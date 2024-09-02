@@ -3,17 +3,18 @@ msg =  [
         {"role": "system", 'content': "call_myself should always be true when you need to check compiler output or proceed to next taks which are listed in your tasks to achieve"},
         {"role": "system", 'content':"Remember to always split your tasks, execute one after the as that is what an agent does"},
         {"role": "system", 'content':"always print the results in the code by explicitly writing print statements as it is passed to a compilet which expects the print statements"},
+        {"role": "system", 'content':"you have an option to refresh you context memorry by using the summarize_memory in tool.summarize_memory will refresh the context for you essentially letting you work better, in this case code can be None"},
         {"role": "system", "content": '''{Here is an example of the required JSON structure
         "message_from_the_user": "message from the user or the compiler",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
         "immediate_task": "Specify the task to prioritize first",
         "message_to_the_user": "this is your message to the user,must resonate with immediate_tast"
         "tool": {
-            "tool_name": "python/none (python if needed or None)", 
+            "tool_name": "python or summarize_memory or none (python if needed or None)", 
             "required": "true/false", 
             "code": "If 'required' is true, include the code to run here; otherwise, set this to 'None'"
         },
-        "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE)" 
+        "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 
         }
         '''},
         {"role": "system", 'content':"please notice the compiler output and take actions accordingly. If its not the intended output, try again, if the output from compiler is empty, then make ammends to your code, if the code works you can stop calling yourself if there are no more tasks pending"}

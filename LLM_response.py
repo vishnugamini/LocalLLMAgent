@@ -28,6 +28,12 @@ def add_context(role,message):
     global msg
     msg.append({"role":role,"content":message})
 
+def get_context():
+    return msg
+
+def update_context(context):
+    global msg
+    msg = context
 
 def llm():
     completion = client.beta.chat.completions.parse(
