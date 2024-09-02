@@ -1,5 +1,4 @@
 from LLM_response import llm, add_context
-from LLM_response import update_context
 from execute_code import exec_code
 from context import Context
 import time
@@ -23,10 +22,6 @@ while prompt != "exit":
     while agent_call == 'true':
         tool = response_json['tool']['tool_name']
         code = response_json['tool']['code']
-        if tool == 'summarize_memory':
-            x = c.summarize_memory()
-            update_context(x)
-            print(Fore.YELLOW + "context updated")
         if tool == 'python' and code != 'None':
             output = exec_code(code)
             print(Fore.YELLOW + "COMPILER OUTPUT: " + output['output'])
