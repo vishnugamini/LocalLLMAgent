@@ -1,12 +1,43 @@
-## Local LLM Agent
+# Local LLM Agent
 
-### Work In Progress
+## Work In Progress
 
-This local LLM agent is designed to run directly on your system with the help of an OpenAI API key. It is currently at a very nascent stage, and work is ongoing for more updates! At the moment, the agent can:
+This Local LLM Agent is designed to run directly on your system using an OpenAI API key. Currently, it's in its early stages, with ongoing development to bring more features and improvements. Here's what the agent can do so far:
 
-- Implement web applications and save them on the system.
-- Check and debug its own code.
-- Automatically call itself, check outputs from the compiler, and rewrite the code to correct itself.
-- Has access to the Python & CMD local environments.
+- **Develop Applications:** Build web applications and games, then save them directly on your system.
+- **Code Debugging:** Analyze and debug its own code.
+- **Self-Correction:** Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
+- **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
+- **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
+- **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
 
-Stay tuned for more features and improvements in the near future!
+Stay tuned for more exciting features and enhancements in the near future!
+
+## Example Output: Tic Tac Toe with Smart AI Opponent
+
+With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
+
+![Local LLM Agent Image](imgs/pic-1.png)
+
+## How to Use the Local LLM Agent
+
+To start using the Local LLM Agent, follow these steps:
+
+1. **Clone the Repository**: First, clone the repository to your local machine using the following command:
+   ```bash
+   git clone https://github.com/your-username/local-llm-agent.git
+2. **Navigate to the Project Directory**: Move into the project directory:
+   ```bash
+   cd local-llm-agent
+3. **Create a `.env` File**: Create a `.env` file in the root directory of the project and include your OpenAI API key. The `.env` file should look like this:
+   ```bash
+   OPENAI_API = "your-openai-api-key"
+4. **Install Dependencies**: Install the necessary Python dependencies by running:
+   ```bash
+   pip install -r requirements.txt
+5. **Run the Agent**: Start the agent by executing the following command:
+   ```bash
+   python interact_AGENT.py
+6. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
+
+
