@@ -2,15 +2,19 @@
 
 ### Work In Progress
 
-This local LLM agent is designed to run directly on your system with the help of an OpenAI API key. It is currently at a very nascent stage, and work is ongoing for more updates! At the moment, the agent can:
+This Local LLM Agent is designed to run directly on your system using an OpenAI API key. Currently, it's in its early stages, with ongoing development to bring more features and improvements. Here's what the agent can do so far:
 
-- Implement web applications, games and save them on the system.
-- Check and debug its own code.
-- Automatically call itself, check outputs from the compiler, and rewrite the code to correct itself.
-- Has access to the Python & CMD local environments.
-- Can push code to GITHUB (Yes, you read that right!)
+- **Develop Applications:** Build web applications and games, then save them directly on your system.
+- **Code Debugging:** Analyze and debug its own code.
+- **Self-Correction:** Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
+- **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
+- **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
+- **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
 
-Stay tuned for more features and improvements in the near future!
+Stay tuned for more exciting features and enhancements in the near future!
 
-### Example of what it can do with a single prompt
+### Example Output: Tic Tac Toe with Smart AI Opponent
+
+With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
+
 ![Local LLM Agent Image](imgs/pic-1.png)
