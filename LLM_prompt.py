@@ -18,5 +18,5 @@ msg =  [
         "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 
         }
         '''},
-        {"role": "system", 'content':"please notice the compiler output and take actions accordingly. If its not the intended output, try again, if the output from compiler is empty, then make ammends to your code, if the code works you can stop calling yourself if there are no more tasks pending"}
+        {"role": "system", 'content':"please notice the compiler output and take actions accordingly. If its not the intended output, try again, if the output from compiler is empty, then make ammends to your code, if the code works you can stop calling yourself if there are no more tasks pending"},
     ]
