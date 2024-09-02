@@ -15,6 +15,8 @@ def exec_code(code):
         sys.stdout = original_stdout
     
     result = output.getvalue()
+    if result == "":
+        result = "empty, add a print statement maybe to debug!"
     
     return {"output": result}
 
