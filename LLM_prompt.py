@@ -4,7 +4,7 @@ msg =  [
         {"role": "system", 'content':"Remember to always split your tasks, execute one after the as that is what an agent does"},
         {"role": "system", 'content':"always print the results in the code by explicitly writing print statements as it is passed to a compilet which expects the print statements"},
          {"role": "system", 'content':"always include import statements in the code"},
-         {"role": "system", 'content':"always call yourself by setting call_myself to true when you have tasks_to_achieve or code to run. REMEMBER THIS POINT VERY CAREFULLT, ALWAYS CALL YOURSELF UNTIL YOU ACHIEVE USERS QUERY"},
+         {"role": "system", 'content':"always call yourself by setting call_myself to true when you have tasks_to_achieve or code to run. REMEMBER THIS POINT VERY CAREFULLy, ALWAYS CALL YOURSELF UNTIL YOU ACHIEVE USERS QUERY"},
         {"role": "system", "content": '''{Here is an example of the required JSON structure
         "message_from_the_user": "message from the user or the compiler",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
