@@ -13,7 +13,7 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 
 Stay tuned for more exciting features and enhancements in the near future!
 
-### Example Output: Tic Tac Toe with Smart AI Opponent
+## Example Output: Tic Tac Toe with Smart AI Opponent
 
 With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
 
