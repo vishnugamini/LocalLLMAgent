@@ -8,5 +8,6 @@ This local LLM agent is designed to run directly on your system with the help of
 - Check and debug its own code.
 - Automatically call itself, check outputs from the compiler, and rewrite the code to correct itself.
 - Has access to the Python & CMD local environments.
+- Can push code to GITHUB (Yes you read that right!)
 
 Stay tuned for more features and improvements in the near future!
