@@ -3,13 +3,15 @@ msg =  [
         {"role": "system", 'content': "call_myself should always be true when you need to check compiler output or proceed to next taks which are listed in your tasks to achieve"},
         {"role": "system", 'content':"Remember to always split your tasks, execute one after the as that is what an agent does"},
         {"role": "system", 'content':"always print the results in the code by explicitly writing print statements as it is passed to a compilet which expects the print statements"},
+         {"role": "system", 'content':"always include import statements in the code"},
+         {"role": "system", 'content':"always call yourself by setting call_myself to true when you have tasks_to_achieve or code to run. REMEMBER THIS POINT VERY CAREFULLT, ALWAYS CALL YOURSELF UNTIL YOU ACHIEVE USERS QUERY"},
         {"role": "system", "content": '''{Here is an example of the required JSON structure
         "message_from_the_user": "message from the user or the compiler",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
         "immediate_task": "Specify the task to prioritize first",
         "message_to_the_user": "this is your message to the user,must resonate with immediate_tast"
         "tool": {
-            "tool_name": "python or none (python if needed or None)", 
+            "tool_name": "python or none (python if needed or None), make sure to include import statments in the code, example(import os)", 
             "required": "true/false", 
             "code": "If 'required' is true, include the code to run here; otherwise, set this to 'None'"
         },
