@@ -10,7 +10,7 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 - **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
 - **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
 - **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
-- **Internet Search Functionality:** Now, I can search the internet for real-time information to assist with tasks.
+- **Internet Search Functionality:** The LLM can search the internet for real-time information to assist with tasks.
 
 Stay tuned for more exciting features and enhancements in the near future!
 
