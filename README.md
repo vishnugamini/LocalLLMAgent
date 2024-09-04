@@ -10,6 +10,7 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 - **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
 - **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
 - **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
+- **Internet Search Functionality:** Now, I can search the internet for real-time information to assist with tasks.
 
 Stay tuned for more exciting features and enhancements in the near future!
 
@@ -18,6 +19,13 @@ Stay tuned for more exciting features and enhancements in the near future!
 With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
 
 ![Local LLM Agent Image](imgs/pic-1.png)
+
+## Example Output: Clock 
+
+With just a single prompt, the Local LLM Agent can create a fully functional clock application.
+
+![Clock Example](imgs/pic-2.png)
+
 
 ## How to Use the Local LLM Agent
 
@@ -39,5 +47,8 @@ To start using the Local LLM Agent, follow these steps:
    ```bash
    python interact_AGENT.py
 6. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
+
+
+
 
 

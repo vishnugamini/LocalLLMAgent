@@ -15,6 +15,7 @@ class Tool(BaseModel):
     tool_name: str
     required: bool
     code: Optional[str] = None
+    query: Optional[str] = None
 
 class Message(BaseModel):
     message_from_the_user: str
