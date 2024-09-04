@@ -2,6 +2,7 @@ import sys
 import io
 
 def exec_code(code):
+    code = "import os\n" + code
     output = io.StringIO()
     original_stdout = sys.stdout
     namespace = {}

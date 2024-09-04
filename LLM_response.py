@@ -1,14 +1,16 @@
 from openai import OpenAI
 from pydantic import BaseModel
 from typing import Optional
-from LLM_prompt import msg
+from LLM_prompt import system_msg
 import os
+import copy
 from dotenv import load_dotenv
 load_dotenv()
 
+original_system_message = copy.deepcopy(system_msg)
 key = os.getenv('OPENAPI_KEY')
 client = OpenAI(api_key=key)
-
+msg = system_msg
 class Tool(BaseModel):
     tool_name: str
     required: bool
@@ -22,13 +24,20 @@ class Message(BaseModel):
     tool: Tool
     call_myself: str
 
-msg = msg
+
+
+def refresh():
+    global msg
+    msg = original_system_message
+    return "Memory Refreshed"
+
 
 def add_context(role,message):
     global msg
     msg.append({"role":role,"content":message})
 
 def llm():
+    global msg
     completion = client.beta.chat.completions.parse(
         model="gpt-4o-mini",
         messages=msg,
