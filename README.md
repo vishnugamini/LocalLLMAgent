@@ -38,7 +38,7 @@ To start using the Local LLM Agent, follow these steps:
 2. **Navigate to the Project Directory**: Move into the project directory:
    ```bash
    cd local-llm-agent
-3. **Create a `.env` File**: Create a `.env` file in the root directory of the project and include your OpenAI and Preplexity(for search) API key. The `.env` file should look like this:
+3. **Create a `.env` File**: Create a `.env` file in the root directory of the project and include your OpenAI and Preplexity(for search) API keys. The `.env` file should look like this:
    ```bash
    OPENAI_API = "your-openai-api-key"
    PERPLEXITY_API = "your-perplexity-api-key"
