@@ -13,6 +13,7 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 - **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
 - **Data Analysis:** The Agent can analyze csv files and create intended graphs for intuitive data representation.
 - **Internet Search Functionality:** The Agent can search the internet for real-time information to assist with tasks.
+- **Research:** The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
 
 Stay tuned for more exciting features and enhancements in the near future!
 
