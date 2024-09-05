@@ -12,6 +12,6 @@ def thinking_dots():
 def search_dots():
     while getattr(threading.current_thread(), "do_run", True):
         for i in range(4):
-            sys.stdout.write(f"{Fore.RED}\rInitiating Internet Search{'.' * i}   ")
+            sys.stdout.write(f"{Fore.RED}\rInitiating Search Agent to browse the Internet{'.' * i}   ")
             sys.stdout.flush()
             time.sleep(0.5)

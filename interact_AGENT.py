@@ -49,7 +49,7 @@ while prompt != "exit":
                 spinner_thread.do_run = False
                 spinner_thread.join()
                 print()
-                print(Fore.YELLOW + "Sending results to LLM")
+                print(Fore.YELLOW + "Search Complete.Sending results to execution Agent")
                 add_context('user', f"OUTPUT FROM SEARCH RESULTS {output}")
 
             spinner_thread = threading.Thread(target=thinking_dots)

@@ -5,7 +5,6 @@ import json
 
 load_dotenv()
 
-
 class PerpSearch:
     def __init__(self):
         self.key = os.getenv("PERPLEXITY_API")
@@ -43,4 +42,3 @@ class PerpSearch:
         response = response['choices'][0]['message']['content'] 
         self.msg.append({"role": "assistant", "content": response})
         return response
-

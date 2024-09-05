@@ -23,11 +23,17 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 
 ## Example Output: Clock 
 
-With just a single prompt, the Local LLM Agent can create a fully functional clock application.
-
 ![Clock Example](imgs/pic-2.png)
 
+## Example Output: Calclator
 
+![Calculator Example](imgs/pic-3.png)
+
+## Example Output: Create data representations
+
+The Agent can analyze the data and create Intuitive data representations
+
+![Data Example](imgs/pic-4.png)
 ## How to Use the Local LLM Agent
 
 To start using the Local LLM Agent, follow these steps:
