@@ -2,6 +2,9 @@
 
 ## Work In Progress
 
+## What is an LLM agent?
+This is a tool that automates workflows on your device. It achieves end-to-end tasks which would require hours of human work which could be automated with a comprehensive prompt. This tool recursively calls itself to achieve the task presented to it in the query. Some examples are listed below for your reference. 
+
 This Local LLM Agent is designed to run directly on your system using an OpenAI API key. Currently, it's in its early stages, with ongoing development to bring more features and improvements. Here's what the agent can do so far:
 
 - **Develop Applications:** Build web applications and games, then save them directly on your system.
