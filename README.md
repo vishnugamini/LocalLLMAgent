@@ -34,7 +34,7 @@ To start using the Local LLM Agent, follow these steps:
 
 1. **Clone the Repository**: First, clone the repository to your local machine using the following command:
    ```bash
-   git clone https://github.com/your-username/local-llm-agent.git
+   git clone https://github.com/vishnugamini/LLMAgent
 2. **Navigate to the Project Directory**: Move into the project directory:
    ```bash
    cd local-llm-agent
