@@ -60,7 +60,7 @@ while prompt != "exit":
                 spinner_thread.join()
                 print()
 
-                print(Style.BRIGHT + Back.GREEN + Fore.BLACK + "Search Complete. Sending results to execution Agent".center(50) + Style.RESET_ALL + '\n')
+                print(Style.BRIGHT + Back.GREEN + Fore.BLACK + "Search Complete. Sending results to Execution Agent".center(50) + Style.RESET_ALL + '\n')
                 add_context('user', f"OUTPUT FROM SEARCH RESULTS {output}")
 
             spinner_thread = threading.Thread(target=thinking_dots)
