@@ -26,7 +26,7 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 
 ![Clock Example](imgs/pic-2.png)
 
-## Example Output: Calclator
+## Example Output: Calculator
 
 ![Calculator Example](imgs/pic-3.png)
 
