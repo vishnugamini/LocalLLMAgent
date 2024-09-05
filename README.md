@@ -29,7 +29,7 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 
 ![Calculator Example](imgs/pic-3.png)
 
-## Example Output: Create data representations
+## Example Output: Create data representations from CSV files
 
 The Agent can analyze the data and create Intuitive data representations
 
