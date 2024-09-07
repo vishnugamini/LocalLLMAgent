@@ -1,4 +1,4 @@
-# Local LLM Agent(Work In Progress)
+# Local LLM Agent (Work In Progress)
 
 ## What is an LLM agent?
 This is a tool that automates workflows on your device. It achieves end-to-end tasks which would require hours of human work which could be automated with a comprehensive prompt. This tool recursively calls itself to achieve the task presented to it in the query. Some examples are listed below for your reference. 
