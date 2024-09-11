@@ -39,7 +39,7 @@ The Agent can analyze the data and create Intuitive data representations
 
 ## Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day and provide advices
 
-![Data Example](imgs/pic-4.png)
+![Data Example](imgs/pic-5.png)
 ## How to Use the Local LLM Agent
 
 To start using the Local LLM Agent, follow these steps:
