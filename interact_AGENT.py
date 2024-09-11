@@ -3,7 +3,7 @@ import time
 import threading
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
-from searchtool import PerpSearch
+from search_agent import PerpSearch
 from terminal_animation import search_dots, thinking_dots
 import json
 from colorama import Fore, Back, Style
@@ -34,7 +34,7 @@ while prompt != "exit":
         msg_to_user = response_json["message_to_the_user"]
         # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
         print(Style.BRIGHT + Back.BLUE + Fore.YELLOW + msg_to_user.center(50) + Style.RESET_ALL + '\n')
-
+        time.sleep(2)
         agent_call = response_json['call_myself']
         while agent_call == 'true':
             tool = response_json['tool']['tool_name']
@@ -49,6 +49,7 @@ while prompt != "exit":
                 print(Style.NORMAL + Fore.WHITE + output['output'] + Style.RESET_ALL) 
                 print(Style.BRIGHT + Fore.YELLOW + "=" * 50 + '\n')  
                 add_context('user', f"OUTPUT FROM PYTHON COMPILER {output['output']}")
+                time.sleep(2)
             
             elif tool == 'search' and query != "None":
                 spinner_thread = threading.Thread(target=search_dots)
@@ -61,7 +62,8 @@ while prompt != "exit":
                 print()
 
                 print(Style.BRIGHT + Back.GREEN + Fore.BLACK + "Search Complete. Sending results to Execution Agent".center(50) + Style.RESET_ALL + '\n')
-                add_context('user', f"OUTPUT FROM SEARCH RESULTS {output}")
+                add_context('user', f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user): {output}")
+                time.sleep(2)
 
             spinner_thread = threading.Thread(target=thinking_dots)
             spinner_thread.start()

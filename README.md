@@ -34,6 +34,10 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 The Agent can analyze the data and create Intuitive data representations
 
 ![Data Example](imgs/pic-4.png)
+
+## Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day and provide advices
+
+![Data Example](imgs/pic-4.png)
 ## How to Use the Local LLM Agent
 
 To start using the Local LLM Agent, follow these steps:
