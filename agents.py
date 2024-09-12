@@ -12,7 +12,7 @@ class PerpSearch:
         self.msg = [
         {
             "role": "system",
-            "content": "Be very precise as the tokens you produce will affect another LLM's response. The information should be up to date, you will be mostly used for searches. Provide valid responses to the LLM. Do not provide extraneous, unsolicited content.The content must be Verbose and Valid"
+            "content": "Be very precise as the tokens you produce will affect another LLM's response. The information should be up to date, you will be mostly used for searches. Provide valid responses to the LLM. Do not provide extraneous, unsolicited content.The content must be Verbose and Valid. If the agent asks for a link, provide th actual link of the whatever's been asked without any wrapper on top"
         },
         ]
         self.payload = {
@@ -42,3 +42,38 @@ class PerpSearch:
         response = response['choices'][0]['message']['content'] 
         self.msg.append({"role": "assistant", "content": response})
         return response
+
+class PicSearch():
+    def __init__(self):
+        self.store = []
+        self.url = "https://pixabay.com/api/"
+        self.params = {
+            "key": "45949203-7642853208ee397943d748af1",
+            "q": "",
+            "image_type": "photo",
+            "pretty": "true"
+        }
+
+    def picSearch(self,query):
+        query = query.split(" ")
+        query = "+".join(query)
+        self.params['q'] = query
+        response = requests.get(self.url, params=self.params)
+        results = response.json()
+        results = results['hits']
+        try:
+            for links in range(3):
+                self.store.append(results[links]['webformatURL'])
+            return self.store
+        except:
+            return "no pictures found! make the search query simpler"
+
+
+
+
+
+
+
+
+
+
