@@ -40,6 +40,6 @@ def refresh_message(response):
 
 def initial_message():
     msg_to_user = "Type 'refresh' to erase agent's memory 🧠"
-    print(Style.BRIGHT + Back.YELLOW + Fore.BLUE + msg_to_user.center(50) + Style.RESET_ALL + '\n')
+    print(Style.BRIGHT + Back.YELLOW + Fore.BLUE + msg_to_user.center(50) + Style.RESET_ALL)
     msg_to_user = "Type 'exit' to leave the chat 🚪"
     print(Style.BRIGHT + Back.GREEN + Fore.WHITE + msg_to_user.center(50) + Style.RESET_ALL + '\n')

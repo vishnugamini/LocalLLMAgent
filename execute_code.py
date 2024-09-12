@@ -3,6 +3,7 @@ import io
 import requests
 
 def exec_code(code):
+    code = "import os \n" + code
     output = io.StringIO()
     original_stdout = sys.stdout
     namespace = {}
@@ -17,7 +18,7 @@ def exec_code(code):
     
     result = output.getvalue()
     if result == "":
-        result = "empty, add a print statement maybe to debug if needed!"
+        result = "empty, add a print statement maybe to debug if needed! (dont use if name == __main__ as that might cause errors )"
     
     return {"output": result}
 
