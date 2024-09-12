@@ -1,5 +1,6 @@
 import sys
 import io
+import requests
 
 def exec_code(code):
     output = io.StringIO()
@@ -16,7 +17,7 @@ def exec_code(code):
     
     result = output.getvalue()
     if result == "":
-        result = "empty, add a print statement maybe to debug!"
+        result = "empty, add a print statement maybe to debug if needed!"
     
     return {"output": result}
 
