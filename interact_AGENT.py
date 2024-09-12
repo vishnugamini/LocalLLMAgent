@@ -20,9 +20,8 @@ while prompt != "exit":
         response = refresh()
         refresh_message(response)
     
-    add_context("user", prompt)
-    
     if prompt not in ['refresh', 'exit']:
+        add_context("user", prompt)
         spinner_thread = threading.Thread(target=thinking_dots)
         spinner_thread.start()
 
