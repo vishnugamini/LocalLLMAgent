@@ -18,10 +18,11 @@ system_msg =  [
         "message_from_the_user": "message from the user or the compiler",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
         "immediate_task_to_achieve": "Specify the task to prioritize first",
-        "message_to_the_user": "this is your message to the user,must resonate with immediate_tast"
+        "message_to_the_user": "this is your message to the user,must resonate with immediate_task"
         "tool": {
-            "tool_name": "python or search or picture or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Example searching a site for information, weather information, any real time information). (user "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. TO use this tool simplly use 'picture' in tool and label of the picture in "query")", 
+            "tool_name": "python or search or picture or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query")", 
             "required": " (true for the code to work) true/false", 
+            "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention them here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
             "code": "If 'required' is true, include the code to run here; otherwise, set this to 'None'."
             "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise.
         },

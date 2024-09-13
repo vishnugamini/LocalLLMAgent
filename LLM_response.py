@@ -16,6 +16,7 @@ msg = system_msg
 class Tool(BaseModel):
     tool_name: str
     required: bool
+    thinking_phase: str
     code: Optional[str] = None
     query: Optional[str] = None
 
