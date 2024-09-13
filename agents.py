@@ -5,7 +5,7 @@ import json
 
 load_dotenv()
 
-class PerpSearch:
+class PerpSearch():
     def __init__(self):
         self.key = os.getenv("PERPLEXITY_API")
         self.url = "https://api.perplexity.ai/chat/completions"
