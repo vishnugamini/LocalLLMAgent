@@ -18,7 +18,7 @@ def search_dots():
             time.sleep(0.5)
 
 def picture_message():
-    print(Style.BRIGHT + Back.LIGHTCYAN_EX + Fore.MAGENTA + "Initializing Agent to search for 🚀".center(50) + Style.RESET_ALL + '\n')
+    print(Style.BRIGHT + Back.LIGHTCYAN_EX + Fore.MAGENTA + "Initializing Agent to search for Pictures🚀".center(50) + Style.RESET_ALL + '\n')
     time.sleep(2)
     print(Style.BRIGHT + Back.RED + Fore.GREEN + "Searching for Pictures 📸".center(50) + Style.RESET_ALL + '\n')
 
