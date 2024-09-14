@@ -64,9 +64,13 @@ class PicSearch():
         try:
             for links in range(3):
                 self.store.append(results[links]['webformatURL'])
+                print(self.store)
             return self.store
         except:
             return "no pictures found! make the search query simpler"
+        
+        finally:
+            self.store = []
 
 
 
