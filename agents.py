@@ -2,6 +2,8 @@ import requests
 import os
 from dotenv import load_dotenv
 import json
+import sys
+import subprocess
 
 load_dotenv()
 
@@ -64,7 +66,6 @@ class PicSearch():
         try:
             for links in range(3):
                 self.store.append(results[links]['webformatURL'])
-                print(self.store)
             return self.store
         except:
             return "no pictures found! make the search query simpler"
@@ -72,12 +73,20 @@ class PicSearch():
         finally:
             self.store = []
 
+class InstallModule:
+    def __init__(self):
+        pass
 
-
-
-
-
-
-
-
+    def install(self, module):
+        try:
+            result = subprocess.run(
+                [sys.executable, '-m', 'pip', 'install', module],
+                stdout=subprocess.PIPE, 
+                stderr=subprocess.PIPE,  
+                text=True, 
+                check=True 
+            )
+            return {'output':f'{module} module installed successfully.\nOutput:\n{result.stdout}'}
+        except subprocess.CalledProcessError as e:
+            return {'output':f'Error occurred while installing {module}:\n{e.stderr}'}
 
