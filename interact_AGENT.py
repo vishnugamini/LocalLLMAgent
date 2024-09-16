@@ -40,23 +40,25 @@ while prompt != "exit":
 
         agent_call = response_json['call_myself']
         while agent_call == 'true':
-            time.sleep(2)
             tool = response_json['tool']['tool_name']
             code = response_json['tool']['code']
             query = response_json['tool']['query']
             
             if tool == 'python' and code != 'None':
                 output = exec_code(code)
+                error = output['error']
+                text = "\n There seems to be an error in the code. Throughly understand why it arised and mitigate it immediately by fixing the code. Do not make the same error again"
+                if error == True:
+                    add_context('user', f"OUTPUT FROM PYTHON COMPILER {output['output']} {text}")
+                else:
+                    add_context('user', f"OUTPUT FROM PYTHON COMPILER {output['output']}")
                 compiler_message(output)
-                add_context('user', f"OUTPUT FROM PYTHON COMPILER {output['output']}")
-                time.sleep(2)
-
+                
             elif tool == 'install' and query != "None":
                 install_module(query)
                 output = install.install(query)
                 compiler_message(output)
                 add_context('user', f'OUTPUT FROM INSTALLATION {output}')
-                time.sleep(2)
             
             elif tool == 'search' and query != "None":
                 spinner_thread = threading.Thread(target=search_dots)
@@ -70,14 +72,12 @@ while prompt != "exit":
 
                 search_message()
                 add_context('user', f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed): {output}")
-                time.sleep(2)
   
 
             elif tool == 'picture' and query != "None":
                 picture_message()
                 results = picture.picSearch(query)
                 add_context('user', f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked")
-                time.sleep(2)
 
             spinner_thread = threading.Thread(target=thinking_dots)
             spinner_thread.start()
@@ -93,4 +93,3 @@ while prompt != "exit":
             msg_to_user = response_json["message_to_the_user"]
             user_message(msg_to_user)
             agent_call = response_json['call_myself']
-            time.sleep(2)
