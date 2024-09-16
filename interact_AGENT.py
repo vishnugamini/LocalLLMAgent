@@ -3,13 +3,14 @@ import time
 import threading
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
-from agents import PerpSearch, PicSearch
+from agents import PerpSearch, PicSearch, InstallModule
 from terminal_animation import search_dots, thinking_dots, picture_message, search_message, compiler_message,user_message,refresh_message, initial_message
 import json
 from colorama import Fore, Style, Back
 
 search = PerpSearch()
 picture = PicSearch()
+install = InstallModule()
 
 prompt = ""
 while prompt != "exit":
@@ -49,6 +50,12 @@ while prompt != "exit":
                 add_context('user', f"OUTPUT FROM PYTHON COMPILER {output['output']}")
                 time.sleep(2)
 
+            elif tool == 'install' and query != "None":
+                print(query)
+                output = install.install(query)
+                compiler_message(output)
+                add_context('user', f'OUTPUT FROM INSTALLATION {output}')
+                time.sleep(2)
             
             elif tool == 'search' and query != "None":
                 spinner_thread = threading.Thread(target=search_dots)
@@ -61,7 +68,7 @@ while prompt != "exit":
                 print()
 
                 search_message()
-                add_context('user', f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user): {output}")
+                add_context('user', f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed): {output}")
                 time.sleep(2)
   
 
