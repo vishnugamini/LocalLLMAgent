@@ -15,6 +15,9 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 - **Internet Search Functionality:** The Agent can search the internet for real-time information to assist with tasks.
 - **Research:** The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
 
+## Example Usage
+![IMAGE](imgs/pic-6.png)
+
 Stay tuned for more exciting features and enhancements in the near future!
 
 ## Example Output: Tic Tac Toe with Smart AI Opponent
