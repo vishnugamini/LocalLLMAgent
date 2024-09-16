@@ -1,8 +1,6 @@
 import sys
-import io
 import subprocess
-import tempfile
-import os
+import shlex
 
 def exec_code(code, python_interpreter=None):
     code = "import os\n" + code
@@ -12,31 +10,30 @@ def exec_code(code, python_interpreter=None):
     else:
         python_executable = python_interpreter
 
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as tmp_file:
-        tmp_file.write(code)
-        tmp_filename = tmp_file.name
+    command = [python_executable, "-c", code]
 
     try:
         result = subprocess.run(
-            [python_executable, tmp_filename],
+            command,
             capture_output=True,
             text=True,
-            timeout=25 
+            timeout=25  
         )
 
         if result.returncode != 0:
             output = result.stderr.strip()
+            error = True
         else:
             output = result.stdout.strip()
+            error = False
             if not output:
                 output = "empty, add a print statement maybe to debug if needed! (don't use if __name__ == '__main__' as that might cause errors)"
+                error = False
         
-        return {"output": output}
+        return {"output": output, "error": error}
     
     except subprocess.TimeoutExpired:
-        return {"output": "Execution timed out."}
+        return {"output": "Execution timed out.", "error": True}
     except Exception as e:
-        return {"output": str(e)}
-    finally:
-        os.unlink(tmp_filename)
+        return {"output": str(e), "error": True}
 
