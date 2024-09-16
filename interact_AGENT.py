@@ -4,7 +4,7 @@ import threading
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
 from agents import PerpSearch, PicSearch, InstallModule
-from terminal_animation import search_dots, thinking_dots, picture_message, search_message, compiler_message,user_message,refresh_message, initial_message
+from terminal_animation import search_dots, thinking_dots, picture_message, search_message, compiler_message,user_message,refresh_message, initial_message, install_module
 import json
 from colorama import Fore, Style, Back
 
@@ -13,8 +13,9 @@ picture = PicSearch()
 install = InstallModule()
 
 prompt = ""
+initial_message()
 while prompt != "exit":
-    initial_message()
+
     prompt = input(Style.BRIGHT + Fore.WHITE + Back.BLACK + "Prompt: " + Style.RESET_ALL)
 
     if prompt.lower() == "refresh":
@@ -51,7 +52,7 @@ while prompt != "exit":
                 time.sleep(2)
 
             elif tool == 'install' and query != "None":
-                print(query)
+                install_module(query)
                 output = install.install(query)
                 compiler_message(output)
                 add_context('user', f'OUTPUT FROM INSTALLATION {output}')
