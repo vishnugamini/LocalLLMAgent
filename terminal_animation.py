@@ -1,45 +1,124 @@
 import sys
 import time
 import threading
-from colorama import Fore, Style, Back
+from rich.console import Console
+from rich.text import Text
+from rich.panel import Panel
+from rich.spinner import Spinner
+from rich.align import Align 
+
+console = Console()
 
 def thinking_dots():
-    while getattr(threading.current_thread(), "do_run", True):
-        for i in range(4):
-            sys.stdout.write(f"{Style.BRIGHT + Fore.YELLOW + Back.BLACK}\rThinking 🤔{'.' * i}{' ' * (3 - i)}{Style.RESET_ALL}")
-            sys.stdout.flush()
+    spinner = Spinner("dots", text="Thinking 🤔")
+    with console.status(spinner, spinner_style="yellow"):
+        while getattr(threading.current_thread(), "do_run", True):
             time.sleep(0.5)
 
 def search_dots():
-    while getattr(threading.current_thread(), "do_run", True):
-        for i in range(4):
-            sys.stdout.write(f"{Style.BRIGHT + Fore.CYAN + Back.RED }\rInitiating Search Agent to browse the Internet 🔍{'.' * i}{' ' * (3 - i)}{Style.RESET_ALL}")
-            sys.stdout.flush()
+    spinner = Spinner("dots", text="Initiating Search Agent to browse the Internet 🔍")
+    with console.status(spinner, spinner_style="cyan on red"):
+        while getattr(threading.current_thread(), "do_run", True):
             time.sleep(0.5)
 
 def picture_message():
-    print(Style.BRIGHT + Back.LIGHTCYAN_EX + Fore.MAGENTA + "Initializing Agent to search for Pictures🚀".center(50) + Style.RESET_ALL + '\n')
+    panel1 = Panel(
+        Text("Initializing Agent to search for Pictures 🚀", style="bold magenta"),
+        style="bold bright_cyan", 
+        title="Picture Agent",
+        subtitle_align="center"
+    )
+    console.print(panel1, justify="center")
     time.sleep(2)
-    print(Style.BRIGHT + Back.RED + Fore.GREEN + "Searching for Pictures 📸".center(50) + Style.RESET_ALL + '\n')
+    
+    panel2 = Panel(
+        Text("Searching for Pictures 📸", style="bold green"),
+        style="bold red",
+        title="Picture Search",
+        subtitle_align="center"
+    )
+    console.print(panel2, justify="center")
+    time.sleep(1)
 
 def search_message():
-    print(Style.BRIGHT + Back.GREEN + Fore.BLACK + "Search Complete. Sending results to Execution Agent".center(50) + Style.RESET_ALL + '\n')
-    
+    panel = Panel(
+        Text("Search Complete. Sending results to Execution Agent", style="bold black"),
+        style="bold green",
+        title="Search Status",
+        subtitle_align="center"
+    )
+    console.print(panel, justify="center")
+    time.sleep(1)
+
 def compiler_message(output):
-    print(Style.BRIGHT + Fore.YELLOW + "=" * 50)  
-    print(Style.BRIGHT + Fore.CYAN + "COMPILER OUTPUT".center(50)) 
-    print(Style.BRIGHT + Fore.YELLOW + "=" * 50)  
-    print(Style.NORMAL + Fore.WHITE + output['output'] + Style.RESET_ALL) 
-    print(Style.BRIGHT + Fore.YELLOW + "=" * 50 + '\n')  
+    title_panel = Panel(
+        Align.center("COMPILER OUTPUT", style="bold cyan"),
+        border_style="bold yellow",
+        padding=(1, 2)
+    )
+    
+    output_panel = Panel(
+        Text(output['output'], style="white"),
+        title="Output",
+        border_style="green",
+        padding=(1, 2),
+        expand=False
+    )
+    
+    console.print(title_panel, justify="center")
+    
+    console.print(output_panel, justify="center")
+    
+    console.print("\n")
+
 
 def user_message(msg_to_user):
-        print(Style.BRIGHT + Back.BLUE + Fore.YELLOW + msg_to_user.center(50) + Style.RESET_ALL + '\n')
+    panel = Panel(
+        Text(msg_to_user, style="bold yellow"),
+        style="bold blue",
+        title="User Message",
+        subtitle_align="center"
+    )
+    console.print(panel, justify="center")
+    time.sleep(1)
 
 def refresh_message(response):
-    print(Style.BRIGHT + Back.MAGENTA + Fore.WHITE + response.center(50) + Style.RESET_ALL + '\n')
+    panel = Panel(
+        Text(response, style="bold white"),
+        style="bold magenta",
+        title="Refresh",
+        subtitle_align="center"
+    )
+    console.print(panel, justify="center")
+    time.sleep(1)
 
 def initial_message():
-    msg_to_user = "Type 'refresh' to erase agent's memory 🧠"
-    print(Style.BRIGHT + Back.YELLOW + Fore.BLUE + msg_to_user.center(50) + Style.RESET_ALL)
-    msg_to_user = "Type 'exit' to leave the chat 🚪"
-    print(Style.BRIGHT + Back.GREEN + Fore.WHITE + msg_to_user.center(50) + Style.RESET_ALL + '\n')
+    msg1 = "Type 'refresh' to erase agent's memory 🧠"
+    panel1 = Panel(
+        Text(msg1, style="bold blue"),
+        style="bold yellow",
+        title="Instructions",
+        subtitle_align="center"
+    )
+    console.print(panel1, justify="center")
+    
+    msg2 = "Type 'exit' to leave the chat 🚪"
+    panel2 = Panel(
+        Text(msg2, style="bold white"),
+        style="bold green",
+        title="Instructions",
+        subtitle_align="center"
+    )
+    console.print(panel2, justify="center")
+    time.sleep(1)
+
+def install_module(module_name):
+    panel = Panel(
+        Text(f"Initializing Install Agent to install module: {module_name}", style="bold magenta"),
+        style="bold cyan",
+        title="Install Agent",
+        subtitle_align="center"
+    )
+    console.print(panel, justify="center")
+    time.sleep(2)
+
