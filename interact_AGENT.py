@@ -1,6 +1,8 @@
-import sys
-import time
+from terminal_animation import initializer
 import threading
+spinner_thread = threading.Thread(target=initializer)
+spinner_thread.start()
+
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
 from agents import PerpSearch, PicSearch, InstallModule
@@ -23,6 +25,8 @@ picture = PicSearch()
 install = InstallModule()
 
 prompt = ""
+spinner_thread.do_run = False
+spinner_thread.join()
 initial_message()
 while prompt != "exit":
 
@@ -48,7 +52,7 @@ while prompt != "exit":
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
-        # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
+        print(Fore.BLUE,json.dumps(response_json,indent=4)) ##((USE THIS FOR VERBOSE OUTPUT))
 
         agent_call = response_json["call_myself"]
         while agent_call == "true":
@@ -110,7 +114,7 @@ while prompt != "exit":
             print()
 
             response_json = json.loads(response)
-            # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
+            print(Fore.BLUE,json.dumps(response_json,indent=4))## ((USE THIS FOR VERBOSE OUTPUT))
             msg_to_user = response_json["message_to_the_user"]
             user_message(msg_to_user)
             agent_call = response_json["call_myself"]
