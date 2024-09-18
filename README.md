@@ -26,6 +26,21 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 
 ![Local LLM Agent Image](imgs/pic-1.png)
 
+## Example: Retrieve and Plot Stock/Crypto Prices
+
+In this example, the Agent browses the web to find a suitable module for retrieving stock or crypto prices over the past few days and plots a graph.
+
+The agent does 3 things:
+1. Browse the web to identify a module for retrieving price data.
+2. Use the module to fetch historical price information.
+3. Plot the retrieved data on a graph for visual analysis.
+
+### Graph:
+![Data Example](imgs/pic-7.png)
+
+The graph represents price trends, helping users make informed decisions.
+
+
 ## Example Output: Clock 
 
 ![Clock Example](imgs/pic-2.png)
@@ -44,20 +59,6 @@ The Agent can analyze the data and create Intuitive data representations
 The Agent provides investment advice by throughly examining the stock trends, plots graphs, runs ML models to predict the stock price for the coming days
 
 ![Data Example](imgs/pic-5.png)
-
-## Example: Retrieve and Plot Stock/Crypto Prices
-
-In this example, the Agent browses the web to find a suitable module for retrieving stock or crypto prices over the past few days and plots a graph.
-
-The agent does 3 things:
-1. Browse the web to identify a module for retrieving price data.
-2. Use the module to fetch historical price information.
-3. Plot the retrieved data on a graph for visual analysis.
-
-### Graph:
-![Data Example](imgs/pic-7.png)
-
-The graph represents price trends, helping users make informed decisions.
 
 ## How to Use the Local LLM Agent
 
