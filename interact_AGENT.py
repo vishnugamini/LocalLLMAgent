@@ -52,7 +52,7 @@ while prompt != "exit":
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
-        print(Fore.BLUE,json.dumps(response_json,indent=4)) ##((USE THIS FOR VERBOSE OUTPUT))
+        # print(Fore.BLUE,json.dumps(response_json,indent=4)) ##((USE THIS FOR VERBOSE OUTPUT))
 
         agent_call = response_json["call_myself"]
         while agent_call == "true":
@@ -114,7 +114,7 @@ while prompt != "exit":
             print()
 
             response_json = json.loads(response)
-            print(Fore.BLUE,json.dumps(response_json,indent=4))## ((USE THIS FOR VERBOSE OUTPUT))
+            # print(Fore.BLUE,json.dumps(response_json,indent=4))## ((USE THIS FOR VERBOSE OUTPUT))
             msg_to_user = response_json["message_to_the_user"]
             user_message(msg_to_user)
             agent_call = response_json["call_myself"]
