@@ -5,15 +5,15 @@ This is a tool that automates workflows on your device. It achieves end-to-end t
 
 This Local LLM Agent is designed to run directly on your system using an OpenAI API key. Currently, it's in its early stages, with ongoing development to bring more features and improvements. Here's what the agent can do so far:
 
-- **Develop Applications:** Build web applications and games, then save them directly on your system.
-- **Code Debugging:** Analyze and debug its own code.
-- **Self-Correction:** Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
-- **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
-- **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
-- **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
-- **Data Analysis:** The Agent can analyze csv files and create intended graphs for intuitive data representation.
-- **Internet Search Functionality:** The Agent can search the internet for real-time information to assist with tasks.
-- **Research:** The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
+- `Develop Applications:`Build web applications and games, then save them directly on your system.
+- `Code Debugging:` Analyze and debug its own code.
+- `Self-Correction:` Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
+- `Local Environment Access:` Interact with Python and CMD local environments for versatile task execution.
+- `File System Interaction:` Find, update, and delete files/folders on your system, providing seamless file management.
+- `Version Control Integration:` Push code directly to GitHub (Yes, you read that right!).
+- `Data Analysis:` The Agent can analyze csv files and create intended graphs for intuitive data representation.
+- `Internet Search Functionality:` The Agent can search the internet for real-time information to assist with tasks.
+- `Research:` The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
 
 ## Example Usage
 ![IMAGE](imgs/image.png)
