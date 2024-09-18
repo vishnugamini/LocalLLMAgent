@@ -17,6 +17,7 @@ This Local LLM Agent is designed to run directly on your system using an OpenAI 
 
 ## Example Usage
 ![IMAGE](imgs/image.png)
+![IMAGE](imgs/pic-8.png)
 
 Stay tuned for more exciting features and enhancements in the near future!
 
