@@ -9,6 +9,13 @@ from rich.align import Align
 
 console = Console()
 
+def initializer():
+    spinner = Spinner("dots", text="Initializing Systems ⚙️")
+    with console.status(spinner, spinner_style="yellow"):
+        while getattr(threading.current_thread(), "do_run", True):
+            time.sleep(5)
+
+
 
 def thinking_dots():
     spinner = Spinner("dots", text="Thinking 🤔")
@@ -18,8 +25,15 @@ def thinking_dots():
 
 
 def search_dots():
-    spinner = Spinner("dots", text="Initiating Search Agent to browse the Internet 🔍")
-    with console.status(spinner, spinner_style="cyan on red"):
+    panel = Panel(
+        Text("Initializing Search Agent to Browse the Internet 🔍 ", style="bold red"),
+        style="bold bright_cyan",
+        title="Search Agent",
+        subtitle_align="center",
+    )
+    console.print(panel, justify= "center")
+    spinner = Spinner("dots", text="Searching the web for relavant results")
+    with console.status(spinner, spinner_style="red"):
         while getattr(threading.current_thread(), "do_run", True):
             time.sleep(0.5)
 
