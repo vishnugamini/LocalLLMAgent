@@ -20,6 +20,7 @@ class Tool(BaseModel):
     tool_name: str
     required: bool
     thinking_phase: str
+    file_location: str
     code: Optional[str] = None
     query: Optional[str] = None
 

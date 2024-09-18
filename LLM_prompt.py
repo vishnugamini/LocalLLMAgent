@@ -63,24 +63,29 @@ system_msg = [
     },
     {
         "role": "system",
+        "content": "When writing code that you think needs to be saved to futher augument code to it. please save the code to a python file and then instead of rewriting the entire code, add whats needed to ensure you dont use too manu tokens",
+    },
+    {
+        "role": "system",
         "content": """{Here is an example of the required JSON structure
-        "message_from_the_user": "message from the user or the compiler",
+        "message_from_the_user": "message from the user or the compiler. Write the consice summary of it, for example if an error occured write about the error, or if everthing was successful write a message stating that everything went well",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
         "immediate_task_to_achieve": "Specify the task to prioritize first",
         "message_to_the_user": "this is your message to the user,must resonate with immediate_task. It should say what you have done and what you are about to do if there is something else pending, or just politely ask if the user needs anything else"
         "tool": {
             "tool_name": "python or search or picture or install or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query"). Use install if you need to install a python module, simple call install and mention the module name in the query", 
             "required": " (true for the code to work) true/false", 
-            "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention them here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
-            "code": "If 'required' is true, include the code to run here; otherwise, set this to 'None'."
-            "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise.
+            "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
+            "file_location": "if you have defined file locations/ folder locations earlier, write them down here to ensure you dont forget it when you have to declare it later. Write down the file location and what is pointing to"
+            "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'."
+            "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
         },
-        "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 
+        "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR CHECK RESPONSE FROM TOOL OUTPUTS SUCH AS 'install', 'picture', 'tool' OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 
         }
-        """,
+        """
     },
     {
         "role": "system",
         "content": "please notice the compiler output and take actions accordingly. If its not the intended output, try again, if the output from compiler is empty, then make ammends to your code, if the code works you can stop calling yourself if there are no more tasks pending. In cases like GUI implementation or something that does not produce console outputs, you can safely assume that your appliation worked and confirm it from the user",
-    },
+    }
 ]
