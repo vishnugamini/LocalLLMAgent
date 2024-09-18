@@ -5,18 +5,19 @@ This is a tool that automates workflows on your device. It achieves end-to-end t
 
 This Local LLM Agent is designed to run directly on your system using an OpenAI API key. Currently, it's in its early stages, with ongoing development to bring more features and improvements. Here's what the agent can do so far:
 
-- **Develop Applications:** Build web applications and games, then save them directly on your system.
-- **Code Debugging:** Analyze and debug its own code.
-- **Self-Correction:** Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
-- **Local Environment Access:** Interact with Python and CMD local environments for versatile task execution.
-- **File System Interaction:** Find, update, and delete files/folders on your system, providing seamless file management.
-- **Version Control Integration:** Push code directly to GitHub (Yes, you read that right!).
-- **Data Analysis:** The Agent can analyze csv files and create intended graphs for intuitive data representation.
-- **Internet Search Functionality:** The Agent can search the internet for real-time information to assist with tasks.
-- **Research:** The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
+- `Develop Applications:`Build web applications and games, then save them directly on your system.
+- `Code Debugging:` Analyze and debug its own code.
+- `Self-Correction:` Automatically call itself, evaluate compiler outputs, and rewrite code to fix any issues.
+- `Local Environment Access:` Interact with Python and CMD local environments for versatile task execution.
+- `File System Interaction:` Find, update, and delete files/folders on your system, providing seamless file management.
+- `Version Control Integration:` Push code directly to GitHub (Yes, you read that right!).
+- `Data Analysis:` The Agent can analyze csv files and create intended graphs for intuitive data representation.
+- `Internet Search Functionality:` The Agent can search the internet for real-time information to assist with tasks.
+- `Research:` The Agent can research about a specific topic by browsing the internet and gather information that could then be summarized/coverted into a blog post/etc.
 
 ## Example Usage
-![IMAGE](imgs/pic-6.png)
+![IMAGE](imgs/image.png)
+![IMAGE](imgs/pic-8.png)
 
 Stay tuned for more exciting features and enhancements in the near future!
 
@@ -25,6 +26,21 @@ Stay tuned for more exciting features and enhancements in the near future!
 With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
 
 ![Local LLM Agent Image](imgs/pic-1.png)
+
+## Example: Retrieve and Plot Stock/Crypto Prices
+
+In this example, the Agent browses the web to find a suitable module for retrieving stock or crypto prices over the past few days and plots a graph.
+
+The agent does 3 things:
+1. Browse the web to identify a module for retrieving price data.
+2. Use the module to fetch historical price information.
+3. Plot the retrieved data on a graph for visual analysis.
+
+### Graph:
+![Data Example](imgs/pic-7.png)
+
+The graph represents price trends, helping users make informed decisions.
+
 
 ## Example Output: Clock 
 
@@ -45,20 +61,6 @@ The Agent provides investment advice by throughly examining the stock trends, pl
 
 ![Data Example](imgs/pic-5.png)
 
-## Example: Retrieve and Plot Stock/Crypto Prices
-
-In this example, the Agent browses the web to find a suitable module for retrieving stock or crypto prices over the past few days and plots a graph.
-
-### Steps:
-1. Browse the web to identify a module for retrieving price data.
-2. Use the module to fetch historical price information.
-3. Plot the retrieved data on a graph for visual analysis.
-
-### Graph Example:
-![Data Example](imgs/pic-7.png)
-
-The graph represents price trends, helping users make informed decisions.
-
 ## How to Use the Local LLM Agent
 
 To start using the Local LLM Agent, follow these steps:
@@ -71,7 +73,7 @@ To start using the Local LLM Agent, follow these steps:
    cd local-llm-agent
 3. **Create a `.env` File**: Create a `.env` file in the root directory of the project and include your OpenAI and Preplexity(to browse the internet(optional)) API keys. The `.env` file should look like this:
    ```bash
-   OPENAI_API = "your-openai-api-key"
+   OPENAPI_KEY = "your-openai-api-key"
    PERPLEXITY_API = "your-perplexity-api-key"
 4. **Install Dependencies**: Install the necessary Python dependencies by running:
    ```bash
