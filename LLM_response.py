@@ -48,7 +48,7 @@ def add_context(role, message):
 def llm():
     global msg
     completion = client.beta.chat.completions.parse(
-        model="gpt-4o-mini",  # or gpt-4o-2024-08-06
+        model="gpt-4o-mini", # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
         messages=msg,
         response_format=Message,
     )

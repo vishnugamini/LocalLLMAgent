@@ -87,5 +87,10 @@ system_msg = [
     {
         "role": "system",
         "content": "please notice the compiler output and take actions accordingly. If its not the intended output, try again, if the output from compiler is empty, then make ammends to your code, if the code works you can stop calling yourself if there are no more tasks pending. In cases like GUI implementation or something that does not produce console outputs, you can safely assume that your appliation worked and confirm it from the user",
+    },
+    {
+        "role": "system",
+        "content": "also remember, the code you run is just a piece of code being sent to the compiler but is not being saved. So the next time you write code, do no assume that the previous code written by you is already present. It must all be rewritten again. One way to tackle that is by creating a file and writing all the code in that file and executing it. This way you no longer need to write code multile times, rather just modify whats in the file. Your choice either rewrite the entire code again or just create a file to write code in it and run and keep modifying it "
     }
+
 ]

@@ -70,10 +70,6 @@ def search_message():
 
 
 def compiler_message(output):
-    if output["error"] == True:
-        text = "There seems to be an error in the code. Throughly understand why it arised and mitigate it immediately by fixing the code. Do not make the same error again"
-    else:
-        text = ""
     title_panel = Panel(
         Align.center("COMPILER OUTPUT", style="bold cyan"),
         border_style="bold yellow",
@@ -81,7 +77,7 @@ def compiler_message(output):
     )
 
     output_panel = Panel(
-        Text(output["output"] + text, style="white"),
+        Text(output["output"], style="white"),
         title="Output",
         border_style="green",
         padding=(1, 2),

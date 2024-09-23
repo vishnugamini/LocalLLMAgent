@@ -27,7 +27,7 @@ def exec_code(code, python_interpreter=None):
             output = result.stdout.strip()
             error = False
             if not output:
-                output = "empty, add a print statement maybe to debug if needed! (don't use if __name__ == '__main__' as that might cause errors)"
+                output = "empty, add a print statement maybe to debug if needed! (don't use if __name__ == '__main__' as that might cause errors). You no dont have to write code again if you think no print statements are expected. And in case you wish to check the output like file creation, check if the files have been created or not"
                 error = False
         
         return {"output": output, "error": error}
