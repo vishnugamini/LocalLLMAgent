@@ -33,7 +33,7 @@ In this example, the Agent browses the web to find a suitable module for retriev
 
 The agent does 3 things:
 1. Browse the web to identify a module for retrieving price data.
-2. Use the module to fetch historical price information.
+2. Download and Use the module to fetch historical price information.
 3. Plot the retrieved data on a graph for visual analysis.
 
 ### Graph:
