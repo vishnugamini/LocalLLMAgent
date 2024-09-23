@@ -100,3 +100,4 @@ class InstallModule:
                 "output": f"Error occurred while installing {module}:\n{e.stderr}",
                 "error": True,
             }
+

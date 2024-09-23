@@ -2,7 +2,6 @@ from terminal_animation import initializer
 import threading
 spinner_thread = threading.Thread(target=initializer)
 spinner_thread.start()
-
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
 from agents import PerpSearch, PicSearch, InstallModule
@@ -19,7 +18,6 @@ from terminal_animation import (
 )
 import json
 from colorama import Fore, Style, Back
-
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
@@ -33,7 +31,6 @@ while prompt != "exit":
     prompt = input(
         Style.BRIGHT + Fore.WHITE + Back.BLACK + "Prompt: " + Style.RESET_ALL
     )
-
     if prompt.lower() == "refresh":
         response = refresh()
         refresh_message(response)
@@ -52,7 +49,8 @@ while prompt != "exit":
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
-        # print(Fore.BLUE,json.dumps(response_json,indent=4)) ##((USE THIS FOR VERBOSE OUTPUT))
+
+        # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
 
         agent_call = response_json["call_myself"]
         while agent_call == "true":
@@ -63,10 +61,9 @@ while prompt != "exit":
             if tool == "python" and code != "None":
                 output = exec_code(code)
                 error = output["error"]
-                text = "\n There seems to be an error in the code. Throughly understand why it arised and mitigate it immediately by fixing the code. Do not make the same error again"
                 if error == True:
                     add_context(
-                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']} {text}"
+                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
                     )
                 else:
                     add_context(
@@ -114,7 +111,7 @@ while prompt != "exit":
             print()
 
             response_json = json.loads(response)
-            # print(Fore.BLUE,json.dumps(response_json,indent=4))## ((USE THIS FOR VERBOSE OUTPUT))
+            # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
             msg_to_user = response_json["message_to_the_user"]
             user_message(msg_to_user)
             agent_call = response_json["call_myself"]
