@@ -92,7 +92,7 @@ class InstallModule:
                 check=True,
             )
             return {
-                "output": f"{module} module installed successfully.\nOutput:\n{result.stdout}",
+                "output": f"{module} module installed successfully",
                 "error": False,
             }
         except subprocess.CalledProcessError as e:
