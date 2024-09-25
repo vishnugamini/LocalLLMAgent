@@ -12,33 +12,33 @@ The Local LLM Agent is capable of handling a wide variety of tasks, from coding 
 - **Develop Web Applications & Games:** The agent can design and build fully functional web applications and games, saving them directly to your system.
   - *Example:* Create a to-do list web app or a browser-based game.
 
-### 2. Code Debugging & Self-Correction
+### 2. `Code Debugging & Self-Correction`
 - **Automatic Code Debugging:** The agent can analyze, debug, and fix code by interacting with your local environment.
 - **Self-Correction:** The agent evaluates compiler outputs, rewrites faulty code, and re-executes it to achieve success.
   - *Example:* Automatically correct errors in a Python script and rerun it.
 
-### 3. File System Interaction
+### 3. `File System Interaction`
 - **Manage Files Seamlessly:** The agent can search, update, delete, and create files/folders on your system.
   - *Example:* Merge multiple PDF files into one or reorganize project directories.
 - **Local Environment Access:** It interacts with Python and CMD environments to run scripts or execute terminal commands.
   - *Example:* Run Python scripts or batch commands directly on your device.
 
-### 4. Version Control Integration
+### 4. `Version Control Integration`
 - **GitHub Integration:** Push code changes, create repositories, or manage version control seamlessly.
   - *Example:* Automatically push your latest project updates to GitHub.
 
-### 5. Data Analysis
+### 5. `Data Analysis`
 - **Analyze Data Locally:** The agent can analyze CSV or other datasets and generate charts or visualizations.
   - *Example:* Create a line graph comparing sales data over time or analyze machine learning models.
 
-### 6. Internet Search & Research
+### 6. `Internet Search & Research`
 - **Internet Search Functionality:** The agent can search the web for real-time information, news, or technical resources.
   - *Example:* Retrieve the latest trends in AI research or solutions to specific coding issues.
   
 - **Research & Summarization:** Conduct research on any topic and summarize the findings or draft blog posts.
   - *Example:* Automatically generate a blog post summarizing recent advancements in AI-driven automation.
 
-## Automating Menial Tasks
+## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
 
 - **PDF Merging:** Combine multiple PDF files into one with a simple command.
@@ -47,7 +47,7 @@ The Local LLM Agent is not just for high-level tasks; it excels at automating da
 
 ---
 
-## Comprehensive Prompts
+## `Comprehensive Prompts`
 You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
 
 
