@@ -1,7 +1,7 @@
 from openai import OpenAI
 from pydantic import BaseModel
 from typing import Optional
-from LLM_prompt import system_msg
+from prompts.Agent_prompt import system_msg
 import os
 import copy
 import time
@@ -47,11 +47,14 @@ def add_context(role, message):
 
 def llm():
     global msg
-    completion = client.beta.chat.completions.parse(
-        model="gpt-4o-mini", # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
-        messages=msg,
-        response_format=Message,
-    )
-    content = completion.choices[0].message.content
-    add_context("assistant", content)
-    return content
+    try:
+        completion = client.beta.chat.completions.parse(
+            model="gpt-4o-mini", # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
+            messages=msg,
+            response_format=Message,
+        )
+        content = completion.choices[0].message.content
+        add_context("assistant", content)
+        return content
+    except Exception as e:
+        print(f"Error Occured \n {e}")

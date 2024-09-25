@@ -4,6 +4,23 @@ from dotenv import load_dotenv
 import json
 import sys
 import subprocess
+from openai import OpenAI
+from pydantic import BaseModel
+from typing import Optional
+from prompts.Child_Agent_prompt import system_msg
+from execute_code import exec_code
+import threading
+import copy
+
+from terminal_ui.terminal_animation2 import (
+    sub_search_dots,
+    sub_thinking_dots,
+    sub_picture_message,
+    sub_search_message,
+    sub_compiler_message,
+    sub_user_message,
+    sub_install_module,
+)
 
 load_dotenv()
 
@@ -100,4 +117,117 @@ class InstallModule:
                 "output": f"Error occurred while installing {module}:\n{e.stderr}",
                 "error": True,
             }
+search = PerpSearch()
+picture = PicSearch()
+install = InstallModule()
+original_system_message = copy.deepcopy(system_msg)
+class Sub_Agent():
+    class Tool(BaseModel):
+        tool_name: str
+        required: bool
+        thinking_phase: str
+        file_location: str
+        code: Optional[str] = None
+        query: Optional[str] = None
 
+
+    class Message(BaseModel):
+        message_from_SeniorAgent: str
+        tasks_to_achieve: str
+        immediate_task_to_achieve: str
+        message_to_Senior_agent: str
+        tool: 'Sub_Agent.Tool'
+        call_myself: str
+
+    def __init__(self):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.client = OpenAI(api_key = self.key)
+        self.msg = system_msg
+
+
+    def add_context(self,role, message):
+        self.msg.append({"role": role, "content": message})
+    
+    def llm(self):
+        try:
+            completion = self.client.beta.chat.completions.parse(
+                model="gpt-4o-mini", # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
+                messages = self.msg,
+                response_format= self.Message,
+            )
+            content = completion.choices[0].message.content
+            self.add_context("assistant", content)
+            return content
+        except Exception as e:
+            print(f"Error Occured \n {e}")
+    
+    def initiate(self,query):
+        self.add_context("user", f"MESSAGE FROM SUPERIOR AGENT: {query}")
+        call_myself = True
+        msg_to_agent = ""
+        while call_myself != 'false':
+            spinner_thread = threading.Thread(target=sub_thinking_dots)
+            spinner_thread.start()
+
+            response = self.llm()
+
+            spinner_thread.do_run = False
+            spinner_thread.join()
+            print()
+
+            response_json = json.loads(response)
+            msg_to_agent = response_json["message_to_Senior_agent"]
+            sub_user_message(msg_to_agent)
+            call_myself = response_json["call_myself"]
+
+            tool = response_json["tool"]["tool_name"]
+            code = response_json["tool"]["code"]
+            query = response_json["tool"]["query"]
+
+            if tool == "python" and code != "None":
+                output = exec_code(code)
+                error = output["error"]
+                if error == True:
+                    self.add_context(
+                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
+                    )
+                else:
+                    self.add_context(
+                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
+                    )
+                sub_compiler_message(output)
+
+            elif tool == "install" and query != "None":
+                sub_install_module(query)
+                output = install.install(query)
+                sub_compiler_message(output)
+                self.add_context("user", f"OUTPUT FROM INSTALLATION {output}")
+
+            elif tool == "search" and query != "None":
+                spinner_thread = threading.Thread(target = sub_search_dots)
+                spinner_thread.start()
+
+                output = search.search(query)
+
+                spinner_thread.do_run = False
+                spinner_thread.join()
+                print()
+
+                sub_search_message()
+                self.add_context(
+                    "user",
+                    f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed): {output}",
+                )
+
+            elif tool == "picture" and query != "None":
+                sub_picture_message()
+                results = picture.picSearch(query)
+                self.add_context(
+                    "user",
+                    f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
+                )
+        return msg_to_agent
+
+
+
+        
