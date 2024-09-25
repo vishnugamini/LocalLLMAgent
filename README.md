@@ -1,9 +1,10 @@
 # Local LLM Agent (Work In Progress)
 
 ## What is LLM Agent?
-The name of the repository might sound peculiar to your ears but here is an explanation as to what it is:
-
 The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging OpenAI's API, this agent can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
+
+### Multi-Agentic System:
+This system employs a multi-agentic architecture where the main agent can spawn child agents to handle specific tasks. Child agents are executed in separate threads to ensure they don't contaminate the main agent's memory. After completing their designated task, the child agent returns a summary and then terminates itself, ensuring efficient memory and task management. The main agent can invoke child agents automatically whenever needed.
 
 ## Example Usage
 ![IMAGE](imgs/image.png)
@@ -55,7 +56,12 @@ The Local LLM Agent is not just for high-level tasks; it excels at automating da
 ## `Comprehensive Prompts`
 You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
 
-Stay tuned for more exciting features and enhancements in the near future!
+### Child Agents for Task Delegation:
+When a task requires specific execution, the main agent can autonomously create and delegate to a child agent. This child agent is designed to perform a single task, report the results, and terminate itself, thus maintaining the main agent's memory integrity.
+
+Here is an example showcasing explicit invocation of a child agent for demonstration purposes, though it can do this automatically when needed:
+![Child Agent Example](imgs/pic-9.png)
+
 
 ## Example Output: Tic Tac Toe with Smart AI Opponent
 
@@ -77,7 +83,6 @@ The agent does 3 things:
 
 The graph represents price trends, helping users make informed decisions.
 
-
 ## Example Output: Clock 
 
 ![Clock Example](imgs/pic-2.png)
@@ -88,12 +93,12 @@ The graph represents price trends, helping users make informed decisions.
 
 ## Example Output: Create data representations from CSV files
 
-The Agent can analyze the data and create Intuitive data representations
+The Agent can analyze the data and create intuitive data representations.
 
 ![Data Example](imgs/pic-4.png)
 
 ## Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day 
-The Agent provides investment advice by throughly examining the stock trends, plots graphs, runs ML models to predict the stock price for the coming days
+The Agent provides investment advice by thoroughly examining stock trends, plotting graphs, and running ML models to predict the stock price for the coming days.
 
 ![Data Example](imgs/pic-5.png)
 
