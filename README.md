@@ -1,6 +1,6 @@
 # Local LLM Agent (Work In Progress)
 
-## The name of the repo might sound peculiar to your ears but here is an explanation as to what it is
+## The name of the repository might sound peculiar to your ears but here is an explanation as to what it is
 
 The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging OpenAI's API, this agent can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
 
