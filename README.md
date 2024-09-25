@@ -55,15 +55,15 @@ SOME EXAMPLES ARE:
 
 ---
 
-## `Comprehensive Prompts`
-You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
-
-### Child Agents for Task Delegation:
+## `Child Agents for Task Delegation:`
 When a task requires specific execution, the main agent can autonomously create and delegate to a child agent. This child agent is designed to perform a single task, report the results, and terminate itself, thus maintaining the main agent's memory integrity.
 
 Here is an example showcasing explicit invocation of a child agent for demonstration purposes, though it can do this automatically when needed:
+
 ![Child Agent Example](imgs/pic-9.png)
 
+## `Comprehensive Prompts`
+You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
 
 ## Example Output: Tic Tac Toe with Smart AI Opponent
 
