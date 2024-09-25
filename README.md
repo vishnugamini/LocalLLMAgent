@@ -8,7 +8,7 @@ The Local LLM Agent is an AI-powered tool designed to automate complex and time-
 
 The Local LLM Agent is capable of handling a wide variety of tasks, from coding and file management to data analysis and internet searches. Below is an overview of its current functionalities:
 
-### 1. Application Development
+### 1. `Application Development`
 - **Develop Web Applications & Games:** The agent can design and build fully functional web applications and games, saving them directly to your system.
   - *Example:* Create a to-do list web app or a browser-based game.
 
