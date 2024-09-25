@@ -4,6 +4,10 @@
 
 The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging OpenAI's API, this agent can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
 
+## Example Usage
+![IMAGE](imgs/image.png)
+![IMAGE](imgs/pic-8.png)
+
 ## Current Features and Capabilities
 
 The Local LLM Agent is capable of handling a wide variety of tasks, from coding and file management to data analysis and internet searches. Below is an overview of its current functionalities:
@@ -49,11 +53,6 @@ The Local LLM Agent is not just for high-level tasks; it excels at automating da
 
 ## `Comprehensive Prompts`
 You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
-
-
-## Example Usage
-![IMAGE](imgs/image.png)
-![IMAGE](imgs/pic-8.png)
 
 Stay tuned for more exciting features and enhancements in the near future!
 
