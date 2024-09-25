@@ -1,11 +1,11 @@
-from terminal_animation import initializer
+from terminal_ui.terminal_animation import initializer
 import threading
 spinner_thread = threading.Thread(target=initializer)
 spinner_thread.start()
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
-from agents import PerpSearch, PicSearch, InstallModule
-from terminal_animation import (
+from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent
+from terminal_ui.terminal_animation import (
     search_dots,
     thinking_dots,
     picture_message,
@@ -15,12 +15,15 @@ from terminal_animation import (
     refresh_message,
     initial_message,
     install_module,
+    child_agent_message,
+    kill_child_agent
 )
 import json
 from colorama import Fore, Style, Back
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
+sub_agent = Sub_Agent()
 
 prompt = ""
 spinner_thread.do_run = False
@@ -101,6 +104,12 @@ while prompt != "exit":
                     f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
                 )
 
+            elif tool == "agent" and query != "None":
+                child_agent_message()
+                response = sub_agent.initiate(query)
+                add_context("user", f"SUMMARY FROM SUB AGENT: {response}")
+                kill_child_agent()
+                
             spinner_thread = threading.Thread(target=thinking_dots)
             spinner_thread.start()
 

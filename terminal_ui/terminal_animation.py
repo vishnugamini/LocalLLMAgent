@@ -146,3 +146,29 @@ def install_module(module_name):
     )
     console.print(panel, justify="center")
     time.sleep(2)
+
+def child_agent_message():
+    panel = Panel(
+        Text(
+            "Creating a child agent to assign task 🧑‍💻", 
+            style="bold cyan"
+        ),
+        style="bold purple",
+        title="Creating Child Agent",
+        subtitle_align="center",
+    )
+    console.print(panel, justify="center")
+    time.sleep(2)
+
+def kill_child_agent():
+    panel = Panel(
+        Text(
+            "Child Agent Terminated ⚰️. Passing control back to Superior Agent 🔄", 
+            style="bold red"
+        ),
+        style="bold purple",
+        title="Child Agent",
+        subtitle_align="left",
+    )
+    console.print(panel, justify="left")
+    time.sleep(2)
