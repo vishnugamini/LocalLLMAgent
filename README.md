@@ -47,6 +47,8 @@ The Local LLM Agent is capable of handling a wide variety of tasks, from coding 
 ## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
 
+SOME EXAMPLES ARE:
+
 - **PDF Merging:** Combine multiple PDF files into one with a simple command.
 - **URL Shortening:** Shorten long URLs for sharing.
 - **File Sorting:** Automatically move, rename, or delete files based on predefined conditions (e.g., file type, date created).
