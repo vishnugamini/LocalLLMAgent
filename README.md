@@ -65,13 +65,13 @@ Here is an example showcasing explicit invocation of a child agent for demonstra
 ## `Comprehensive Prompts`
 You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
 
-## Example Output: Tic Tac Toe with Smart AI Opponent
+## `Example Output: Tic Tac Toe with Smart AI Opponent`
 
 With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
 
 ![Local LLM Agent Image](imgs/pic-1.png)
 
-## Example: Retrieve and Plot Stock/Crypto Prices
+## `Example: Retrieve and Plot Stock/Crypto Prices`
 
 In this example, the Agent browses the web to find a suitable module for retrieving stock or crypto prices over the past few days and plots a graph.
 
@@ -80,26 +80,26 @@ The agent does 3 things:
 2. Download and Use the module to fetch historical price information.
 3. Plot the retrieved data on a graph for visual analysis.
 
-### Graph:
+### `Graph:`
 ![Data Example](imgs/pic-7.png)
 
 The graph represents price trends, helping users make informed decisions.
 
-## Example Output: Clock 
+## `Example Output: Clock`
 
 ![Clock Example](imgs/pic-2.png)
 
-## Example Output: Calculator
+## `Example Output: Calculator`
 
 ![Calculator Example](imgs/pic-3.png)
 
-## Example Output: Create data representations from CSV files
+## `Example Output: Create data representations from CSV files`
 
 The Agent can analyze the data and create intuitive data representations.
 
 ![Data Example](imgs/pic-4.png)
 
-## Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day 
+## `Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day`
 The Agent provides investment advice by thoroughly examining stock trends, plotting graphs, and running ML models to predict the stock price for the coming days.
 
 ![Data Example](imgs/pic-5.png)
