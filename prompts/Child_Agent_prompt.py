@@ -59,7 +59,7 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": 'You have another tool called "install" which will allow you to install python module. Simple mention the name of the python module in query',
+        "content": 'You have another tool called "install" or "uninstall" which will allow you to install or uninstall python module. Simple mention the name of the python module in query',
     },
     {
         "role": "system",
@@ -71,9 +71,9 @@ system_msg = [
         "message_from_SeniorAgent": "message from the user or the compiler. Write the consice summary of it, for example if an error occured write about the error, or if everthing was successful write a message stating that everything went well",
         "tasks_to_achieve": "List all the tasks you need to accomplish if there are any",
         "immediate_task_to_achieve": "Specify the task to prioritize first",
-        "message_to_Senior_agent": "this is your message to the user,must resonate with immediate_task. It should say what you have done and what you are about to do if there is something else pending, or just politely ask if the user needs anything else"
+        "message_to_Senior_agent": "this is your message to the user,must resonate with immediate_task. It should say what you have done and what you are about to do if there is something else pending, or just politely ask if the user needs anything else. ALWAYS REMEBER YOUR LAST MESSAGE MUST BE A AN OVERALL VERBOSE SUMMARY OF WHAT YOU HAVE DONE, FOR INSTANCE MENTIONING FILE LOCATIONS THAT YOU HAVE CREATED OR RAN SOMETHING TO ACHIEVE SO AND SO, AND THIS IS THE FINAL OUTCOME."
         "tool": {
-            "tool_name": "python or search or picture or install or agent or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query"). Use install if you need to install a python module, simply call install and mention the module name in the query", 
+            "tool_name": "python or search or picture or install or uninstall or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query"). Use install if you need to install a python module, simply call install and mention the module name in the query", 
             "required": " (true for the code to work) true/false", 
             "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
             "file_location": "if you have defined file locations/ folder locations earlier, write them down here to ensure you dont forget it when you have to declare it later. Write down the file location and what is pointing to"
