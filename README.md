@@ -127,7 +127,17 @@ To start using the Local LLM Agent, follow these steps:
    python interact_AGENT.py
 6. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
 
+## Example Workflow
 
+Here, The agent is tasked to create a ppt about AI with a beautiful template. 
 
+1. `Starts of with a web search about templates for ppt`
+2. `Tries to create a ppt using a python framwork but realizes that the framework does not exist`
+3. `Uses the install tool to install the python-pptx framework`
+4. `proceeds to create the ppt`
+### `OUTPUT: `
+![Data Example](imgs/pic-10.png)
+![Data Example](imgs/pic-11.png)
+![Data Example](imgs/pic-12.png)
 
 

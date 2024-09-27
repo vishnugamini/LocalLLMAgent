@@ -15,15 +15,16 @@ from terminal_ui.terminal_animation import (
     refresh_message,
     initial_message,
     install_module,
+    uninstall_module,
     child_agent_message,
     kill_child_agent
 )
 import json
 from colorama import Fore, Style, Back
+
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
-sub_agent = Sub_Agent()
 
 prompt = ""
 spinner_thread.do_run = False
@@ -47,13 +48,12 @@ while prompt != "exit":
 
         spinner_thread.do_run = False
         spinner_thread.join()
-        print()
 
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
 
-        # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
+        # print(Fore.BLUE,json.dumps(response_json,indent=4))  ((use this for VERBOSE OUTPUT ONLY))
 
         agent_call = response_json["call_myself"]
         while agent_call == "true":
@@ -80,6 +80,12 @@ while prompt != "exit":
                 compiler_message(output)
                 add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
+            elif tool == "uninstall" and query != "None":
+                uninstall_module(query)
+                output = install.uninstall(query)
+                compiler_message(output)
+                add_context("user", f"OUTPUT FROM INSTALLATION {output}")
+
             elif tool == "search" and query != "None":
                 spinner_thread = threading.Thread(target=search_dots)
                 spinner_thread.start()
@@ -88,8 +94,6 @@ while prompt != "exit":
 
                 spinner_thread.do_run = False
                 spinner_thread.join()
-                print()
-
                 search_message()
                 add_context(
                     "user",
@@ -105,9 +109,11 @@ while prompt != "exit":
                 )
 
             elif tool == "agent" and query != "None":
+                print(query)
                 child_agent_message()
+                sub_agent = Sub_Agent()
                 response = sub_agent.initiate(query)
-                add_context("user", f"SUMMARY FROM SUB AGENT: {response}")
+                add_context("user", f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task is exists")
                 kill_child_agent()
                 
             spinner_thread = threading.Thread(target=thinking_dots)
@@ -120,7 +126,7 @@ while prompt != "exit":
             print()
 
             response_json = json.loads(response)
-            # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((USE THIS FOR VERBOSE OUTPUT))
+            # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((use this for VERBOSE OUTPUT ONLY))
             msg_to_user = response_json["message_to_the_user"]
             user_message(msg_to_user)
             agent_call = response_json["call_myself"]

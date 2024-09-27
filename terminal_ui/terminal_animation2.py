@@ -106,3 +106,16 @@ def sub_install_module(module_name):
     console.print(panel, justify="left")
     time.sleep(2)
 
+def sub_uninstall_module(module_name):
+    panel = Panel(
+        Text(
+            f"Child Agent: Installing module: {module_name}",
+            style="bold green",
+        ),
+        style="bold yellow",
+        title="Child Agent Install",
+        subtitle_align="left",
+    )
+    console.print(panel, justify="left")
+    time.sleep(2)
+

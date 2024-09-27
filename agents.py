@@ -20,6 +20,7 @@ from terminal_ui.terminal_animation2 import (
     sub_compiler_message,
     sub_user_message,
     sub_install_module,
+    sub_uninstall_module
 )
 
 load_dotenv()
@@ -117,10 +118,30 @@ class InstallModule:
                 "output": f"Error occurred while installing {module}:\n{e.stderr}",
                 "error": True,
             }
+    def uninstall(self, module):
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "uninstall", module, '-y'],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                check=True,
+            )
+            return {
+                "output": f"{module} module uninstalled successfully",
+                "error": False,
+            }
+        except subprocess.CalledProcessError as e:
+            return {
+                "output": f"Error occurred while uninstalling {module}:\n{e.stderr}",
+                "error": True,
+            }
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
 original_system_message = copy.deepcopy(system_msg)
+
+
 class Sub_Agent():
     class Tool(BaseModel):
         tool_name: str
@@ -143,7 +164,6 @@ class Sub_Agent():
         self.key = os.getenv("OPENAPI_KEY")
         self.client = OpenAI(api_key = self.key)
         self.msg = system_msg
-
 
     def add_context(self,role, message):
         self.msg.append({"role": role, "content": message})
@@ -203,6 +223,12 @@ class Sub_Agent():
                 sub_compiler_message(output)
                 self.add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
+            elif tool == "uninstall" and query != "None":
+                sub_uninstall_module(query)
+                output = install.install(query)
+                sub_compiler_message(output)
+                self.add_context("user", f"OUTPUT FROM INSTALLATION {output}")
+
             elif tool == "search" and query != "None":
                 spinner_thread = threading.Thread(target = sub_search_dots)
                 spinner_thread.start()
@@ -226,8 +252,12 @@ class Sub_Agent():
                     "user",
                     f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
                 )
+        # print(self.msg)
+        # print(original_system_message)
+        self.msg = copy.deepcopy(system_msg)
+        # print(self.msg)
         return msg_to_agent
 
 
 
-        
+
