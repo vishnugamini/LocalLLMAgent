@@ -2,6 +2,7 @@ import sys
 import time
 import threading
 from rich.console import Console
+from rich.markdown import Markdown
 from rich.text import Text
 from rich.panel import Panel
 from rich.spinner import Spinner
@@ -92,14 +93,18 @@ def compiler_message(output):
 
 
 def user_message(msg_to_user):
+    markdown_content = Markdown(msg_to_user)
     panel = Panel(
-        Text(msg_to_user, style="bold yellow"),
-        style="bold blue",
-        title="User Message",
-        subtitle_align="center",
+        markdown_content,
+        border_style="cyan bold",  # 
+        title="User Message",  
+        title_align="left",       
+        subtitle="Notification",  
+        subtitle_align="right",   
+        padding=(1, 2),           
+        width=120,                 
     )
     console.print(panel, justify="center")
-    time.sleep(1)
 
 
 def refresh_message(response):
@@ -145,7 +150,20 @@ def install_module(module_name):
         subtitle_align="center",
     )
     console.print(panel, justify="center")
-    time.sleep(2)
+    time.sleep(1)
+
+def uninstall_module(module_name):
+    panel = Panel(
+        Text(
+            f"Initializing Install Agent to uninstall module: {module_name}",
+            style="bold magenta",
+        ),
+        style="bold cyan",
+        title="Install Agent",
+        subtitle_align="center",
+    )
+    console.print(panel, justify="center")
+    time.sleep(1)
 
 def child_agent_message():
     panel = Panel(
@@ -155,9 +173,9 @@ def child_agent_message():
         ),
         style="bold purple",
         title="Creating Child Agent",
-        subtitle_align="center",
+        subtitle_align="left",
     )
-    console.print(panel, justify="center")
+    console.print(panel, justify="left")
     time.sleep(2)
 
 def kill_child_agent():
