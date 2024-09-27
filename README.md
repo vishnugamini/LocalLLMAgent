@@ -49,10 +49,10 @@ The Local LLM Agent is not just for high-level tasks; it excels at automating da
 
 SOME EXAMPLES ARE:
 
-- **PPT Preparation:** Prepare a PPT about a topic within seconds with just a simple prompt
-- **PDF Merging:** Combine multiple PDF files into one with a simple command.
-- **URL Shortening:** Shorten long URLs for sharing.
-- **File Sorting:** Automatically move, rename, or delete files based on predefined conditions (e.g., file type, date created).
+- `PPT Preparation:`Prepare a PPT about a topic within seconds with just a simple prompt
+- `PDF Merging:`Combine multiple PDF files into one with a simple command.
+- `URL Shortening:`Shorten long URLs for sharing.
+- `File Sorting:`Automatically move, rename, or delete files based on predefined conditions (e.g., file type, date created).
 
 ---
 
