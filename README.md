@@ -10,7 +10,7 @@ The Local LLM Agent is an AI-powered tool designed to automate complex and time-
 This system employs a multi-agentic architecture where the main agent can spawn child agents to handle specific tasks. Child agents are executed in separate threads to ensure they don't contaminate the main agent's memory. After completing their designated task, the child agent returns a summary and then terminates itself, ensuring efficient memory and task management. The main agent can invoke child agents automatically whenever needed.
 
 - ### `Child Agents for Task Delegation:`
-      When a task requires specific execution, the main agent can autonomously create and delegate to a child agent. This child agent is designed to perform a single task, report the results, and terminate itself, thus maintaining the main agent's memory integrity.
+  When a task requires specific execution, the main agent can autonomously create and delegate to a child agent. This child agent is designed to perform a single task, report the results, and terminate itself, thus maintaining the main agent's memory integrity.
 
    ``Here is an example showcasing explicit invocation of a child agent for demonstration purposes, though it can do this automatically when needed:``
 
