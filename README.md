@@ -27,7 +27,7 @@ The Local LLM Agent is capable of handling a wide variety of tasks, from coding 
   **Prompt:** `Create a browser based clock using HTML, CSS and JS. It must look like an actual clock, round in shape with moving hands. Also display the time in digits beside the clock`
       ![Clock Example](imgs/pic-2.png)
       
-   **Prompt:** `Create a web based calculator using HTML, CSS and JS with history that records all the previous calculation and give it a cyborg theme.`
+   **Prompt:** `Create a web based calculator using HTML, CSS and JS with history that records all the previous calculations. Beautify the application by giving it a cyborg theme.`
       ![Calculator Example](imgs/pic-3.png)
    
 ### 2. `Code Debugging & Self-Correction`
