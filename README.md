@@ -16,7 +16,7 @@ This system employs a multi-agentic architecture where the main agent can spawn 
 
    ![Child Agent Example](imgs/pic-9.png)
 
-## `Current Features and Capabilities`
+# `Current Features and Capabilities`
 
 The Local LLM Agent is capable of handling a wide variety of tasks, from coding and file management to data analysis and internet searches. Below is an overview of its current functionalities:
 
@@ -66,6 +66,10 @@ The Local LLM Agent is capable of handling a wide variety of tasks, from coding 
 
 - **Research & Summarization:** Conduct research on any topic and summarize the findings or draft blog posts.
   - *Example:* Generate a blog post summarizing recent advancements in AI-driven automation.
+  
+### 7. `Download pictures`
+- **Search and download pictures:** The agent has a picture tool using which it can download pictures.
+
 ## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
 
