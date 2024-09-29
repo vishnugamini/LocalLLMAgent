@@ -1,7 +1,7 @@
 system_msg = [
     {
         "role": "system",
-        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. USE THE CHILD AGENT AS MUSH AS YOU NEED TO. USE IT MORE OFTEN",
+        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. ",
     },
     {
         "role": "system",
