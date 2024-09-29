@@ -1,28 +1,30 @@
-// static/js/app.js
+
 
 $(document).ready(function(){
     var socket = io();
 
-    // Handle Send Button Click
+    
     $('#send-btn').click(function(){
         sendPrompt();
     });
 
-    // Handle Enter Key Press in Input
+    
     $('#prompt').keypress(function(e){
         if(e.which == 13){
             sendPrompt();
-            return false; // Prevent default form submission
+            return false; 
         }
     });
 
-    // On Connection
+    
     socket.on('connect', function(){
         console.log('Connected to server');
     });
 
-    // Handle Agent Responses
+-    
     socket.on('agent_response', function(data){
+        removeLoadingSpinner(); 
+
         if(data.type === "loading_message"){
             displayLoadingMessage(data.content);
         }
@@ -35,11 +37,13 @@ $(document).ready(function(){
         scrollChatToBottom();
     });
 
+
     /**
      * Displays a loading message with a spinner.
      * @param {string} message - The loading message content.
      */
     function displayLoadingMessage(message){
+        removeLoadingMessage(); 
         let html = `
             <div class="message loading-message">
                 <span>${message}</span>
@@ -50,6 +54,7 @@ $(document).ready(function(){
         `;
         $('#chat-window').append(html);
     }
+    
 
     /**
      * Displays an error message.
@@ -77,28 +82,23 @@ $(document).ready(function(){
                 messageTypeClass = 'user-message';
                 break;
             case "compiler_message":
-                messageTypeClass = 'agent-message';
-                break;
             case "search_message":
-                messageTypeClass = 'agent-message';
-                break;
             case "picture_message":
-                messageTypeClass = 'agent-message';
-                break;
             case "child_agent_message":
-                messageTypeClass = 'agent-message';
-                break;
             case "refresh":
                 messageTypeClass = 'agent-message';
-                message = `<i class="bi bi-arrow-clockwise"></i> ${message}`;
                 break;
             default:
                 messageTypeClass = 'agent-message';
         }
 
+        
+        let isReadme = type === 'readme_message';  
+        let htmlMessage = isReadme ? marked.parse(message) : `<span>${message}</span>`;
+
         let html = `
             <div class="message ${messageTypeClass}">
-                <span>${message}</span>
+                ${htmlMessage}
             </div>
         `;
         $('#chat-window').append(html);
@@ -113,7 +113,7 @@ $(document).ready(function(){
             return;
         }
 
-        // Display user message
+        
         let html = `
             <div class="message user-message">
                 <span>${prompt}</span>
@@ -123,7 +123,7 @@ $(document).ready(function(){
         scrollChatToBottom();
         $('#prompt').val('');
         
-        // Emit prompt to server
+        
         socket.emit('user_prompt', {'prompt': prompt});
     }
 
@@ -133,4 +133,18 @@ $(document).ready(function(){
     function scrollChatToBottom(){
         $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
     }
+    /**
+     * Removes the loading message.
+     */
+    function removeLoadingMessage(){
+        $('.loading-message').remove();
+    }
+    /**
+     * Removes the spinner from the loading message.
+     */
+    function removeLoadingSpinner(){
+        $('.loading-message .spinner-border').remove(); 
+    }
+
+
 });

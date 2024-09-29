@@ -1,15 +1,14 @@
-/* static/css/styles.css */
 
-/* General Styles */
 body {
     margin: 0;
     padding: 0;
     font-family: 'Roboto', sans-serif;
-    overflow: hidden; /* Prevent scrollbars from appearing */
-    background-color: #121212; /* Dark background */
+    overflow: hidden;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
 }
 
-/* Particles.js Container */
+
 #particles-js {
     position: fixed;
     width: 100%;
@@ -19,47 +18,49 @@ body {
     left: 0;
 }
 
-/* Chat Box */
+
 .chat-box {
-    position: fixed; /* Fixed to occupy the entire viewport */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* Full viewport width */
-    height: 100vh; /* Full viewport height */
-    background: rgba(18, 18, 18, 0.8); /* Semi-transparent dark background */
+    width: 100vw;
+    height: 100vh;
+    background: rgba(28, 28, 28, 0.9);
     padding: 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Center vertically */
-    align-items: center; /* Center horizontally */
+    justify-content: center;
+    align-items: center;
     box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 }
 
-/* Header */
+
 .chat-box h2 {
     font-family: 'Orbitron', sans-serif;
-    color: #00ffe6;
-    text-shadow: 0 0 10px rgba(0,255,230,0.7);
+    color: #ff6f61;
+    text-shadow: 0 0 10px rgba(255, 111, 97, 0.7);
     margin-bottom: 20px;
     text-align: center;
 }
 
-/* Chat Window */
+
 .chat-window {
     flex: 1;
     width: 100%;
     max-width: 1200px;
-    height: 80vh; /* Occupies most of the screen */
+    height: 80vh;
     overflow-y: auto;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(45, 45, 45, 0.85);
     border-radius: 15px;
     margin-bottom: 20px;
     position: relative;
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-/* Messages */
+
 .message {
     padding: 15px 20px;
     border-radius: 25px;
@@ -72,9 +73,9 @@ body {
     word-wrap: break-word;
 }
 
-/* User Messages */
+
 .user-message {
-    background: #1e88e5;
+    background: #4caf50;
     color: #ffffff;
     align-self: flex-end;
     margin-left: auto;
@@ -82,10 +83,9 @@ body {
     border-bottom-right-radius: 0;
 }
 
-/* Agent Messages */
-/* Agent Messages */
+
 .agent-message {
-    background: #424242;
+    background: #2196f3;
     color: #ffffff;
     align-self: flex-start;
     margin-right: auto;
@@ -94,10 +94,9 @@ body {
 }
 
 
-/* Loading Messages */
 .loading-message {
-    background: #2e7d32;
-    color: #ffffff;
+    background: #ffeb3b;
+    color: #333333;
     align-self: flex-start;
     margin-right: auto;
     display: flex;
@@ -106,9 +105,9 @@ body {
     border-bottom-left-radius: 0;
 }
 
-/* Error Messages */
+
 .error-message {
-    background: #d32f2f;
+    background: #f44336;
     color: #ffffff;
     align-self: flex-start;
     margin-right: auto;
@@ -118,35 +117,35 @@ body {
     border-bottom-left-radius: 0;
 }
 
-/* Input Group */
+
 .futuristic-input-group {
     display: flex;
     align-items: center;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 70, 70, 0.7);
     border-radius: 50px;
     padding: 10px 20px;
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     width: 100%;
     max-width: 1200px;
 }
 
-/* Input Field */
+
 .futuristic-input-group input {
     background: transparent;
     border: none;
     outline: none;
-    color: #ffffff;
+    color: #e0e0e0;
     flex: 1;
     font-size: 1.1rem;
 }
 
-/* Send Button */
+
 .futuristic-input-group button {
-    background: #00ffe6;
+    background: #ff6f61;
     border: none;
-    color: #000000;
+    color: #ffffff;
     padding: 10px 25px;
     border-radius: 50px;
     cursor: pointer;
@@ -155,23 +154,23 @@ body {
 }
 
 .futuristic-input-group button:hover {
-    background: #00b3c1;
+    background: #e65b50;
     transform: scale(1.05);
 }
 
-/* Spinner Alignment */
+
 .loading-message .spinner-border,
 .error-message .spinner-border {
     margin-left: 10px;
 }
 
-/* Animations */
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Scrollbar Styling */
+
 .chat-window::-webkit-scrollbar {
     width: 10px;
 }
@@ -182,15 +181,15 @@ body {
 }
 
 .chat-window::-webkit-scrollbar-thumb {
-    background: #00ffe6;
+    background: #ff6f61;
     border-radius: 10px;
 }
 
 .chat-window::-webkit-scrollbar-thumb:hover {
-    background: #00b3c1;
+    background: #e65b50;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .chat-box {
         padding: 20px;
@@ -209,51 +208,50 @@ body {
     }
 }
 
-/* Dark Mode Variables */
+
 :root {
-    --primary-color: #00ffe6;
-    --agent-color: #424242;
-    --user-color: #1e88e5;
-    --loading-color: #2e7d32;
-    --error-color: #d32f2f;
+    --primary-color: #ff6f61;
+    --agent-color: #2196f3;
+    --user-color: #4caf50;
+    --loading-color: #ffeb3b;
+    --error-color: #f44336;
 }
 
-/* Dark Mode Styles */
+
 body.dark-mode {
-    background-color: #121212;
-    color: #ffffff;
+    background-color: #1c1c1c;
+    color: #e0e0e0;
 }
 
-/* Update Chat Box for Dark Mode */
+
 body.dark-mode .chat-box {
-    background: rgba(18, 18, 18, 0.9);
+    background: rgba(28, 28, 28, 0.95);
     border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Update Input Group for Dark Mode */
+
 body.dark-mode .futuristic-input-group {
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(70, 70, 70, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Update Messages for Dark Mode */
+
 body.dark-mode .user-message {
-    background: #1e88e5;
+    background: var(--user-color);
     color: #ffffff;
 }
 
 body.dark-mode .agent-message {
-    background: #424242;
+    background: var(--agent-color);
     color: #ffffff;
 }
 
 body.dark-mode .loading-message {
-    background: #2e7d32;
-    color: #ffffff;
+    background: var(--loading-color);
+    color: #333333;
 }
 
 body.dark-mode .error-message {
-    background: #d32f2f;
+    background: var(--error-color);
     color: #ffffff;
 }
-
