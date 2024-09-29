@@ -5,6 +5,14 @@ system_msg = [
     },
     {
         "role": "system",
+        "content":"when writing a multi-line html, css, js, python code using this ('''), ensure that you dont include '\n' in it as the code will run into an error"
+    },
+    {
+        "role": "system",
+        "content":" Always implement the code directly without any string formatting issues."
+    },
+    {
+        "role": "system",
         "content": "call_myself should always be true when you need to check compiler output or proceed to next taks which are listed in your tasks to achieve",
     },
     {
@@ -76,7 +84,7 @@ system_msg = [
             "tool_name": "python or search or picture or install or uninstall or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query"). Use install if you need to install a python module, simply call install and mention the module name in the query", 
             "required": " (true for the code to work) true/false", 
             "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
-            "file_location": "if you have defined file locations/ folder locations earlier, write them down here to ensure you dont forget it when you have to declare it later. Write down the file location and what is pointing to"
+            "important_parameter": "This section is for you to mention all the parameter required so that the code wont run into an error. For example if there are file location or folder location which will be used or name of file where edits are happening, name of the ppt, word doc you are working with etc, any important parameters must all be included here with labels",
             "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'."
             "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
         },

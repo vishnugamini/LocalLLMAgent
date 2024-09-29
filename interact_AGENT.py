@@ -30,48 +30,43 @@ prompt = ""
 spinner_thread.do_run = False
 spinner_thread.join()
 initial_message()
-while prompt != "exit":
+agent_call = "false"  
 
+while prompt != "exit":
     prompt = input(
         Style.BRIGHT + Fore.WHITE + Back.BLACK + "Prompt: " + Style.RESET_ALL
     )
+    
     if prompt.lower() == "refresh":
         response = refresh()
         refresh_message(response)
 
     if prompt not in ["refresh", "exit"]:
         add_context("user", prompt)
+
+    while prompt not in ["refresh", "exit"]:
         spinner_thread = threading.Thread(target=thinking_dots)
         spinner_thread.start()
-
+        
         response = llm()
-
+        
         spinner_thread.do_run = False
         spinner_thread.join()
-
+        
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
 
-        # print(Fore.BLUE,json.dumps(response_json,indent=4))  ((use this for VERBOSE OUTPUT ONLY))
+        agent_call = response_json.get("call_myself")
 
-        agent_call = response_json["call_myself"]
-        while agent_call == "true":
+        if agent_call == "true":
             tool = response_json["tool"]["tool_name"]
             code = response_json["tool"]["code"]
             query = response_json["tool"]["query"]
 
             if tool == "python" and code != "None":
                 output = exec_code(code)
-                error = output["error"]
-                if error == True:
-                    add_context(
-                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
-                    )
-                else:
-                    add_context(
-                        "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
-                    )
+                add_context("user", f"OUTPUT FROM PYTHON COMPILER {output['output']}")
                 compiler_message(output)
 
             elif tool == "install" and query != "None":
@@ -89,9 +84,7 @@ while prompt != "exit":
             elif tool == "search" and query != "None":
                 spinner_thread = threading.Thread(target=search_dots)
                 spinner_thread.start()
-
                 output = search.search(query)
-
                 spinner_thread.do_run = False
                 spinner_thread.join()
                 search_message()
@@ -113,20 +106,8 @@ while prompt != "exit":
                 child_agent_message()
                 sub_agent = Sub_Agent()
                 response = sub_agent.initiate(query)
-                add_context("user", f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task is exists")
+                add_context("user", f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task if it exists")
                 kill_child_agent()
-                
-            spinner_thread = threading.Thread(target=thinking_dots)
-            spinner_thread.start()
 
-            response = llm()
-
-            spinner_thread.do_run = False
-            spinner_thread.join()
-            print()
-
-            response_json = json.loads(response)
-            # print(Fore.BLUE,json.dumps(response_json,indent=4)) ((use this for VERBOSE OUTPUT ONLY))
-            msg_to_user = response_json["message_to_the_user"]
-            user_message(msg_to_user)
-            agent_call = response_json["call_myself"]
+        if agent_call != "true":
+            break

@@ -147,7 +147,7 @@ class Sub_Agent():
         tool_name: str
         required: bool
         thinking_phase: str
-        file_location: str
+        important_parameter: str
         code: Optional[str] = None
         query: Optional[str] = None
 
@@ -193,7 +193,6 @@ class Sub_Agent():
 
             spinner_thread.do_run = False
             spinner_thread.join()
-            print()
 
             response_json = json.loads(response)
             msg_to_agent = response_json["message_to_Senior_agent"]
@@ -225,7 +224,7 @@ class Sub_Agent():
 
             elif tool == "uninstall" and query != "None":
                 sub_uninstall_module(query)
-                output = install.install(query)
+                output = install.uninstall(query)
                 sub_compiler_message(output)
                 self.add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
@@ -237,7 +236,6 @@ class Sub_Agent():
 
                 spinner_thread.do_run = False
                 spinner_thread.join()
-                print()
 
                 sub_search_message()
                 self.add_context(
@@ -252,12 +250,43 @@ class Sub_Agent():
                     "user",
                     f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
                 )
-        # print(self.msg)
-        # print(original_system_message)
-        self.msg = copy.deepcopy(system_msg)
-        # print(self.msg)
+
+        self.msg = original_system_message
         return msg_to_agent
 
 
+
+from pydantic import BaseModel
+class Code_Agent():
+    class Code(BaseModel):
+        Thinking_Stage: str
+        code: str
+        
+
+    def __init__(self, query):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.query = query
+
+    def initiate(self):
+        client = OpenAI(api_key = self.key)
+        messages = [
+            {"role": "system", "content":"You are a specialist in writing HTML, CSS, JAVASCRIPT, PYTHON, or ANY LANGUAGE CODE. while wrtiting code, do not use escape quotes or add unnecessary backslashes as the code you are writing is being passed to another LLM, Make sure to only provide the content specified in the query"},
+            {"role": "system", "content": "you will provide output in json format.Here is an example of the required JSON structure {'Thinking_stage': 'use chain of thought process to think through the query and write down what you wish to implement. do not make errors', 'code': 'write down just the code here ad nothing else'}"}
+        ]
+        messages.append({"role": "user","content": self.query})
+        completion = client.beta.chat.completions.parse(
+            model="gpt-4o-mini",
+            messages = messages,
+            response_format= self.Code
+        )
+        content = completion.choices[0].message.content
+        messages.append({"role": "assistant","content": content})
+        content = json.loads(content)
+        print(content['code'])
+    
+class Code_Error_Fixer():
+
+    def __init__(self, query):
+        self.query = query
 
 
