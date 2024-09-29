@@ -1,14 +1,12 @@
-
-
 $(document).ready(function(){
     var socket = io();
 
-    
+    // Send button click event
     $('#send-btn').click(function(){
         sendPrompt();
     });
 
-    
+    // Press Enter to send the prompt
     $('#prompt').keypress(function(e){
         if(e.which == 13){
             sendPrompt();
@@ -16,12 +14,12 @@ $(document).ready(function(){
         }
     });
 
-    
+    // Socket connection success
     socket.on('connect', function(){
         console.log('Connected to server');
     });
 
--    
+    // Handling agent response
     socket.on('agent_response', function(data){
         removeLoadingSpinner(); 
 
@@ -32,16 +30,13 @@ $(document).ready(function(){
             displayErrorMessage(data.content);
         }
         else {
-            displayAgentMessage(data.content, data.type);
+            // Process all messages through the marked parser
+            displayAgentMessage(data.content);
         }
         scrollChatToBottom();
     });
 
-
-    /**
-     * Displays a loading message with a spinner.
-     * @param {string} message - The loading message content.
-     */
+    // Function to display a loading message
     function displayLoadingMessage(message){
         removeLoadingMessage(); 
         let html = `
@@ -55,11 +50,7 @@ $(document).ready(function(){
         $('#chat-window').append(html);
     }
     
-
-    /**
-     * Displays an error message.
-     * @param {string} message - The error message content.
-     */
+    // Function to display error message
     function displayErrorMessage(message){
         let html = `
             <div class="message error-message">
@@ -69,51 +60,24 @@ $(document).ready(function(){
         $('#chat-window').append(html);
     }
 
-    /**
-     * Displays agent messages.
-     * @param {string} message - The agent message content.
-     * @param {string} type - The type of agent message.
-     */
-    function displayAgentMessage(message, type){
-        let messageTypeClass = '';
-
-        switch(type){
-            case "user_message":
-                messageTypeClass = 'user-message';
-                break;
-            case "compiler_message":
-            case "search_message":
-            case "picture_message":
-            case "child_agent_message":
-            case "refresh":
-                messageTypeClass = 'agent-message';
-                break;
-            default:
-                messageTypeClass = 'agent-message';
-        }
-
-        
-        let isReadme = type === 'readme_message';  
-        let htmlMessage = isReadme ? marked.parse(message) : `<span>${message}</span>`;
-
+    // Function to display agent message (all messages processed as Markdown)
+    function displayAgentMessage(message){
+        // Parse the message using marked to convert it to HTML
         let html = `
-            <div class="message ${messageTypeClass}">
-                ${htmlMessage}
+            <div class="message agent-message">
+                ${marked.parse(message)}
             </div>
         `;
         $('#chat-window').append(html);
     }
 
-    /**
-     * Function to Send Prompt
-     */
+    // Send prompt to the server
     function sendPrompt(){
         let prompt = $('#prompt').val().trim();
         if(prompt === ""){
             return;
         }
 
-        
         let html = `
             <div class="message user-message">
                 <span>${prompt}</span>
@@ -123,28 +87,22 @@ $(document).ready(function(){
         scrollChatToBottom();
         $('#prompt').val('');
         
-        
+        // Send the prompt to the server
         socket.emit('user_prompt', {'prompt': prompt});
     }
 
-    /**
-     * Function to Scroll Chat to Bottom
-     */
+    // Scroll chat to bottom
     function scrollChatToBottom(){
         $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
     }
-    /**
-     * Removes the loading message.
-     */
+
+    // Remove loading message
     function removeLoadingMessage(){
         $('.loading-message').remove();
     }
-    /**
-     * Removes the spinner from the loading message.
-     */
+
+    // Remove spinner from loading message
     function removeLoadingSpinner(){
         $('.loading-message .spinner-border').remove(); 
     }
-
-
 });
