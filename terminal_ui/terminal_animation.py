@@ -61,7 +61,7 @@ def picture_message():
 
 def search_message():
     panel = Panel(
-        Text("Search Complete. Sending results to Execution Agent", style="bold black"),
+        Text("Search Complete. Sending results to Execution Agent", style="bold green"),
         style="bold green",
         title="Search Status",
         subtitle_align="center",
@@ -105,6 +105,7 @@ def user_message(msg_to_user):
         width=120,                 
     )
     console.print(panel, justify="center")
+    time.sleep(2)
 
 
 def refresh_message(response):
