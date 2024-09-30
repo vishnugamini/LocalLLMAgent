@@ -87,7 +87,7 @@ def handle_agent_logic(prompt, sid):
                     )
 
                     if output.get("error"):
-
+      
                         socketio.emit(
                             "agent_response",
                             {
@@ -97,6 +97,8 @@ def handle_agent_logic(prompt, sid):
                             },
                             room=sid,
                         )
+                        socketio.sleep(1)
+                    
                     else:
                         socketio.emit(
                             "agent_response",

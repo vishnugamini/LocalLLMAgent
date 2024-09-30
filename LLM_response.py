@@ -21,6 +21,7 @@ class Tool(BaseModel):
     required: bool
     thinking_phase: str
     important_parameter: str
+    print_statement_to_add: str
     code: Optional[str] = None
     query: Optional[str] = None
 
