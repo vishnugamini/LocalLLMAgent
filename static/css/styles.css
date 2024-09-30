@@ -255,3 +255,41 @@ body.dark-mode .error-message {
     background: var(--error-color);
     color: #ffffff;
 }
+
+.success-message {
+    background: #4caf50; /* Green color */
+    color: #ffffff;
+    align-self: flex-start;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    border-bottom-left-radius: 0;
+}
+
+.success-message .tick-icon {
+    margin-left: 10px;
+    color: #ffffff;
+}
+
+/* New Styles for Error Messages */
+.error-message {
+    background: #f44336; /* Red color */
+    color: #ffffff;
+    align-self: flex-start;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    border-bottom-left-radius: 0;
+}
+
+.error-message i {
+    margin-left: 10px;
+    color: #ffffff;
+}
+
+/* Optional: Adjust the tick and error icons for better alignment */
+.tick-icon, .error-message i {
+    font-size: 1.2em;
+}

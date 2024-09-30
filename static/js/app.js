@@ -21,26 +21,29 @@ $(document).ready(function(){
 
     // Handling agent response
     socket.on('agent_response', function(data){
-        removeLoadingSpinner(); 
-
         if(data.type === "loading_message"){
-            displayLoadingMessage(data.content);
+            displayLoadingMessage(data.content, data.msg_id);
+        }
+        else if(data.type === "success_message"){
+            updateLoadingMessage(data.msg_id, data.content);
+        }
+        else if(data.type === "error_message"){
+            updateLoadingMessageWithError(data.msg_id, data.content);
         }
         else if(data.type === "error"){
             displayErrorMessage(data.content);
         }
         else {
-            // Process all messages through the marked parser
+            // Process all other messages through the marked parser
             displayAgentMessage(data.content);
         }
         scrollChatToBottom();
     });
 
-    // Function to display a loading message
-    function displayLoadingMessage(message){
-        removeLoadingMessage(); 
+    // Function to display a loading message with a unique ID
+    function displayLoadingMessage(message, msg_id){
         let html = `
-            <div class="message loading-message">
+            <div class="message loading-message" id="msg-${msg_id}">
                 <span>${message}</span>
                 <div class="spinner-border spinner-border-sm text-primary" role="status">
                     <span class="visually-hidden">Loading...</span>
@@ -50,7 +53,31 @@ $(document).ready(function(){
         $('#chat-window').append(html);
     }
     
-    // Function to display error message
+    // Function to update the loading message with a success tick
+    function updateLoadingMessage(msg_id, message){
+        let messageElement = $(`#msg-${msg_id}`);
+        if(messageElement.length){
+            messageElement.removeClass('loading-message').addClass('success-message');
+            messageElement.html(`
+                <span>${message}</span>
+                <i class="bi bi-check-circle-fill tick-icon"></i>
+            `);
+        }
+    }
+
+    // Function to update the loading message with an error indicator
+    function updateLoadingMessageWithError(msg_id, message){
+        let messageElement = $(`#msg-${msg_id}`);
+        if(messageElement.length){
+            messageElement.removeClass('loading-message').addClass('error-message');
+            messageElement.html(`
+                <span>${message}</span>
+                <i class="bi bi-exclamation-triangle-fill"></i>
+            `);
+        }
+    }
+
+    // Function to display error message for general errors
     function displayErrorMessage(message){
         let html = `
             <div class="message error-message">
@@ -94,15 +121,5 @@ $(document).ready(function(){
     // Scroll chat to bottom
     function scrollChatToBottom(){
         $('#chat-window').scrollTop($('#chat-window')[0].scrollHeight);
-    }
-
-    // Remove loading message
-    function removeLoadingMessage(){
-        $('.loading-message').remove();
-    }
-
-    // Remove spinner from loading message
-    function removeLoadingSpinner(){
-        $('.loading-message .spinner-border').remove(); 
     }
 });
