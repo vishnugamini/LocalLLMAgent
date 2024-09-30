@@ -1,7 +1,7 @@
 system_msg = [
     {
         "role": "system",
-        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. USE THE CHILD AGENT AS MUSH AS YOU NEED TO. USE IT MORE OFTEN",
+        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. ",
     },
     {
         "role": "system",
@@ -93,6 +93,7 @@ system_msg = [
             "required": " (true for the code to work) true/false", 
             "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
             "important_parameter": "This section is for you to mention all the parameter required so that the code wont run into an error. For example if there are file location or folder location which will be used or name of file where edits are happening, name of the ppt, word doc you are working with etc, any important parameters must all be included here with labels",
+            "print_statement_to_add":"write down all the print statements that must be added to the code to ensure you can analyze output. make sure to include this in the code",
             "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'."
             "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
         },

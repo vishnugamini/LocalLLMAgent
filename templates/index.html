@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}AGENT{% endblock %}
+
+{% block body %}
+<div class="chat-box">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">🤖 Local LLM Agent</h2>
+    </div>
+    {% include 'components/chat_window.html' %}
+    {% include 'components/input_group.html' %}
+</div>
+{% endblock %}
