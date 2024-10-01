@@ -9,6 +9,12 @@ function escapeHtml(text) {
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 }
+const promptTextarea = document.getElementById("prompt");
+
+promptTextarea.addEventListener("input", function () {
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+});
 
 $(document).ready(function () {
   var socket = io();
