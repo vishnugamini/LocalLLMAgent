@@ -149,7 +149,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                             room=sid,
                         )
                     else:
-
                         socketio.emit(
                             "agent_response",
                             {
