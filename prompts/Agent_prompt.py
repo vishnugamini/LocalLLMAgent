@@ -93,7 +93,7 @@ system_msg = [
             "required": " (true for the code to work) true/false", 
             "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
             "important_parameter": "This section is for you to mention all the parameter required so that the code wont run into an error. For example if there are file location or folder location which will be used or name of file where edits are happening, name of the ppt, word doc you are working with etc, any important parameters must all be included here with labels",
-            "print_statement_to_add":"write down all the print statements that must be added to the code to ensure you can analyze output. make sure to include this in the code",
+            "print_statement_to_add":"write down all the print statements that must be added to the code to ensure you can analyze output. This is being done to verify the successful execution of of key operations like file creation, completion of processes, or the occurence of specific events. Make sure to include these print statements in the code as well",
             "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'."
             "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
         },

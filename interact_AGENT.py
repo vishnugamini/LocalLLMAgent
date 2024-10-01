@@ -108,6 +108,7 @@ while prompt != "exit":
                 response = sub_agent.initiate(query)
                 add_context("user", f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task if it exists")
                 kill_child_agent()
+                
 
         if agent_call != "true":
             break
