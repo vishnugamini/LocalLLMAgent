@@ -382,55 +382,52 @@ pre {
 }
 
 #agent-status {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    padding: 8px 12px;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    z-index: 1000;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 8px 12px;
+  border-radius: 20px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
 }
 
 #agent-status .bi {
-    margin-right: 8px;
-    font-size: 1.2rem;
+  margin-right: 8px;
+  font-size: 1.2rem;
 }
 
 .active {
-    background-color: var(--success-color);
+  background-color: var(--success-color);
 }
 
 .inactive {
-    background-color: var(--error-color);
+  background-color: var(--error-color);
 }
 
 #agent-status:hover {
-    opacity: 0.9;
-    cursor: default;
+  opacity: 0.9;
+  cursor: default;
 }
 
-/* index.html or main.css */
-
-/* Style for the End Button */
 .futuristic-input-group #end-btn {
-    background: #e74c3c; /* Red color for End */
-    border: none;
-    color: #ffffff;
-    padding: 8px 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    font-weight: bold;
-    margin-left: 10px;
+  background: #e74c3c;
+  border: none;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 .futuristic-input-group #end-btn:hover {
-    background: #c0392b; /* Darker red on hover */
-    transform: translateY(-2px);
+  background: #c0392b;
+  transform: translateY(-2px);
 }
