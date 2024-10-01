@@ -23,6 +23,10 @@ $(document).ready(function () {
     sendPrompt();
   });
 
+  $("#end-btn").click(function () {
+    endProcessing();
+  });
+
   $("#prompt").keypress(function (e) {
     if (e.which == 13) {
       sendPrompt();
@@ -35,6 +39,9 @@ $(document).ready(function () {
   });
 
   socket.on("agent_response", function (data) {
+    if (data.type === "thinking_message") {
+        displayThinkingMessage(data.content, data.msg_id);
+    }   
     if (data.type === "loading_message") {
       displayLoadingMessage(data.content, data.msg_id);
     } else if (data.type === "search_results") {
@@ -53,7 +60,32 @@ $(document).ready(function () {
     }
     scrollChatToBottom();
   });
-  function updateSearchResults(message, results, msg_id) {
+    socket.on("agent_status", function(data) {
+        const statusElement = $("#agent-status");
+        if (data.status === 'true') {
+        statusElement.text("STATUS: Active");
+        statusElement.removeClass("inactive").addClass("active");
+        toggleButtons(true);
+        } else {
+        statusElement.text("STATUS: Inactive");
+        statusElement.removeClass("active").addClass("inactive");
+        toggleButtons(false);
+        }
+    });
+    function toggleButtons(isActive) {
+        if (isActive) {
+          $("#send-btn").prop("disabled", true).hide();
+          $("#end-btn").show();
+        } else {
+          $("#send-btn").prop("disabled", false).show();
+          $("#end-btn").hide();
+        }
+    }
+    function endProcessing() {
+        socket.emit("end_processing");
+        toggleButtons(false);
+    }
+    function updateSearchResults(message, results, msg_id) {
     let html = `
             <span>${escapeHtml(message)}</span>
             <i class="bi bi-check-circle-fill" style="margin-left: 10px;"></i>
@@ -72,6 +104,7 @@ $(document).ready(function () {
       toggleResultsVisibility(msg_id);
     });
   }
+  
 
   function displaySearchResults(message, results, msg_id) {
     let html = `

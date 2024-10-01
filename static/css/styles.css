@@ -263,6 +263,7 @@ pre {
 }
 
 .code-execution-message {
+  align-self: flex-start;
   background: var(--code-bg);
   color: #2ecc71;
   border: 1px solid #2ecc71;
@@ -339,6 +340,7 @@ pre {
 }
 
 .search-results-message {
+  align-self: flex-start;
   background: #3498db;
   color: #ffffff;
   border-radius: 10px;
@@ -377,4 +379,58 @@ pre {
   .chat-box h2 {
     font-size: 1.8rem;
   }
+}
+
+#agent-status {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+#agent-status .bi {
+    margin-right: 8px;
+    font-size: 1.2rem;
+}
+
+.active {
+    background-color: var(--success-color);
+}
+
+.inactive {
+    background-color: var(--error-color);
+}
+
+#agent-status:hover {
+    opacity: 0.9;
+    cursor: default;
+}
+
+/* index.html or main.css */
+
+/* Style for the End Button */
+.futuristic-input-group #end-btn {
+    background: #e74c3c; /* Red color for End */
+    border: none;
+    color: #ffffff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.futuristic-input-group #end-btn:hover {
+    background: #c0392b; /* Darker red on hover */
+    transform: translateY(-2px);
 }
