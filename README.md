@@ -115,9 +115,17 @@ To start using the Local LLM Agent, follow these steps:
    ```bash
    pip install -r requirements.txt
 5. **Run the Agent**: Start the agent by executing the following command:
+   
+   `TERMINAL VERSION`
    ```bash
    python interact_AGENT.py
-6. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
+   ```
+
+   `UI Version`
+   ```bash
+   python interact_AGENT.py
+   ```
+7. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
 
 ## `Example Workflow`
 
