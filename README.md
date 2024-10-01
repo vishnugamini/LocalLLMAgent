@@ -5,7 +5,7 @@ The Local LLM Agent is an AI-powered tool designed to automate complex and time-
 
 ### `Click on the thumbnail below to watch a video of the working of the application (UI version)`
 [![Thumnail](imgs/thumbnail.png)](https://vimeo.com/1014757362?share=copy)
-- ### `Example Usage`
+- ### `Example Usage (Terminal Version)`
 ![IMAGE](imgs/image.png)
 ![IMAGE](imgs/pic-8.png)
 
