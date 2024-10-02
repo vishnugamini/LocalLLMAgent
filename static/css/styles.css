@@ -1,12 +1,12 @@
 :root {
   --primary-color: #6c5ce7;
   --secondary-color: #00cec9;
-  --background-color: #2d3436;
+  --background-color: #000000;
   --text-color: #ffffff;
   --message-bg-user: #6c5ce7;
   --message-bg-agent: #00cec9;
   --input-bg: rgba(255, 255, 255, 0.1);
-  --button-bg: #fd79a8;
+  --button-bg: #00b457;
   --button-hover: #e84393;
   --scrollbar-thumb: #a29bfe;
   --scrollbar-track: rgba(255, 255, 255, 0.1);
@@ -47,7 +47,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   box-sizing: border-box;
   backdrop-filter: blur(10px);
 }
@@ -57,16 +57,17 @@ body {
   color: var(--secondary-color);
   text-shadow: 0 0 15px rgba(0, 206, 201, 0.7);
   margin-bottom: 20px;
-  text-align: left;
-  font-size: 1.75rem;
+  text-align: left;  
+  font-size: 1.5rem;
   letter-spacing: 1.5px;
+  align-self: flex-start;  
 }
 
 .message {
-  max-width: 75%;
-  margin-bottom: 15px;
-  padding: 15px 20px;
-  border-radius: 20px;
+  max-width: 70%;
+  margin-bottom: 10px;
+  padding: 10px 15px;
+  border-radius: 15px;
   word-wrap: break-word;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   animation: fadeIn 0.5s ease-in-out;
@@ -84,6 +85,11 @@ body {
   background: var(--message-bg-agent);
   color: #333333;
   border-bottom-left-radius: 0;
+  max-width: 65;
+}
+
+.agent-message p:last-child {
+  margin-bottom: 0; 
 }
 
 .chat-window {
@@ -147,7 +153,7 @@ body {
 
 .futuristic-input-group button:hover {
   background: var(--button-hover);
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .futuristic-input-group textarea:focus {
@@ -384,7 +390,7 @@ pre {
 #agent-status {
   position: fixed;
   top: 20px;
-  right: 20px;
+  right: 33px;
   padding: 8px 12px;
   border-radius: 20px;
   color: white;
