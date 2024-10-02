@@ -118,10 +118,8 @@ To start using the Local LLM Agent, follow these steps:
    
   ### `UI Version`
        python app.py
-  ### access the APP here:
+  #### access the APP here:
        http://localhost:5000/
-  ### or
-       http://127.0.0.1:5000/
    
   ### `TERMINAL VERSION`
        python interact_AGENT.py
