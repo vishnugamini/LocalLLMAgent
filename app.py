@@ -81,10 +81,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                 tool = response_json.get("tool", {}).get("tool_name", "")
                 code = response_json.get("tool", {}).get("code", "None")
                 query = response_json.get("tool", {}).get("query", "None")
-                prints = response_json.get("tool", {}).get(
-                    "print_statement_to_add", "None"
-                )
-                print(prints)
                 msg_id = str(uuid.uuid4())
 
                 if tool == "python" and code != "None":
@@ -135,7 +131,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = fixer.initiate()
                         add_context(
                             "user",
-                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {solution}",
+                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {solution} \n DO NOT SOLELY RELY ON THIS ALWAYS, YOU CAN DO A WEB SEARCH IF YOU NEED TO",
                         )
                         logger.info(f"Solution from Code Fixer: {solution}")
 
@@ -406,4 +402,4 @@ def index():
 
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True)
+    socketio.run(app)

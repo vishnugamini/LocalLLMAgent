@@ -154,7 +154,7 @@ class Code_Fixer():
         ]
         messages.append({"role": "user","content": self.query})
         completion = client.beta.chat.completions.parse(
-            model="gpt-4o-mini",
+            model="gpt-4o-2024-08-06",
             messages = messages,
         )
         content = completion.choices[0].message.content
