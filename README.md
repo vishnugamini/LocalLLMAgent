@@ -2,7 +2,10 @@
 
 ## `What is LLM Agent?`
 The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging OpenAI's API, this agent can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
-- ### `Example Usage`
+
+### `Click on the thumbnail below to watch a video of the working of the application (UI version)`
+[![Thumnail](imgs/thumbnail.png)](https://vimeo.com/1014757362?share=copy)
+- ### `Example Usage (Terminal Version)`
 ![IMAGE](imgs/image.png)
 ![IMAGE](imgs/pic-8.png)
 
@@ -112,9 +115,17 @@ To start using the Local LLM Agent, follow these steps:
    ```bash
    pip install -r requirements.txt
 5. **Run the Agent**: Start the agent by executing the following command:
-   ```bash
-   python interact_AGENT.py
-6. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
+   
+  ### `UI Version`
+       python app.py
+  #### access the APP here:
+       http://localhost:5000/
+   
+  ### `TERMINAL VERSION`
+       python interact_AGENT.py
+
+
+7. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
 
 ## `Example Workflow`
 
