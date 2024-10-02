@@ -64,6 +64,7 @@ def handle_agent_logic(prompt, sid, stop_event):
 
             response = llm()
             response_json = json.loads(response)
+            print(response_json)
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
 
