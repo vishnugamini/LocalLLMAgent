@@ -117,10 +117,13 @@ To start using the Local LLM Agent, follow these steps:
 5. **Run the Agent**: Start the agent by executing the following command:
    
   ### `UI Version`
-     python app.py
+       python app.py
+       access the file here:
+       http://localhost:5000/ or
+       http://127.0.0.1:5000/
    
   ### `TERMINAL VERSION`
-     python interact_AGENT.py
+       python interact_AGENT.py
 
 
 7. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
