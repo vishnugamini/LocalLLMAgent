@@ -104,25 +104,6 @@ $(document).ready(function () {
       toggleResultsVisibility(msg_id);
     });
   }
-  
-
-  function displaySearchResults(message, results, msg_id) {
-    let html = `
-            <div class="message search-results-message" id="msg-${msg_id}">
-                <span>${escapeHtml(message)}</span>
-                <i class="bi bi-check-circle-fill" style="margin-left: 10px;"></i>
-                <button class="show-results-btn" id="show-results-${msg_id}" data-msg-id="${msg_id}" style="margin-left: 10px;">Show Results</button>
-                <pre class="hidden-results" id="results-block-${msg_id}" style="display: none; margin-top: 10px;"><code>${escapeHtml(
-      results
-    )}</code></pre>
-            </div>
-        `;
-    $("#chat-window").append(html);
-
-    $(`#show-results-${msg_id}`).click(function () {
-      toggleResultsVisibility(msg_id);
-    });
-  }
 
   function toggleResultsVisibility(msg_id) {
     let resultsBlock = $(`#results-block-${msg_id}`);
@@ -180,17 +161,6 @@ $(document).ready(function () {
     }
   }
 
-  function displayLoadingMessage(message, msg_id) {
-    let html = `
-            <div class="message loading-message" id="msg-${msg_id}">
-                <span>${message}</span>
-                <div class="spinner-border spinner-border-sm text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        `;
-    $("#chat-window").append(html);
-  }
 
   function updateLoadingMessage(msg_id, message) {
     let messageElement = $(`#msg-${msg_id}`);
