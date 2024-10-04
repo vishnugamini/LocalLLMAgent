@@ -15,6 +15,9 @@
   --code-bg: #2c3e50;
   --code-color: #ecf0f1;
   --loading-color: #f1c40f;
+  --chat-box-bg: rgba(0, 0, 0, 0.95);
+  --chat-window-bg: rgba(30, 30, 30, 0.9);
+  --input-group-bg: rgba(30, 30, 30, 0.9);
 }
 
 body {
@@ -42,7 +45,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(45, 52, 54, 0.95);
+  background: var(--chat-box-bg);
   padding: 30px;
   display: flex;
   flex-direction: column;
@@ -70,7 +73,7 @@ body {
   border-radius: 15px;
   word-wrap: break-word;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 0.5s ease-in-out;
+  animation: fadeIn 0.3s ease-in-out;
 }
 
 .user-message {
@@ -98,19 +101,20 @@ body {
   height: 80vh;
   overflow-y: auto;
   padding: 20px;
-  background: rgba(45, 52, 54, 0.8);
+  background: rgba(15, 15, 15, 0.9);
   border-radius: 20px 20px 0 0;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.1);
   display: flex;
   flex-direction: column;
   margin-bottom: 0;
 }
 
+
 .futuristic-input-group {
   display: flex;
   align-items: center;
-  background: rgba(45, 52, 54, 0.8);
+  background: rgba(15, 15, 15, 0.9);
   border-radius: 0 0 20px 20px;
   padding: 8px 12px;
   backdrop-filter: blur(10px);
@@ -347,7 +351,7 @@ pre {
 
 .search-results-message {
   align-self: flex-start;
-  background: #3498db;
+  background: var(--success-color);
   color: #ffffff;
   border-radius: 10px;
   margin-bottom: 15px;
