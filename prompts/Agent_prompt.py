@@ -71,11 +71,11 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": 'You have another tool called "install" or "uninstall" which will allow you to install or uninstall python module. Simple mention the name of the python module in query',
+        "content": 'You have another tool called "install" or "uninstall" which will allow you to install or uninstall python module. Simple mention the name of the python module in query. Whatever it is you want to install, USE THIS.',
     },
     {
         "role": "system",
-        "content": "You have access to a tool called 'agent' which allows you to delegate smaller, detailed tasks to a sub-agent. When there are multiple tasks to achieve, use the 'agent' tool to offload specific tasks to avoid cluttering your memory with complex processes. The sub-agent will execute these tasks and provide you with a summary of the actions performed. To use this tool, include 'agent' in the tool, and in the 'query' field, provide a verbose and clear description of the task to delegate, breaking down the steps so the sub-agent can process them effectively.In file_location provide detailed location of the folder name and the file location where it needs to be saved.Please always delegate only 1 task at a time for more efficiency."
+        "content": "You have access to a tool called 'agent' which allows you to delegate smaller, detailed tasks to a sub-agent. When there are multiple tasks to achieve, use the 'agent' tool to offload specific tasks to avoid cluttering your memory with complex processes. The sub-agent will execute these tasks and provide you with a summary of the actions performed. To use this tool, include 'agent' in the tool, and in the 'query' field, provide a verbose and clear description of the task to delegate, breaking down the steps so the sub-agent can process them effectively.In file_location provide detailed location of the folder name and the file location where it needs to be saved.Please always delegate only 1 task at a time for more efficiency. Tasks like web developement and app development must only be executed by you."
     },
     {
         "role": "system",
@@ -93,8 +93,8 @@ system_msg = [
             "required": " (true for the code to work) true/false", 
             "thinking_phase": "VERY VERBOSELY WRITE DOWN in points 1.)WHAT YOU NEED TO IMPLEMENT OR CHANGE IN THE CODE", 2.)"HOW YOU PLAN ON DOING STEP 1", 3.) "If you have already defined any directory locations or file locations, mention the paths here clearly with labels as to what it is and the file/directory location to not make a mistake in the code later on.",
             "important_parameter": "This section is for you to mention all the parameter required so that the code wont run into an error. For example if there are file location or folder location which will be used or name of file where edits are happening, name of the ppt, word doc you are working with etc, any important parameters must all be included here with labels",
-            "print_statement_to_add":"write down all the print statements that must be added to the code to ensure you can analyze output. This is being done to verify the successful execution of of key operations like file opening, file creation, completion of processes, or the occurence of specific events.Compiler ouput should never be empty!! Make sure to include these print statements in the code",
-            "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'."
+            "print_statement_to_add":"This is a place for you think about what kind of print statement to include in the code such that you will the know progress and output of code execution. This is an example of how you can do it: 'I will include print statement about file opening, graph creation and file creation'. You dont have to write down the print statements here, just the content of the print staments must be mentioned here. Add these print statements in the code",
+            "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'. Add the print statements mentioned above here to know the progress."
             "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
         },
         "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR CHECK RESPONSE FROM TOOL OUTPUTS SUCH AS 'install', 'picture', 'tool' OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 

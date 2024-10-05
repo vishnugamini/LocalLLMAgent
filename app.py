@@ -4,25 +4,12 @@ import threading
 import json
 import logging
 import uuid
-
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
 from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer
 from terminal_ui.terminal_animation import (
-    search_dots,
-    thinking_dots,
-    picture_message,
-    search_message,
-    compiler_message,
-    user_message,
-    refresh_message,
-    install_module,
-    uninstall_module,
-    child_agent_message,
     kill_child_agent,
 )
-
-
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
@@ -37,10 +24,6 @@ processing_tasks = {}
 
 
 def handle_agent_logic(prompt, sid, stop_event):
-    """
-    Handles the agent's logic in a background thread.
-    Periodically checks if a stop_event is set to terminate processing.
-    """
     try:
         if prompt.lower() == "refresh":
             response = refresh()
@@ -109,6 +92,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                                 "type": "error_message",
                                 "content": f"Error executing code. Running again...",
                                 "msg_id": msg_id,
+                                "output": output['output']
                             },
                             room=sid,
                         )
@@ -129,11 +113,16 @@ def handle_agent_logic(prompt, sid, stop_event):
                         whole = f'CODE: {code} \n ERROR: {output["output"]}'
                         fixer = Code_Fixer(whole)
                         solution = fixer.initiate()
+                        solution = json.loads(solution)
+                        a = solution["error_description"]
+                        b = solution["code"]
+                        c = f"{a}\n{b}"
+                        print(c)
                         add_context(
                             "user",
-                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {solution} \n DO NOT SOLELY RELY ON THIS ALWAYS, YOU CAN DO A WEB SEARCH IF YOU NEED TO",
+                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n DO NOT SOLELY RELY ON THIS ALWAYS, YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
                         )
-                        logger.info(f"Solution from Code Fixer: {solution}")
+                        logger.info(f"Solution from Code Fixer: {c}")
 
                         socketio.emit(
                             "agent_response",
@@ -180,8 +169,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                         room=sid,
                     )
                     socketio.sleep(1)
-
-                    install_module(query)
                     output = install.install(query)
                     add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
@@ -208,8 +195,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                         room=sid,
                     )
                     socketio.sleep(1)
-
-                    uninstall_module(query)
                     output = install.uninstall(query)
                     add_context("user", f"OUTPUT FROM UNINSTALLATION {output}")
 
@@ -236,15 +221,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         room=sid,
                     )
                     socketio.sleep(1)
-
-                    search_thread = threading.Thread(target=search_dots)
-                    search_thread.start()
-
                     output = search.search(query)
-
-                    search_thread.do_run = False
-                    search_thread.join()
-
                     add_context(
                         "user",
                         f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed): {output}",
@@ -278,7 +255,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     results_pictures = picture.picSearch(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python if the user asked",
+                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python. Also before downloading the pictures, display the download links in readme format to the user.",
                     )
 
                     socketio.emit(
@@ -308,14 +285,7 @@ def handle_agent_logic(prompt, sid, stop_event):
 
                     sub_agent = Sub_Agent()
                     sub_response = sub_agent.initiate(query)
-                    add_context(
-                        "user",
-                        f"SUMMARY FROM SUB AGENT: {sub_response}. You must explain the outcome to the user and then proceed to next task if it exists",
-                    )
-
-                    kill_child_agent()
                     socketio.sleep(2)
-
                     socketio.emit(
                         "agent_response",
                         {
@@ -326,7 +296,11 @@ def handle_agent_logic(prompt, sid, stop_event):
                         room=sid,
                     )
                     socketio.sleep(2)
-
+                    add_context(
+                        "user",
+                        f"SUMMARY FROM SUB AGENT: {sub_response}. You must explain the outcome to the user and then proceed to next task if it exists",
+                    )
+                    kill_child_agent()
     except Exception as e:
         logger.error(f"Error in handle_agent_logic: {e}")
         emit_response = {
@@ -345,10 +319,6 @@ def handle_agent_logic(prompt, sid, stop_event):
 
 @socketio.on("user_prompt")
 def handle_user_prompt(data):
-    """
-    Handles incoming user prompts.
-    Starts a background task to process the prompt.
-    """
     prompt = data.get("prompt")
     sid = request.sid
 
@@ -376,10 +346,6 @@ def handle_user_prompt(data):
 
 @socketio.on("end_processing")
 def handle_end_processing():
-    """
-    Handles requests from clients to end active processing.
-    Sets the stop_event to signal the background task to terminate.
-    """
     sid = request.sid
 
     if sid in processing_tasks:
@@ -388,7 +354,6 @@ def handle_end_processing():
         emit_response = {"type": "info", "content": "Processing has been terminated."}
         emit("agent_response", emit_response, room=sid)
     else:
-
         emit_response = {
             "type": "error",
             "content": "No active processing to terminate.",
