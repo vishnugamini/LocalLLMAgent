@@ -149,9 +149,10 @@ class Code_Fixer():
     def __init__(self, query):
         self.key = os.getenv("OPENAPI_KEY")
         self.query = query
+        self.client = OpenAI(api_key = self.key)
 
     def initiate(self):
-        client = OpenAI(api_key = self.key)
+        
         messages = [
             {"role": "system", "content":"You are specialist in providing remedy to the incorrect code and error provided to you. The code is being ran in a python environment."},
             {"role": "system","content":"when writing a multi-line html, css, js, python code using this ('''), ensure that you dont include '\n' in it as the code will run into an error"
@@ -161,7 +162,7 @@ class Code_Fixer():
             {"role": "system", "content": """This is how you provide your output {'error_description': 'There is wehere you write about the error', 'code': 'complete corrected python code for execution'}"""}
         ]
         messages.append({"role": "user","content": self.query})
-        completion = client.beta.chat.completions.parse(
+        completion = self.client.beta.chat.completions.parse(
             model="gpt-4o-2024-08-06",
             messages = messages,
             response_format= self.Format
@@ -170,9 +171,6 @@ class Code_Fixer():
         messages.append({"role": "assistant","content": content})
         return content
 
-c = Code_Fixer("hello")
-d = c.initiate()
-print(d)
 class Sub_Agent():
     class Tool(BaseModel):
         tool_name: str
