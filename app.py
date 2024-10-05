@@ -116,11 +116,11 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = json.loads(solution)
                         a = solution["error_description"]
                         b = solution["code"]
-                        c = f"{a}\n{b}"
+                        c = f"{a}\n Here is the code to fix it: {b}"
                         print(c)
                         add_context(
                             "user",
-                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n DO NOT SOLELY RELY ON THIS ALWAYS, YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
+                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
                         )
                         logger.info(f"Solution from Code Fixer: {c}")
 
@@ -255,7 +255,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     results_pictures = picture.picSearch(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python. Also before downloading the pictures, display the download links in readme format to the user.",
+                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python. Also before downloading the pictures, display the download links in readme format to the user in this manner '![Alt text](image-url)'",
                     )
 
                     socketio.emit(

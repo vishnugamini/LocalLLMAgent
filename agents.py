@@ -86,7 +86,7 @@ class PicSearch:
         results = response.json()
         results = results["hits"]
         try:
-            for links in range(3):
+            for links in range(5):
                 self.store.append(results[links]["webformatURL"])
             return self.store
         except:
