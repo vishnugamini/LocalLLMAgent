@@ -72,6 +72,9 @@ The Local LLM Agent is capable of handling a wide variety of tasks, from coding 
   
 ### 7. `Download pictures`
 - **Search and download pictures:** The agent has a picture tool using which it can download pictures.
+### `Click on the thumbnail below to watch a video (UI version)`
+[![Thumnail](imgs/thumbnail2.png)](https://vimeo.com/1016759327?share=copy)
+  
 
 ## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
