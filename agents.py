@@ -11,6 +11,7 @@ from prompts.Child_Agent_prompt import system_msg
 from execute_code import exec_code
 import threading
 import copy
+import random
 
 from terminal_ui.terminal_animation2 import (
     sub_search_dots,
@@ -37,7 +38,7 @@ class PerpSearch:
             },
         ]
         self.payload = {
-            "model": "llama-3.1-sonar-small-128k-online",
+            "model": "llama-3.1-sonar-large-128k-online",
             "messages": self.msg,
             "temperature": 0.2,
             "top_p": 0.9,
@@ -86,7 +87,13 @@ class PicSearch:
         results = response.json()
         results = results["hits"]
         try:
-            for links in range(5):
+            size = len(results)
+            count = 5
+            while count >= size:
+                count = count - 1
+            r = random.randint(0, size - count)
+            for links in range(r, r + count):
+                print(results[links]["webformatURL"])
                 self.store.append(results[links]["webformatURL"])
             return self.store
         except:
@@ -285,6 +292,6 @@ class Sub_Agent():
                     f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
                 )
 
-        self.msg = original_system_message
+        self.msg = copy.deepcopy(original_system_message)
         return msg_to_agent
 

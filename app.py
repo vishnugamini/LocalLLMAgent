@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import time
 from flask_socketio import SocketIO, emit
 import threading
 import json
@@ -15,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*")
+socketio = SocketIO(app, cors_allowed_origins="*",async_mode='threading')
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
@@ -43,7 +44,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                 break
 
             socketio.emit("agent_status", {"status": "true"}, room=sid)
-            socketio.sleep(0.1)
+            time.sleep(0.1)
 
             response = llm()
             response_json = json.loads(response)
@@ -57,7 +58,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                 {"type": "agent_message", "content": msg_to_user},
                 room=sid,
             )
-            socketio.sleep(1)
+            time.sleep(1)
 
             if agent_call.lower() == "true":
 
@@ -77,7 +78,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                     output = exec_code(code)
                     add_context(
@@ -96,7 +97,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
-                        socketio.sleep(1)
+                        time.sleep(1)
                         msg_ids = str(uuid.uuid4())
 
                         socketio.emit(
@@ -108,7 +109,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
-                        socketio.sleep(1)
+                        time.sleep(1)
 
                         whole = f'CODE: {code} \n ERROR: {output["output"]}'
                         fixer = Code_Fixer(whole)
@@ -143,7 +144,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
-                        socketio.sleep(1)
+                        time.sleep(1)
 
                         socketio.emit(
                             "agent_response",
@@ -155,7 +156,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
-                        socketio.sleep(1)
+                        time.sleep(1)
 
                 elif tool == "install" and query != "None":
 
@@ -168,7 +169,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
                     output = install.install(query)
                     add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
@@ -181,7 +182,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                 elif tool == "uninstall" and query != "None":
 
@@ -194,7 +195,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
                     output = install.uninstall(query)
                     add_context("user", f"OUTPUT FROM UNINSTALLATION {output}")
 
@@ -207,7 +208,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                 elif tool == "search" and query != "None":
 
@@ -220,11 +221,11 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
                     output = search.search(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed): {output}",
+                        f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed in great and decorative README FORMAT. use different colors if needed): {output}",
                     )
 
                     socketio.emit(
@@ -237,7 +238,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                 elif tool == "picture" and query != "None":
 
@@ -250,12 +251,12 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                     results_pictures = picture.picSearch(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python. Also before downloading the pictures, display the download links in readme format to the user in this manner '![Alt text](image-url)'",
+                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python if the user asked. Also before downloading the pictures, display the download links in readme format to the user in this manner '![Alt text](image-url)'. number them as well. DO the displaying work in msg_to_user section.",
                     )
 
                     socketio.emit(
@@ -268,7 +269,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                 elif tool == "agent" and query != "None":
 
@@ -281,7 +282,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(1)
+                    time.sleep(1)
 
                     sub_agent = Sub_Agent()
                     sub_response = sub_agent.initiate(query)
@@ -295,7 +296,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    socketio.sleep(2)
+                    time.sleep(2)
                     add_context(
                         "user",
                         f"SUMMARY FROM SUB AGENT: {sub_response}. You must explain the outcome to the user and then proceed to next task if it exists",
