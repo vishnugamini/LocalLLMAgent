@@ -36,4 +36,3 @@ def exec_code(code, python_interpreter=None):
         return {"output": "Execution timed out.", "error": True}
     except Exception as e:
         return {"output": str(e), "error": True}
-

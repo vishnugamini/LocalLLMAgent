@@ -65,6 +65,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                 tool = response_json.get("tool", {}).get("tool_name", "")
                 code = response_json.get("tool", {}).get("code", "None")
                 query = response_json.get("tool", {}).get("query", "None")
+                think = response_json.get("tool", {}).get("thinking_phase", "None")
                 msg_id = str(uuid.uuid4())
 
                 if tool == "python" and code != "None":
@@ -74,6 +75,16 @@ def handle_agent_logic(prompt, sid, stop_event):
                         {
                             "type": "loading_message",
                             "content": "Executing code...",
+                            "msg_id": msg_id,
+                        },
+                        room=sid,
+                    )
+                    time.sleep(1)
+                    socketio.emit(
+                        "agent_response",
+                        {
+                            "type": "thinking_message",
+                            "content": think,
                             "msg_id": msg_id,
                         },
                         room=sid,
