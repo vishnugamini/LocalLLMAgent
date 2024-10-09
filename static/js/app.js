@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     let html = `
       <h3 class="think-header" id="think-title-${msg_id}">
-        <i class="bi bi-gear-fill spinning-icon" id="spinner-icon-${msg_id}"></i> Thinking Phase
+        Thinking Phase
       </h3>
       <div class="thinking-container">
     `;
@@ -111,7 +111,6 @@ $(document).ready(function () {
 
     setTimeout(function () {
       $("#think-window").removeClass("highlight");
-      $(`#spinner-icon-${msg_id}`).remove();
     }, 4000);
   }
 

@@ -448,11 +448,6 @@ pre {
   }
 }
 
-.spinning-icon {
-  animation: spin 2s linear infinite;
-  margin-right: 8px;
-}
-
 @keyframes spin {
   from {
     transform: rotate(0deg);
@@ -512,12 +507,14 @@ pre {
   justify-content: left;
 }
 
+
 .thinking-container {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
 }
+
 
 .thinking-card {
   border: 1px solid #e0e0e0;
@@ -527,30 +524,29 @@ pre {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+
 .thinking-card .card-header {
   background-color: #f7f7f7;
   padding: 10px 15px;
   border-bottom: 1px solid #e0e0e0;
 }
 
+
 .thinking-card .step-number {
   font-weight: bold;
   color: #333333;
 }
 
+
 .thinking-card .card-body {
   padding: 15px;
 }
+
 
 .thinking-card .card-body p {
   margin: 0;
   color: #555555;
   line-height: 1.6;
-}
-
-.spinning-icon {
-  animation: spin 2s linear infinite;
-  margin-right: 8px;
 }
 
 @keyframes pulseBorder {
