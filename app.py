@@ -5,6 +5,8 @@ import threading
 import json
 import logging
 import uuid
+import webbrowser
+import os
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
 from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer
@@ -52,16 +54,18 @@ def handle_agent_logic(prompt, sid, stop_event):
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
             task = response_json.get("tasks_to_achieve",'')
-            socketio.emit(
-                "agent_response",
-                {
-                    "type": "thinking_message",
-                    "content": task,
-                    "msg_id": msg_id,
-                },
-                room=sid,
-            )
-            time.sleep(1)
+            print("task", task)
+            if task != '':
+                socketio.emit(
+                    "agent_response",
+                    {
+                        "type": "thinking_message",
+                        "content": task,
+                        "msg_id": msg_id,
+                    },
+                    room=sid,
+                )
+                time.sleep(1)
 
 
             socketio.emit("agent_status", {"status": agent_call}, room=sid)
@@ -390,6 +394,10 @@ def handle_end_processing():
 def index():
     return render_template("index.html")
 
+def open_browser():
+    webbrowser.open_new('http://127.0.0.1:5000/')
 
 if __name__ == "__main__":
-    socketio.run(app)
+    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
+        threading.Timer(1, open_browser).start()
+    app.run(debug=True)

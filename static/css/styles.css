@@ -401,13 +401,55 @@ pre {
   font-size: 1.2rem;
 }
 
+/* Add this to your CSS */
+
 .active {
+  position: relative;
   background-color: var(--success-color);
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 10px 20px; /* Adjust padding as needed */
+  color: #fff; /* Text color */
+  font-weight: bold;
+  text-align: center;
+}
+
+.active::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  background: conic-gradient(
+    from 0deg,
+    var(--secondary-color),
+    var(--primary-color),
+    var(--secondary-color)
+  );
+  border-radius: 25px; /* Slightly larger to cover the border */
+  animation: rotate 4s linear infinite;
+  z-index: -1; /* Place behind the main content */
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .inactive {
   background-color: var(--error-color);
+  border-radius: 20px;
+  color: #fff;
+  padding: 10px 20px;
+  font-weight: bold;
+  text-align: center;
 }
+
 
 #agent-status:hover {
   opacity: 0.9;
@@ -430,31 +472,6 @@ pre {
 .futuristic-input-group #end-btn:hover {
   background: #c0392b;
   transform: translateY(-2px);
-}
-
-.highlight {
-  animation: pulseBorder 2s ease-in-out;
-}
-
-@keyframes pulseBorder {
-  0% {
-    box-shadow: 0 0 10px var(--secondary-color);
-  }
-  50% {
-    box-shadow: 0 0 20px var(--secondary-color);
-  }
-  100% {
-    box-shadow: 0 0 10px var(--secondary-color);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 .think-window {
@@ -549,26 +566,22 @@ pre {
   line-height: 1.6;
 }
 
+.highlight {
+  animation: pulseBorder 2s ease-in-out;
+}
+
 @keyframes pulseBorder {
   0% {
-    box-shadow: 0 0 10px var(--secondary-color);
+    box-shadow: 0 0 10px 10px var(--secondary-color);
   }
   50% {
-    box-shadow: 0 0 20px var(--secondary-color);
+    box-shadow: 0 0 15px 15px var(--secondary-color);
   }
   100% {
-    box-shadow: 0 0 10px var(--secondary-color);
+    box-shadow: 0 0 10px 10px var(--secondary-color);
   }
 }
 
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 @media (max-width: 768px) {
   #agent-status {
@@ -611,7 +624,7 @@ pre {
 }
 
 .highlight {
-  animation: pulseBorder 4s ease-in-out;
+  animation: pulseBorder 2s ease-in-out;
 }
 
 @keyframes highlightAnimation {
