@@ -499,30 +499,53 @@ pre {
 .think-header {
   padding: 15px 20px;
   background: rgba(15, 15, 15, 0.9);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .think-header h3 {
   margin: 0;
   color: var(--secondary-color);
-  font-size: 1.5rem;
-  text-align: center;
+  font-size: 1.3rem;
+  text-align: left;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
 }
 
-.think-content {
-  padding: 15px 20px;
-  overflow-y: auto;
-  flex: 1;
+.thinking-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
 }
 
-.think-content p {
-  font-size: 1rem;
-  line-height: 1.6;
+.thinking-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.thinking-card .card-header {
+  background-color: #f7f7f7;
+  padding: 10px 15px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.thinking-card .step-number {
+  font-weight: bold;
+  color: #333333;
+}
+
+.thinking-card .card-body {
+  padding: 15px;
+}
+
+.thinking-card .card-body p {
   margin: 0;
-  color: var(--text-color);
+  color: #555555;
+  line-height: 1.6;
 }
 
 .spinning-icon {
