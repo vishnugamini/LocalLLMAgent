@@ -47,9 +47,22 @@ def handle_agent_logic(prompt, sid, stop_event):
             time.sleep(0.1)
 
             response = llm()
+            msg_id = str(uuid.uuid4())
             response_json = json.loads(response)
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
+            task = response_json.get("tasks_to_achieve",'')
+            socketio.emit(
+                "agent_response",
+                {
+                    "type": "thinking_message",
+                    "content": task,
+                    "msg_id": msg_id,
+                },
+                room=sid,
+            )
+            time.sleep(1)
+
 
             socketio.emit("agent_status", {"status": agent_call}, room=sid)
 
@@ -128,7 +141,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = json.loads(solution)
                         a = solution["error_description"]
                         b = solution["code"]
-                        c = f"{a}"
+                        c = f"{a} \n CODE to FIX {b}. modify whatever is needed in the code to achieve user's needs"
                         print(c)
                         add_context(
                             "user",
