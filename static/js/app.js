@@ -88,17 +88,23 @@ $(document).ready(function () {
       <h3 class="think-header" id="think-title-${msg_id}">
         <i class="bi bi-gear-fill spinning-icon" id="spinner-icon-${msg_id}"></i> Thinking Phase
       </h3>
+      <div class="thinking-container">
     `;
 
-    items.forEach(function (item, index) {
+    items.forEach(function (item) {
       html += `
-        <div class="think-bubble">
-          <div class="bubble-content">
+        <div class="thinking-card">
+          <div class="card-header">
+            <span class="step-number">Step ${item.number}</span>
+          </div>
+          <div class="card-body">
             <p>${escapeHtml(item.content)}</p>
           </div>
         </div>
       `;
     });
+
+    html += "</div>";
 
     $("#think-window").html(html);
     $("#think-window").addClass("highlight");

@@ -128,7 +128,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = json.loads(solution)
                         a = solution["error_description"]
                         b = solution["code"]
-                        c = f"{a}\n Here is the code to fix it: {b}"
+                        c = f"{a}"
                         print(c)
                         add_context(
                             "user",
