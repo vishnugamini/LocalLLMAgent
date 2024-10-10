@@ -67,7 +67,7 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": "you also have a tool named 'picture' which gives you to links to download a picture of anything in you mention in the query",
+        "content": "you also have a tool named 'picture' which gives you to links to download a picture of anything in you mention in the query. If you encounter anything related to pictures/images such as search for pictures or search the net for pictures. use this tool. The query must only include the term for search as in 'cars, bikes' etc.",
     },
     {
         "role": "system",
@@ -85,8 +85,8 @@ system_msg = [
         "role": "system",
         "content": """{Here is an example of the required JSON structure
         "message_from_the_user": "message from the user or the compiler. Write the consice summary of it, for example if an error occured write about the error, or if everthing was successful write a message stating that everything went well",
-        "tasks_to_achieve": "List all the tasks you need to accomplish if there are any in a superficial manner in this way 1) , 2)",
-        "immediate_task_to_achieve": "Specify the task to prioritize first",
+        "tasks_to_achieve": "List all the tasks you need to accomplish if there are any in a superficial manner.",
+        "immediate_task_to_achieve": "Specify the task to prioritize first in this manner 1)I have to message the user",
         "message_to_the_user": "this is your message to the user,must resonate with immediate_task. It should say what you have done and what you are about to do if there is something else pending, or just politely ask if the user needs anything else. If a user asks a question, it must be answered here. This is also a place to answer users questions. Always use readme format when messaging the user"
         "tool": {
             "tool_name": "python or agent or search or picture or install or uninstall or None (python if needed or None) (use 'search' tool if users requests for information that needs an internet search or if you need up to date information this tool can be used. Examples: searching a site for information, weather information, any real time information). (use "picture" tool if user requests for a picutre or if you need images to display in the website you build for the user. To use this tool simplly use 'picture' in tool and mention the label of the picture in "query"). Use install if you need to install a python module, simply call install and mention the module name in the query. Use agent tool to delegate tasks to a sub agent when you have boat load of tasks to ensure you dont contaminate your memory. just call 'agent' in tool_name and verbosely mention the task it needs to achieve in 'query' and in file_location mention file/folder location it needs to follow or save the files it creates.", 
