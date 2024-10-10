@@ -1,6 +1,36 @@
 <div id="chat-window" class="chat-window"></div>
 <div id="agent-status" class="inactive">STATUS: Inactive</div>
-<div id="think-window" class="think-window think-header" id="think-msg">
-    <h3 class="think-header">Thinking Phase</h3>
+<div id="widget-container">
+    <button id="refresh-btn" data-tooltip="Deletes the existing Memory of Agent">
+        🧠 REFRESH
+    </button>
+    <button id="clear-btn" data-tooltip="Clears the chat window">
+        <i class="bi bi-trash"></i>
+        CLEAR
+    </button>
+    <button id="api-btn" data-tooltip="Configure APIs">
+    ⚙️ API
+    </button>
 </div>
+
+<div id="think-window" class="think-window think-header" id="think-msg">
+    <h3 class="think-header">THINKING PHASE</h3>
+</div>
+
+<div id="api-modal" class="api-modal">
+    <div class="api-modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Configure APIs</h2>
+        <form id="api-form">
+            <label for="api1">OPENAI API KEY:</label>
+            <input type="text" id="api1" name="api1" placeholder="Enter API key here">
+            <label for="api2">PERPLEXITY API KEY (optional)</label>
+            <input type="text" id="api2" name="api2" placeholder="Enter API key here">
+            <label for="api3">PIXABAY API KEY (optional)</label>
+            <input type="text" id="api3" name="api3" placeholder="Enter API 3 URL">
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
 

@@ -28,11 +28,11 @@ processing_tasks = {}
 
 def handle_agent_logic(prompt, sid, stop_event):
     try:
-        if prompt.lower() == "refresh":
+        @socketio.on("refresh")
+        def refresh_memory():
             response = refresh()
             emit_response = {"type": "refresh", "content": response}
-            socketio.emit("agent_response", emit_response, room=sid)
-            return
+            socketio.emit("agent_response", emit_response, room = sid)
 
         add_context("user", prompt)
         agent_call = "true"
@@ -53,7 +53,7 @@ def handle_agent_logic(prompt, sid, stop_event):
             response_json = json.loads(response)
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
-            task = response_json.get("tasks_to_achieve",'')
+            task = response_json.get("immediate_task_to_achieve",'')
             print("task", task)
             if task != '':
                 socketio.emit(
@@ -253,7 +253,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     output = search.search(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM SEARCH RESULTS (NOT VISIBLE TO USER, must be summarized in message to user if needed in great and decorative README FORMAT. use different colors if needed): {output}",
+                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT. use different colors if needed)",
                     )
 
                     socketio.emit(
@@ -388,6 +388,7 @@ def handle_end_processing():
             "content": "No active processing to terminate.",
         }
         emit("agent_response", emit_response, room=sid)
+
 
 
 @app.route("/")

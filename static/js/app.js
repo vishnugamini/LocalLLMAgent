@@ -18,6 +18,13 @@ promptTextarea.addEventListener("input", function () {
 
 $(document).ready(function () {
   var socket = io();
+  $("#refresh-btn").click(function () {
+    refresh();
+  });
+
+  $("#clear-btn").click(function () {
+    clear();
+  });
 
   $("#send-btn").click(function () {
     sendPrompt();
@@ -86,7 +93,7 @@ $(document).ready(function () {
 
     let html = `
       <h3 class="think-header" id="think-title-${msg_id}">
-        Thinking Phase
+        THINKING PHASE
       </h3>
       <div class="thinking-container">
     `;
@@ -131,7 +138,6 @@ $(document).ready(function () {
     let html = `
             <span>${escapeHtml(message)}</span>
             <i class="bi bi-check-circle-fill" style="margin-left: 10px;"></i>
-            <button class="show-results-btn" id="show-results-${msg_id}" data-msg-id="${msg_id}" style="margin-left: 10px;">Show Results</button>
             <pre class="hidden-results" id="results-block-${msg_id}" style="display: none; margin-top: 10px;"><code>${escapeHtml(
       results
     )}</code></pre>
@@ -243,6 +249,15 @@ $(document).ready(function () {
     $("#chat-window").append(html);
   }
 
+  function clear() {
+    document.getElementById("think-window").innerHTML = "";
+    document.getElementById("chat-window").innerHTML = "";
+  }
+
+  function refresh() {
+    socket.emit("refresh");
+  }
+
   function sendPrompt() {
     let prompt = $("#prompt").val().trim();
     if (prompt === "") {
@@ -263,5 +278,23 @@ $(document).ready(function () {
 
   function scrollChatToBottom() {
     $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
+  }
+});
+
+const apiBtn = document.getElementById("api-btn");
+const apiModal = document.getElementById("api-modal");
+const closeBtn = document.querySelector(".close-btn");
+
+apiBtn.addEventListener("click", () => {
+  apiModal.style.display = "block";
+});
+
+closeBtn.addEventListener("click", () => {
+  apiModal.style.display = "none";
+});
+
+window.addEventListener("click", (event) => {
+  if (event.target === apiModal) {
+    apiModal.style.display = "none";
   }
 });

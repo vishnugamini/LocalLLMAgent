@@ -44,8 +44,8 @@ class PerpSearch:
             "top_p": 0.9,
             "return_citations": True,
             "search_domain_filter": ["perplexity.ai"],
-            "return_images": False,
-            "return_related_questions": False,
+            "return_images": True,
+            "return_related_questions": True,
             "search_recency_filter": "month",
             "top_k": 0,
             "stream": False,
@@ -200,7 +200,7 @@ class Sub_Agent():
     def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
         self.client = OpenAI(api_key = self.key)
-        self.msg = system_msg
+        self.msg = copy.deepcopy(system_msg)
 
     def add_context(self,role, message):
         self.msg.append({"role": role, "content": message})
@@ -292,6 +292,6 @@ class Sub_Agent():
                     f"OUTPUT FROM PICTURE SEARCH RESULTS {results}. Now you can proceed to download these using python if the user asked",
                 )
 
-        self.msg = copy.deepcopy(original_system_message)
+        self.msg = copy.deepcopy(system_msg)
         return msg_to_agent
 

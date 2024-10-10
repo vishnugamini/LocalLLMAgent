@@ -9,12 +9,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-original_system_message = copy.deepcopy(system_msg)
 
 key = os.getenv("OPENAPI_KEY")
 client = OpenAI(api_key=key)
-msg = system_msg
-
+msg = copy.deepcopy(system_msg)
 
 class Tool(BaseModel):
     tool_name: str
@@ -37,6 +35,7 @@ class Message(BaseModel):
 
 def refresh():
     global msg
+    original_system_message = copy.deepcopy(system_msg)
     msg = original_system_message
     return "Memory Refreshed"
 
