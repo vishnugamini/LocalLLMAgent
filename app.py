@@ -145,7 +145,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = json.loads(solution)
                         a = solution["error_description"]
                         b = solution["code"]
-                        c = f"{a} \n CODE to FIX {b}. modify whatever is needed in the code to achieve user's needs"
+                        c = f"{a} \n CODE to FIX {b}"
                         print(c)
                         add_context(
                             "user",
@@ -162,6 +162,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
+                        time.sleep(1)
                     else:
                         socketio.emit(
                             "agent_response",
