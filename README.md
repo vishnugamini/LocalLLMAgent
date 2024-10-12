@@ -40,10 +40,10 @@ https://github.com/user-attachments/assets/119392dc-2b66-4923-afa0-dfa72a836fb3
 
 https://github.com/user-attachments/assets/5ed5f0fe-7238-475c-9c94-34708d662143
 
-- **Research & Summarization:** Conduct research on any topic and summarize the findings or draft blog posts.
-  - *Example:* Generate a blog post summarizing recent advancements in AI-driven automation.
+### 7. `Research & Summarization`
+- Conduct research on any topic and summarize the findings or draft blog posts.
   
-### 7. `Download pictures`
+### 8. `Download pictures`
 **Search and download pictures:** The agent has a picture tool using which it can download pictures.
 
 https://github.com/user-attachments/assets/90945a68-93f7-427a-9194-474a5760c62e
