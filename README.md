@@ -1,5 +1,5 @@
 # `Local LLM Agent`
-## The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By Levaraging the capabilites of LLM's ability to `attend` to relavant chunks of data, this tool can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
+### The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By Levaraging the capabilites of LLM's ability to `attend` to relavant chunks of data, this tool can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
 
 ## `How is it different from other Agents`
 ### *My tool encompasses a system similar to that of a chatbot. No external coding expertise is required nor explicit creation of various agents is required. Just one single prompt will kick off the workflow, and the agent will continuosly work towards fullfilling the user's request, And just like a chatbot, you can look at the work done and get it modified if you are dissatisfied*
