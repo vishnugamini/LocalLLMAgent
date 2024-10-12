@@ -54,7 +54,7 @@ The Local LLM Agent is not just for high-level tasks; it excels at automating da
 SOME EXAMPLES ARE:
 - `PPT/PDF Preparation:`Prepare a PPT about a topic within seconds with just a simple prompt
 
-https://github.com/user-attachments/assets/082293cf-2b8e-4b25-bbb9-afb736221267
+https://github.com/user-attachments/assets/14ab398e-5cdc-477c-b626-c83fff01a73a
 
 - `PDF Merging:`Combine multiple PDF files into one with a simple command.
 - `URL Shortening:`Shorten long URLs for sharing.
