@@ -269,6 +269,7 @@ $(document).ready(function () {
             <div class="message user-message">
                 <span>${prompt}</span>
             </div>
+            
         `;
         $("#chat-window").append(html);
         scrollChatToBottom();
