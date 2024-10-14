@@ -8,7 +8,7 @@
 1. GUI (Provides intermediary outputs at every step)
 2. TERMINAL (Light Weight Alternative)
 
-### Lets Look at a video of its working
+### Let's look at a video of one aspect of its functionality.
 https://github.com/user-attachments/assets/119392dc-2b66-4923-afa0-dfa72a836fb3
 
 # `Workflow Diagram`
