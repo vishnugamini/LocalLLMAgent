@@ -49,12 +49,12 @@ def handle_agent_logic(prompt, sid, stop_event):
             time.sleep(0.1)
 
             response = llm()
+            print(response)
             msg_id = str(uuid.uuid4())
             response_json = json.loads(response)
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
             task = response_json.get("immediate_task_to_achieve",'')
-            print("task", task)
             if task != '':
                 socketio.emit(
                     "agent_response",
@@ -114,6 +114,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     )
 
                     if output.get("error"):
+                        print(code)
 
                         socketio.emit(
                             "agent_response",
@@ -145,11 +146,10 @@ def handle_agent_logic(prompt, sid, stop_event):
                         solution = json.loads(solution)
                         a = solution["error_description"]
                         b = solution["code"]
-                        c = f"{a} \n CODE to FIX {b}. modify whatever is needed in the code to achieve user's needs"
-                        print(c)
+                        c = f"{a} \n CODE to FIX {b}"
                         add_context(
                             "user",
-                            f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
+                            f"The code ran into an error, follow this exactly.Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
                         )
                         logger.info(f"Solution from Code Fixer: {c}")
 
@@ -162,6 +162,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
+                        time.sleep(1)
                     else:
                         socketio.emit(
                             "agent_response",
@@ -253,7 +254,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     output = search.search(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT. use different colors if needed)",
+                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_the_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT in message_to_the_user. use different colors if needed)",
                     )
 
                     socketio.emit(
@@ -389,16 +390,9 @@ def handle_end_processing():
         }
         emit("agent_response", emit_response, room=sid)
 
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
 
-def open_browser():
-    webbrowser.open_new('http://127.0.0.1:5000/')
-
 if __name__ == "__main__":
-    if os.environ.get("WERKZEUG_RUN_MAIN") == "true":
-        threading.Timer(1, open_browser).start()
-    app.run(debug=True)
+    app.run()

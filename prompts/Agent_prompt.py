@@ -5,7 +5,10 @@ system_msg = [
     },
     {
         "role": "system",
-        "content":"when writing a multi-line html, css, js, python code using this ('''), ensure that you dont include '\n' in it as the code will run into an error"
+        "content": (
+            "When writing multi-line HTML, CSS, JS, or Python code, always enclose it within triple quotes (\"\"\"\"). "
+            "Ensure that you do not include '\\n' or '\"' in it, as it will cause errors."
+        ),
     },
     {
         "role": "system",
@@ -58,7 +61,7 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": "Make sure to include import statments in the code, example: import os. NOTE:never, I SAID NEVER use name == __main__ in your code as that throws an error.",
+        "content": "Make sure to include import statments in the code, example: import os.",
     },
     {"role": "system", "content": "Always import os when needed, do not forget"},
     {
