@@ -1,20 +1,22 @@
+<div id="agent-status" class="inactive">Inactive</div>
 <div id="chat-window" class="chat-window"></div>
-<div id="agent-status" class="inactive">STATUS: Inactive</div>
 <div id="widget-container">
     <button id="refresh-btn" data-tooltip="Deletes the existing Memory of Agent">
-        🧠 REFRESH
+        <i class="bi bi-memory"></i> REFRESH
     </button>
     <button id="clear-btn" data-tooltip="Clears the chat window">
         <i class="bi bi-trash"></i>
         CLEAR
     </button>
     <button id="api-btn" data-tooltip="Configure APIs">
-    ⚙️ API
+        <i class="bi bi-gear-fill"></i>
+        API
     </button>
 </div>
 
 <div id="think-window" class="think-window think-header" id="think-msg">
     <h3 class="think-header">THINKING PHASE</h3>
+    <div class="thinking-container"></div>
 </div>
 
 <div id="api-modal" class="api-modal">
@@ -32,5 +34,3 @@
         </form>
     </div>
 </div>
-
-
