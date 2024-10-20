@@ -285,7 +285,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     results_pictures = picture.picSearch(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python if the user asked. Also before downloading the pictures, display the download links in readme format to the user in this manner '![Alt text](image-url)'. number them as well. DO the displaying work in msg_to_user section.",
+                        f"OUTPUT FROM PICTURE SEARCH RESULTS {results_pictures}. Now you can proceed to download these using python if the user asked. Also before downloading the pictures, display the download links in readme format to the user in this manner '![Alt text](image-url)'. number them as well. DO the displaying work in msg_to_user section. Limit the size of image to small",
                     )
 
                     socketio.emit(

@@ -1,3 +1,50 @@
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+if (SpeechRecognition) {
+    
+    const recognition = new SpeechRecognition();
+    recognition.continuous = false; 
+    recognition.interimResults = false; 
+    recognition.lang = 'en-US'; 
+
+    const voiceInputBtn = document.getElementById('voice-input-btn');
+    const promptTextarea = document.getElementById('prompt');
+    const sendButton = document.getElementById('send-btn');
+
+    voiceInputBtn.addEventListener('click', () => {
+        recognition.start();
+        voiceInputBtn.classList.add('listening');
+    });
+
+    
+    recognition.addEventListener('result', (event) => {
+        const transcript = event.results[0][0].transcript;
+        
+        promptTextarea.value = transcript;
+    });
+
+    
+    recognition.addEventListener('speechend', () => {
+        recognition.stop();
+        voiceInputBtn.classList.remove('listening');
+
+        
+        sendButton.click();
+    });
+
+    
+    recognition.addEventListener('error', (event) => {
+        console.error('Speech recognition error:', event.error);
+        voiceInputBtn.classList.remove('listening');
+        
+        alert('Error with speech recognition: ' + event.error);
+    });
+} else {
+    console.warn('SpeechRecognition API is not supported in this browser.');
+    document.getElementById('voice-input-btn').style.display = 'none';
+}
+
 function escapeHtml(text) {
     if (!text) {
         return "";
@@ -72,16 +119,19 @@ $(document).ready(function () {
     socket.on("agent_status", function (data) {
         const statusElement = $("#agent-status");
         if (data.status === "true") {
-            statusElement.text("STATUS: Active");
+            statusElement.text("Thinking");
             statusElement.removeClass("inactive").addClass("active");
             toggleButtons(true);
         } else {
-            statusElement.text("STATUS: Inactive");
+            statusElement.text("Inactive");
             statusElement.removeClass("active").addClass("inactive");
             toggleButtons(false);
         }
     });
+    
+
     function displayThinkingMessage(message, msg_id) {
+        
         let regex = /(\d+\)\s+)/g;
         let parts = message.split(regex);
         let items = [];
@@ -91,35 +141,89 @@ $(document).ready(function () {
             items.push({ number: number.trim(), content: content });
         }
 
+        
         let html = `
-      <h3 class="think-header" id="think-title-${msg_id}">
-        THINKING PHASE
-      </h3>
-      <div class="thinking-container">
-    `;
-
-        items.forEach(function (item) {
-            html += `
-        <div class="thinking-card">
-          <div class="card-header">
-            <span class="step-number">Step ${item.number}</span>
-          </div>
-          <div class="card-body">
-            <p>${escapeHtml(item.content)}</p>
-          </div>
+        <h3 class="think-header" id="think-title-${msg_id}">
+            THINKING PHASE
+        </h3>
+        <div class="thinking-container" id="thinking-container-${msg_id}">
         </div>
-      `;
-        });
-
-        html += "</div>";
-
+        `;
         $("#think-window").html(html);
+
+        
+        typeThinkingSteps(items, msg_id);
+    }
+
+    function typeThinkingSteps(steps, msg_id) {
+        let container = $(`#thinking-container-${msg_id}`);
+        let stepIndex = 0;
+
+        function typeNextStep() {
+            if (stepIndex < steps.length) {
+                let step = steps[stepIndex];
+                
+                let stepHtml = `
+                    <div class="thinking-card" id="thinking-card-${msg_id}-${stepIndex}">
+                    <div class="card-header">
+                        <span class="step-number">Step ${step.number}</span>
+                    </div>
+                    <div class="card-body">
+                        <p id="step-content-${msg_id}-${stepIndex}"></p>
+                    </div>
+                    </div>
+                `;
+                container.append(stepHtml);
+
+                
+                typeStepContent(step.content, msg_id, stepIndex, function() {
+                    
+                    stepIndex++;
+                    typeNextStep();
+                });
+            } else {
+                
+                
+                $("#think-window").removeClass("highlight");
+            }
+        }
+
+        
         $("#think-window").addClass("highlight");
 
-        setTimeout(function () {
-            $("#think-window").removeClass("highlight");
-        }, 4000);
+        
+        typeNextStep();
     }
+
+    function typeStepContent(content, msg_id, stepIndex, callback) {
+        let contentElement = $(`#step-content-${msg_id}-${stepIndex}`);
+        let index = 0;
+        let speed = 20; 
+        let tempContent = '';
+
+        function typeChar() {
+            if (index < content.length) {
+                let currentChar = content.charAt(index);
+                tempContent += currentChar;
+                
+                contentElement.html(escapeHtml(tempContent));
+                index++;
+                setTimeout(typeChar, speed);
+            } else {
+                
+                let parsedContent = marked.parse(tempContent);
+                contentElement.html(parsedContent);
+
+                
+                if (callback) callback();
+            }
+        }
+
+        typeChar();
+    }
+
+    
+
 
     function toggleButtons(isActive) {
         if (isActive) {
@@ -241,17 +345,38 @@ $(document).ready(function () {
     }
 
     function displayAgentMessage(message) {
+        let msg_id = Date.now();
         let html = `
-            <div class="message agent-message">
-                ${marked.parse(message)}
+            <div class="message agent-message" id="msg-${msg_id}">
+                <span></span>
             </div>
         `;
         $("#chat-window").append(html);
+        typeMessageCharacterByCharacter(message, msg_id);
+    }
+    function typeMessageCharacterByCharacter(message, msg_id) {
+        let messageElement = $(`#msg-${msg_id}`).find('span');
+        let index = 0;
+        let speed = 5; 
+        let tempMessage = ''; 
+    
+        function typeChar() {
+            if (index < message.length) {
+                let currentChar = message.charAt(index);
+                tempMessage += currentChar;
+                messageElement.html(escapeHtml(tempMessage));
+                index++;
+                setTimeout(typeChar, speed);
+            } else {
+                let parsedMessage = marked.parse(tempMessage);
+                messageElement.html(parsedMessage);
+            }
+        }
+        typeChar();
     }
     function clear() {
         const outerDiv = document.getElementById("think-window");
         outerDiv.querySelector(".thinking-container").innerHTML = "";
-        // document.getElementsByClassName("thinking-container").innerHTML = "";
         document.getElementById("chat-window").innerHTML = "";
     }
 
