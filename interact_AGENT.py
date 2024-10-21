@@ -1,5 +1,6 @@
 from terminal_ui.terminal_animation import initializer
 import threading
+
 spinner_thread = threading.Thread(target=initializer)
 spinner_thread.start()
 from LLM_response import llm, add_context, refresh
@@ -17,7 +18,7 @@ from terminal_ui.terminal_animation import (
     install_module,
     uninstall_module,
     child_agent_message,
-    kill_child_agent
+    kill_child_agent,
 )
 import json
 from colorama import Fore, Style, Back
@@ -30,13 +31,13 @@ prompt = ""
 spinner_thread.do_run = False
 spinner_thread.join()
 initial_message()
-agent_call = "false"  
+agent_call = "false"
 
 while prompt != "exit":
     prompt = input(
         Style.BRIGHT + Fore.WHITE + Back.BLACK + "Prompt: " + Style.RESET_ALL
     )
-    
+
     if prompt.lower() == "refresh":
         response = refresh()
         refresh_message(response)
@@ -47,12 +48,12 @@ while prompt != "exit":
     while prompt not in ["refresh", "exit"]:
         spinner_thread = threading.Thread(target=thinking_dots)
         spinner_thread.start()
-        
+
         response = llm()
-        
+
         spinner_thread.do_run = False
         spinner_thread.join()
-        
+
         response_json = json.loads(response)
         msg_to_user = response_json["message_to_the_user"]
         user_message(msg_to_user)
@@ -106,9 +107,11 @@ while prompt != "exit":
                 child_agent_message()
                 sub_agent = Sub_Agent()
                 response = sub_agent.initiate(query)
-                add_context("user", f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task if it exists")
+                add_context(
+                    "user",
+                    f"SUMMARY FROM SUB AGENT: {response}. You must explain the outcome to the user and then proceed to next task if it exists",
+                )
                 kill_child_agent()
-                
 
         if agent_call != "true":
             break
