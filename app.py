@@ -13,12 +13,13 @@ from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer
 from terminal_ui.terminal_animation import (
     kill_child_agent,
 )
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
 app = Flask(__name__)
-socketio = SocketIO(app, cors_allowed_origins="*",async_mode='threading')
+socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
@@ -28,11 +29,12 @@ processing_tasks = {}
 
 def handle_agent_logic(prompt, sid, stop_event):
     try:
+
         @socketio.on("refresh")
         def refresh_memory():
             response = refresh()
             emit_response = {"type": "refresh", "content": response}
-            socketio.emit("agent_response", emit_response, room = sid)
+            socketio.emit("agent_response", emit_response, room=sid)
 
         add_context("user", prompt)
         agent_call = "true"
@@ -54,8 +56,8 @@ def handle_agent_logic(prompt, sid, stop_event):
             response_json = json.loads(response)
             msg_to_user = response_json.get("message_to_the_user", "")
             agent_call = response_json.get("call_myself", "false")
-            task = response_json.get("immediate_task_to_achieve",'')
-            if task != '':
+            task = response_json.get("immediate_task_to_achieve", "")
+            if task != "":
                 socketio.emit(
                     "agent_response",
                     {
@@ -66,7 +68,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                     room=sid,
                 )
                 time.sleep(1)
-
 
             socketio.emit("agent_status", {"status": agent_call}, room=sid)
 
@@ -122,7 +123,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                                 "type": "error_message",
                                 "content": f"Error executing code. Running again...",
                                 "msg_id": msg_id,
-                                "output": output['output']
+                                "output": output["output"],
                             },
                             room=sid,
                         )
@@ -390,9 +391,11 @@ def handle_end_processing():
         }
         emit("agent_response", emit_response, room=sid)
 
+
 @app.route("/")
 def index():
     return render_template("index.html")
+
 
 if __name__ == "__main__":
     app.run()
