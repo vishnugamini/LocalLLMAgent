@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import time
 from flask_socketio import SocketIO, emit
+from miscellaneous import shorten_url
 import threading
 import json
 import logging
@@ -9,7 +10,7 @@ import webbrowser
 import os
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
-from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer
+from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer, GenerateImage
 from terminal_ui.terminal_animation import (
     kill_child_agent,
 )
@@ -23,6 +24,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="threading")
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
+image = GenerateImage()
 
 processing_tasks = {}
 
@@ -187,6 +189,29 @@ def handle_agent_logic(prompt, sid, stop_event):
                             room=sid,
                         )
                         time.sleep(1)
+                elif tool == "generate" and query != "None":
+                    socketio.emit(
+                        "agent_response",
+                        {
+                            "type": "loading_message",
+                            "content": f"Generating Picture for '{query}'. This might take a while. Please hold on.",
+                            "msg_id": msg_id,
+                        },
+                        room=sid,
+                    )
+                    time.sleep(1)
+                    link = image.generate(query)
+                    link = shorten_url(link)
+                    socketio.emit(
+                        "agent_response",
+                        {
+                            "type": "success_message",
+                            "content": f"Pictured Generated Successfully",
+                            "msg_id": msg_id,
+                        },
+                        room=sid,
+                    )
+                    add_context("user", f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'")
 
                 elif tool == "install" and query != "None":
 

@@ -13,6 +13,8 @@ import threading
 import copy
 import random
 
+
+
 from terminal_ui.terminal_animation2 import (
     sub_search_dots,
     sub_thinking_dots,
@@ -67,7 +69,24 @@ class PerpSearch:
         self.msg.append({"role": "assistant", "content": response})
         return response
 
+class GenerateImage:
+    def __init__(self):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.client = OpenAI(api_key=self.key)
 
+    def generate(self,query):
+        response = self.client.images.generate(
+        model="dall-e-3",
+        style='natural',
+        prompt=query,
+        size="1024x1024",
+        quality="standard",
+        n=1,
+        )
+        image_url = response.data[0].url
+        return image_url
+
+GenerateImage().generate("cat")          
 class PicSearch:
     def __init__(self):
         self.store = []

@@ -277,13 +277,14 @@ pre {
   align-self: flex-end;
   background: var(--message-bg-user);
   color: #ffffff;
+  max-width: 100%;
 }
 
 .agent-message {
   align-self: flex-start;
   background: var(--message-bg-agent);
   color: #ffffff;
-  max-width: 85%;
+  max-width: 100%;
   font-size: 1.2rem;
 }
 
@@ -311,6 +312,7 @@ pre {
 
 .success-message {
   align-self: flex-start;
+  font-size: 1.2rem;
   background: var(--success-color);
   color: #ffffff;
   display: flex;
@@ -408,6 +410,7 @@ pre {
   word-wrap: break-word;
   display: inline-block;
   animation: pulse 1.5s infinite;
+  font-size: 1.2rem;
 }
 
 @keyframes pulse {
@@ -981,6 +984,7 @@ pre {
   margin-top: 5px;
   margin-right: 9px;
   font-size: 1.3rem;
+  word-wrap: break-word;
 }
 
 #code-snippets-container {
@@ -1016,6 +1020,7 @@ pre {
   align-items: flex-start;
   padding-top: 50px;
   display: flex;
+  word-wrap: break-word;
 }
 
 .modal-content {
@@ -1029,6 +1034,7 @@ pre {
   border-radius: 4px;
   max-height: 90vh;
   overflow-y: auto;
+  word-wrap: break-word;
 }
 
 .close-code-modal {

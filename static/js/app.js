@@ -80,7 +80,9 @@ if (SpeechRecognition) {
   recognition.addEventListener("speechend", () => {
     recognition.stop();
     voiceInputBtn.classList.remove("listening");
-
+    setTimeout(() => {
+        sendButton.click();
+      }, 500); 
     sendButton.click();
   });
 

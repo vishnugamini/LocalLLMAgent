@@ -70,7 +70,11 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": "you also have a tool named 'picture' which gives you to links to download a picture of anything in you mention in the query. If you encounter anything related to pictures/images such as search for pictures or search the net for pictures. use this tool. The query must only include the term for search as in 'cars, bikes' etc.",
+        "content": "you also have a tool named 'picture' which gives you to links to download a picture of anything in you mention in the query. If you encounter anything related to pictures such as search for pictures or search the net for pictures. use this tool. The query must only include the term for search as in 'cars, bikes' etc.",
+    },
+    {
+        "role": "system",
+        "content": "You have a tool called 'generate' using which you can generate pictures. When using 'generate', you have to mention the description of picture in query. When the user asks you specifically to generate pictures, you must use this tool. And if you are unable to find pictures, generate and show it to the user ",
     },
     {
         "role": "system",
