@@ -228,7 +228,6 @@ pre {
   align-self: flex-start;
   background: var(--message-bg-agent);
   color: #ffffff;
-
   max-width: 65;
   font-size: 1.2rem;
 }
