@@ -1,3 +1,58 @@
+let codeSnippets = [];
+
+$(document).on("click", ".code-snippet-widget", function () {
+  let msg_id = $(this).data("msg-id");
+  showCodeInModal(msg_id);
+});
+
+function showCodeInModal(msg_id) {
+  let codeSnippet = codeSnippets.find((snippet) => snippet.id === msg_id);
+  if (codeSnippet) {
+    let modalHtml = `
+      <div class="modal" id="code-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button class="copy-button" title="Copy to clipboard">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+            <span class="close-code-modal">&times;</span>
+          </div>
+          <pre><code>${escapeHtml(codeSnippet.code)}</code></pre>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHtml);
+
+    $("#code-modal").show();
+
+    $(".copy-button").click(function () {
+      const codeText = codeSnippet.code;
+      navigator.clipboard
+        .writeText(codeText)
+        .then(() => {
+          const $copyButton = $(this);
+          $copyButton.html('<i class="fas fa-check"></i> Copied!');
+          setTimeout(() => {
+            $copyButton.html('<i class="fas fa-copy"></i> Copy');
+          }, 2000);
+        })
+        .catch((err) => {
+          console.error("Failed to copy text: ", err);
+          alert("Failed to copy code to clipboard");
+        });
+    });
+
+    $(".close-code-modal").click(function () {
+      $("#code-modal").remove();
+    });
+
+    $(window).click(function (event) {
+      if (event.target.id === "code-modal") {
+        $("#code-modal").remove();
+      }
+    });
+  }
+}
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -39,6 +94,21 @@ if (SpeechRecognition) {
   console.warn("SpeechRecognition API is not supported in this browser.");
   document.getElementById("voice-input-btn").style.display = "none";
 }
+const sendButton = document.getElementById("send-btn");
+const promptTextareas = document.getElementById("prompt");
+
+sendButton.classList.remove("show");
+
+promptTextareas.addEventListener("input", function () {
+  this.style.height = "auto";
+  this.style.height = this.scrollHeight + "px";
+
+  if (this.value.trim() !== "") {
+    sendButton.classList.add("show");
+  } else {
+    sendButton.classList.remove("show");
+  }
+});
 
 function escapeHtml(text) {
   if (!text) {
@@ -190,7 +260,7 @@ $(document).ready(function () {
   function typeStepContent(content, msg_id, stepIndex, callback) {
     let contentElement = $(`#step-content-${msg_id}-${stepIndex}`);
     let index = 0;
-    let speed = 20;
+    let speed = 10;
     let tempContent = "";
 
     function typeChar() {
@@ -259,20 +329,37 @@ $(document).ready(function () {
   function displayCodeExecutionMessage(message, code, msg_id) {
     code = code || "No code available";
 
+    codeSnippets.push({ id: msg_id, code: code });
+
     let html = `
-            <div class="message code-execution-message" id="msg-${msg_id}">
-                <span>${escapeHtml(message)}</span>
-                <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">Show Code</button>
-                <pre class="hidden-code" id="code-block-${msg_id}" style="display: none;"><code>${escapeHtml(
+      <div class="message code-execution-message" id="msg-${msg_id}">
+        <span>${escapeHtml(message)}</span>
+        <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">Show Code</button>
+        <pre class="hidden-code" id="code-block-${msg_id}" style="display: none;"><code>${escapeHtml(
       code
     )}</code></pre>
-            </div>
-        `;
+      </div>
+    `;
     $("#chat-window").append(html);
+    updateCodeSidebar(msg_id, code);
 
     $(`#show-code-${msg_id}`).click(function () {
       toggleCodeVisibility(msg_id);
     });
+  }
+
+  function updateCodeSidebar(msg_id, code) {
+    let codePreview = code.split("\n")[0];
+    if (codePreview.length > 30) {
+      codePreview = codePreview.substring(0, 27) + "...";
+    }
+
+    let snippetHtml = `
+      <div class="code-snippet-widget" data-msg-id="${msg_id}">
+        <span>${escapeHtml(codePreview)}</span>
+      </div>
+    `;
+    $("#code-snippets-container").append(snippetHtml);
   }
 
   function displayLoadingMessage(message, msg_id) {
