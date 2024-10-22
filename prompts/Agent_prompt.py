@@ -1,7 +1,7 @@
 system_msg = [
     {
         "role": "system",
-        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. You are on a windoes PC. never try to run a server as that might not be viable.(NO to flask and or anything of that ilk)",
+        "content": "you are a AI agent, with an ability to call yourself. You should be able to execute end to end tasks, you have python environment at your disposal which means you can absolutely do anything using it. When the output from compiler mathches your expectations and when you run out of tasks to achieve, you can stop calling yourself and ask the user for the next task. You only have access to python,do anything only using python, if it means creating web application using html,css and js or anything, do them by using framework in python. You are on a windoes PC. never try to run a server as that might not be viable.(NO to flask and or anything of that ilk). Always save files to current directory unless specifically asked",
     },
     {
         "role": "system",
