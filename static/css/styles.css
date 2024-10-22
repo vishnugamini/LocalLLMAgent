@@ -406,7 +406,7 @@ pre {
   padding: 15px 25px;
   box-sizing: border-box;
   margin-bottom: 15px;
-  max-width: 70%;
+  max-width: 100%;
   word-wrap: break-word;
   display: inline-block;
   animation: pulse 1.5s infinite;
@@ -442,7 +442,7 @@ pre {
 
 .bi-check-circle-fill {
   color: rgb(255, 255, 255);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-right: 10px;
 }
 
@@ -968,7 +968,6 @@ pre {
 
 #code-sidebar {
   width: 150px;
-
   padding-left: 20px;
   position: fixed;
   top: 0;
@@ -977,9 +976,9 @@ pre {
   background: var(--chat-box-bg);
   overflow: hidden;
 }
+
 #code-sidebar h3 {
-  border-style: dashed;
-  border: 3px solid #393737;
+  border: 3px dashed #393737;
   text-align: center;
   margin-top: 5px;
   margin-right: 9px;
@@ -990,20 +989,39 @@ pre {
 #code-snippets-container {
   max-height: 80vh;
   overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f0f0f0;
+}
+
+#code-snippets-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+#code-snippets-container::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+#code-snippets-container::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+  border: 2px solid #f0f0f0;
 }
 
 .code-snippet-widget {
   background: var(--message-bg-user);
   border: 3px solid #393737;
-  background-color: --;
   padding: 10px;
   margin-bottom: 10px;
   cursor: pointer;
   border-radius: 4px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .code-snippet-widget:hover {
   background-color: #474443;
+  transform: translateY(-2px);
 }
 
 .modal {
@@ -1019,8 +1037,8 @@ pre {
   justify-content: center;
   align-items: flex-start;
   padding-top: 50px;
-  display: flex;
   word-wrap: break-word;
+  display: flex;
 }
 
 .modal-content {
@@ -1035,6 +1053,43 @@ pre {
   max-height: 90vh;
   overflow-y: auto;
   word-wrap: break-word;
+  opacity: 0;
+  transform: scale(0.95);
+  animation: modalFadeIn 0.3s forwards;
+
+  scrollbar-width: thin;
+  scrollbar-color: #888 #f0f0f0;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 4px;
+  border: 2px solid #f0f0f0;
+}
+
+@keyframes modalFadeIn {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.error-snippet {
+  background-color: #f8d7da;
+  border-left: 4px solid #f5c6cb;
+}
+
+.error-snippet span {
+  color: #721c24;
 }
 
 .close-code-modal {
@@ -1045,13 +1100,14 @@ pre {
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
-  transition: color 0.3s;
+  transition: color 0.3s ease, transform 0.2s ease;
 }
 
 .close-code-modal:hover,
 .close-code-modal:focus {
   color: black;
   text-decoration: none;
+  transform: rotate(10deg);
 }
 
 .copy-button {
@@ -1061,8 +1117,10 @@ pre {
   border: 1px solid #ccc;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .copy-button:hover {
   background-color: #e0e0e0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }

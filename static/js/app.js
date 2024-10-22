@@ -1,5 +1,4 @@
 let codeSnippets = [];
-
 $(document).on("click", ".code-snippet-widget", function () {
   let msg_id = $(this).data("msg-id");
   showCodeInModal(msg_id);
@@ -81,9 +80,8 @@ if (SpeechRecognition) {
     recognition.stop();
     voiceInputBtn.classList.remove("listening");
     setTimeout(() => {
-        sendButton.click();
-      }, 500); 
-    sendButton.click();
+      sendButton.click();
+    }, 500);
   });
 
   recognition.addEventListener("error", (event) => {
@@ -173,7 +171,7 @@ $(document).ready(function () {
     } else if (data.type === "success_message") {
       updateLoadingMessage(data.msg_id, data.content);
     } else if (data.type === "error_message") {
-      updateLoadingMessageWithError(data.msg_id, data.content);
+      updateLoadingMessageWithError(data.msg_id, data.content, data.code);
     } else if (data.type === "error") {
       displayErrorMessage(data.content);
     } else if (data.type === "thinking_message") {
@@ -195,6 +193,91 @@ $(document).ready(function () {
       toggleButtons(false);
     }
   });
+  $(document).ready(function () {
+    $("#preview-btn").click(function () {
+      showPreviewModal();
+    });
+  });
+
+  function showPreviewModal() {
+    let modalHtml = `
+      <div class="modal" id="preview-modal">
+        <div class="modal-content">
+          <span class="close-preview-modal">&times;</span>
+          <div class="modal-body">
+            <div class="web-app-preview">
+              <iframe id="preview-iframe" src="about:blank" frameborder="0"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    $("body").append(modalHtml);
+
+    $("#preview-modal").css({
+      position: "fixed",
+      top: "0",
+      left: "0",
+      width: "100%",
+      height: "100%",
+      "background-color": "rgba(0, 0, 0, 0.9)",
+      "z-index": "1000",
+    });
+
+    $("#preview-modal .modal-content").css({
+      position: "relative",
+      width: "100%",
+      height: "100%",
+      "background-color": "#fff",
+      display: "flex",
+      "flex-direction": "column",
+    });
+
+    $("#preview-modal .modal-body").css({
+      flex: "1",
+      overflow: "hidden",
+    });
+
+    $("#preview-modal .web-app-preview").css({
+      width: "100%",
+      height: "100%",
+      "background-color": "#fff",
+      overflow: "hidden",
+    });
+
+    $("#preview-modal .web-app-preview iframe").css({
+      width: "100%",
+      height: "100%",
+      border: "none",
+    });
+
+    $("#preview-modal .close-preview-modal").css({
+      position: "absolute",
+      top: "20px",
+      right: "30px",
+      "font-size": "40px",
+      cursor: "pointer",
+      color: "#030303",
+      "z-index": "1001",
+    });
+
+    $("#preview-modal .close-preview-modal").click(function () {
+      $("#preview-modal").remove();
+    });
+
+    $(document).on("keydown", function (e) {
+      if (e.key === "Escape") {
+        $("#preview-modal").remove();
+      }
+    });
+
+    renderWebApp();
+  }
+
+  function renderWebApp() {
+    $("#preview-iframe").attr("src", "render/index.html");
+  }
+
   function scrollChatToBottom() {
     $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
   }
@@ -350,20 +433,6 @@ $(document).ready(function () {
     });
   }
 
-  function updateCodeSidebar(msg_id, code) {
-    let codePreview = code.split("\n")[0];
-    if (codePreview.length > 30) {
-      codePreview = codePreview.substring(0, 27) + "...";
-    }
-
-    let snippetHtml = `
-      <div class="code-snippet-widget" data-msg-id="${msg_id}">
-        <span>${escapeHtml(codePreview)}</span>
-      </div>
-    `;
-    $("#code-snippets-container").append(snippetHtml);
-  }
-
   function displayLoadingMessage(message, msg_id) {
     let html = `
             <div class="message loading-message" id="msg-${msg_id}">
@@ -399,16 +468,38 @@ $(document).ready(function () {
             `);
     }
   }
+  function updateCodeSidebar(msg_id, code, isError = false) {
+    let codePreview = code.split("\n")[0];
+    if (codePreview.length > 30) {
+      codePreview = codePreview.substring(0, 27) + "...";
+    }
 
-  function updateLoadingMessageWithError(msg_id, message) {
+    let snippetClass = "code-snippet-widget";
+    if (isError) {
+      snippetClass += " error-snippet";
+    }
+
+    let snippetHtml = `
+      <div class="${snippetClass}" data-msg-id="${msg_id}">
+        <span>${escapeHtml(codePreview)}</span>
+      </div>
+    `;
+    $("#code-snippets-container").append(snippetHtml);
+  }
+
+  function updateLoadingMessageWithError(msg_id, message, code) {
     let messageElement = $(`#msg-${msg_id}`);
     if (messageElement.length) {
       messageElement.removeClass("loading-message").addClass("error-message");
       messageElement.html(`
-                <span>${message}</span>
-                <i class="bi bi-exclamation-triangle-fill"></i>
-            `);
+        <span>${escapeHtml(message)}</span>
+        <i class="bi bi-exclamation-triangle-fill"></i>
+      `);
     }
+
+    codeSnippets.push({ id: msg_id, code: code });
+
+    updateCodeSidebar(msg_id, code, true);
   }
 
   function displayErrorMessage(message) {

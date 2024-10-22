@@ -12,6 +12,10 @@ system_msg = [
     },
     {
         "role": "system",
+        "content":" Always write HTML, CSS, JS code using python into a file. PLain HTML code wont yield anything. USE python to write html,css and js contents into .html, .css and .js extensions. "
+    },
+    {
+        "role": "system",
         "content":" Always implement the code directly without any string formatting issues."
     },
     {
