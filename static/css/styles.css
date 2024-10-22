@@ -161,11 +161,11 @@ body {
 }
 
 .futuristic-input-group #end-btn {
-  background: #e74c3c;
+  background: var(--button-bg);
   border: none;
   color: #ffffff;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;

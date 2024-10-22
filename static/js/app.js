@@ -206,31 +206,11 @@ $(document).ready(function () {
           <span class="close-preview-modal">&times;</span>
           <div class="modal-body">
             <div class="web-app-preview">
-              <iframe id="preview-iframe" src="about:blank" frameborder="0"></iframe>
+              <iframe id="preview-iframe" src="about:blank" frameborder="0" scrolling="yes"></iframe>
             </div>
           </div>
         </div>
       </div>
-      <style>
-        #preview-modal .modal-content::-webkit-scrollbar {
-          width: 12px;
-        }
-        #preview-modal .modal-content::-webkit-scrollbar-track {
-          background: #f1f1f1;
-          border-radius: 10px;
-        }
-        #preview-modal .modal-content::-webkit-scrollbar-thumb {
-          background: #888;
-          border-radius: 10px;
-        }
-        #preview-modal .modal-content::-webkit-scrollbar-thumb:hover {
-          background: #555;
-        }
-        #preview-modal .modal-content {
-          scrollbar-width: thin;
-          scrollbar-color: #888 #f1f1f1;
-        }
-      </style>
     `;
     $("body").append(modalHtml);
 
@@ -238,25 +218,36 @@ $(document).ready(function () {
       position: "fixed",
       top: "0",
       left: "0",
-      width: "100%",
-      height: "100%",
+      right: "0",
+      bottom: "0",
+      width: "100vw",
+      height: "100vh",
       "background-color": "rgba(0, 0, 0, 0.9)",
-      "z-index": "1000",
+      "z-index": "9999",
+      display: "flex",
+      "align-items": "center",
+      "justify-content": "center",
     });
 
     $("#preview-modal .modal-content").css({
       position: "relative",
-      width: "100%",
-      height: "100%",
+      width: "100vw",
+      height: "100vh",
       "background-color": "#fff",
       display: "flex",
       "flex-direction": "column",
-      overflow: "auto",
+      overflow: "hidden",
+      margin: "0",
+      padding: "0",
     });
 
     $("#preview-modal .modal-body").css({
       flex: "1",
       overflow: "hidden",
+      padding: "0",
+      margin: "0",
+      width: "100%",
+      height: "100%",
     });
 
     $("#preview-modal .web-app-preview").css({
@@ -264,22 +255,28 @@ $(document).ready(function () {
       height: "100%",
       "background-color": "#fff",
       overflow: "hidden",
+      display: "flex",
     });
 
     $("#preview-modal .web-app-preview iframe").css({
       width: "100%",
       height: "100%",
       border: "none",
+      margin: "0",
+      padding: "0",
+      overflow: "auto",
+      flex: "1",
     });
 
     $("#preview-modal .close-preview-modal").css({
       position: "fixed",
-      top: "-10px",
-      right: "5px",
+      top: "10px",
+      right: "20px",
       "font-size": "40px",
       cursor: "pointer",
       color: "#000000",
-      "z-index": "1001",
+      "z-index": "10000",
+      "text-shadow": "0 0 10px white",
     });
 
     $("#preview-modal .close-preview-modal").click(function () {
@@ -291,6 +288,7 @@ $(document).ready(function () {
         $("#preview-modal").remove();
       }
     });
+
     $("#preview-modal").on("click", function (e) {
       if ($(e.target).is("#preview-modal")) {
         $("#preview-modal").remove();
@@ -301,11 +299,27 @@ $(document).ready(function () {
   }
 
   function renderWebApp() {
-    $("#preview-iframe").attr("src", "render/index.html");
-  }
+    const iframe = document.getElementById("preview-iframe");
+    iframe.onload = function () {
+      try {
+        const iframeDoc =
+          iframe.contentDocument || iframe.contentWindow.document;
 
-  function renderWebApp() {
-    $("#preview-iframe").attr("src", "render/index.html");
+        if (!iframeDoc.querySelector('meta[name="viewport"]')) {
+          const meta = iframeDoc.createElement("meta");
+          meta.name = "viewport";
+          meta.content =
+            "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+          iframeDoc.head.appendChild(meta);
+        }
+      } catch (e) {
+        console.log(
+          "Cannot access iframe content - likely due to same-origin policy"
+        );
+      }
+    };
+
+    iframe.src = "render/index.html";
   }
 
   function scrollChatToBottom() {
