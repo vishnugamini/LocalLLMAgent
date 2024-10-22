@@ -14,7 +14,6 @@ import copy
 import random
 
 
-
 from terminal_ui.terminal_animation2 import (
     sub_search_dots,
     sub_thinking_dots,
@@ -23,7 +22,7 @@ from terminal_ui.terminal_animation2 import (
     sub_compiler_message,
     sub_user_message,
     sub_install_module,
-    sub_uninstall_module
+    sub_uninstall_module,
 )
 
 load_dotenv()
@@ -69,24 +68,28 @@ class PerpSearch:
         self.msg.append({"role": "assistant", "content": response})
         return response
 
+
 class GenerateImage:
     def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
         self.client = OpenAI(api_key=self.key)
 
-    def generate(self,query):
+    def generate(self, query):
         response = self.client.images.generate(
-        model="dall-e-3",
-        style='natural',
-        prompt=query,
-        size="1024x1024",
-        quality="standard",
-        n=1,
+            model="dall-e-3",
+            style="natural",
+            prompt=query,
+            size="1024x1024",
+            quality="standard",
+            n=1,
         )
         image_url = response.data[0].url
         return image_url
 
-GenerateImage().generate("cat")          
+
+GenerateImage().generate("cat")
+
+
 class PicSearch:
     def __init__(self):
         self.store = []
@@ -144,10 +147,11 @@ class InstallModule:
                 "output": f"Error occurred while installing {module}:\n{e.stderr}",
                 "error": True,
             }
+
     def uninstall(self, module):
         try:
             result = subprocess.run(
-                [sys.executable, "-m", "pip", "uninstall", module, '-y'],
+                [sys.executable, "-m", "pip", "uninstall", module, "-y"],
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 text=True,
@@ -162,12 +166,61 @@ class InstallModule:
                 "output": f"Error occurred while uninstalling {module}:\n{e.stderr}",
                 "error": True,
             }
+
+
 search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
 original_system_message = copy.deepcopy(system_msg)
 
-class Code_Fixer():
+
+class file_judger:
+    class Format(BaseModel):
+        file_type: str
+        code: str
+
+    def __init__(self, query):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.query = query
+        self.client = OpenAI(api_key=self.key)
+
+    def initiate(self):
+        messages = [
+            {
+                "role": "system",
+                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.js",
+            },
+            {
+                "role": "system",
+                "content": """This is how you provide your output {'file_type': 'provide the file type (html,css,js, none)', 'code': 'extracted html,css or js code only. None if no traces of html,css or js'}""",
+            },
+        ]
+        messages.append({"role": "user", "content": self.query})
+        completion = self.client.beta.chat.completions.parse(
+            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+        )
+        content = completion.choices[0].message.content
+        messages.append({"role": "assistant", "content": content})
+        self.act(content)
+
+    def act(self, content):
+        json_content = json.loads(content)
+        type = json_content["file_type"]
+        code = json_content["code"]
+        if type != "none":
+
+            if type == "html":
+                with open("render/index.html", "w") as file:
+                    file.write(code)
+            elif type == "css":
+                with open("render/styles.css", "w") as file:
+                    file.write(code)
+            elif type == "js":
+                with open("render/scripts.js", "w") as file:
+                    file.write(code)
+
+
+class Code_Fixer:
     class Format(BaseModel):
         error_description: str
         code: str
@@ -175,29 +228,38 @@ class Code_Fixer():
     def __init__(self, query):
         self.key = os.getenv("OPENAPI_KEY")
         self.query = query
-        self.client = OpenAI(api_key = self.key)
+        self.client = OpenAI(api_key=self.key)
 
     def initiate(self):
-        
+
         messages = [
-            {"role": "system", "content":"You are specialist in providing remedy to the incorrect code and error provided to you. The code is being ran in a python environment."},
-            {"role": "system","content":"when writing a multi-line html, css, js, python code using this ('''), ensure that you dont include '\n' in it as the code will run into an error"
+            {
+                "role": "system",
+                "content": "You are specialist in providing remedy to the incorrect code and error provided to you. The code is being ran in a python environment.",
             },
-            {"role": "system","content":" Always implement the code directly without any string formatting issues."
+            {
+                "role": "system",
+                "content": "when writing a multi-line html, css, js, python code using this ('''), ensure that you dont include '\n' in it as the code will run into an error",
             },
-            {"role": "system", "content": """This is how you provide your output {'error_description': 'There is wehere you write about the error', 'code': 'complete corrected python code for execution'}"""}
+            {
+                "role": "system",
+                "content": " Always implement the code directly without any string formatting issues.",
+            },
+            {
+                "role": "system",
+                "content": """This is how you provide your output {'error_description': 'There is wehere you write about the error', 'code': 'complete corrected python code for execution'}""",
+            },
         ]
-        messages.append({"role": "user","content": self.query})
+        messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06",
-            messages = messages,
-            response_format= self.Format
+            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
-        messages.append({"role": "assistant","content": content})
+        messages.append({"role": "assistant", "content": content})
         return content
 
-class Sub_Agent():
+
+class Sub_Agent:
     class Tool(BaseModel):
         tool_name: str
         required: bool
@@ -207,41 +269,40 @@ class Sub_Agent():
         code: Optional[str] = None
         query: Optional[str] = None
 
-
     class Message(BaseModel):
         message_from_SeniorAgent: str
         tasks_to_achieve: str
         immediate_task_to_achieve: str
         message_to_Senior_agent: str
-        tool: 'Sub_Agent.Tool'
+        tool: "Sub_Agent.Tool"
         call_myself: str
 
     def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
-        self.client = OpenAI(api_key = self.key)
+        self.client = OpenAI(api_key=self.key)
         self.msg = copy.deepcopy(system_msg)
 
-    def add_context(self,role, message):
+    def add_context(self, role, message):
         self.msg.append({"role": role, "content": message})
-    
+
     def llm(self):
         try:
             completion = self.client.beta.chat.completions.parse(
-                model="gpt-4o-mini-2024-07-18", # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
-                messages = self.msg,
-                response_format= self.Message,
+                model="gpt-4o-mini-2024-07-18",
+                messages=self.msg,
+                response_format=self.Message,
             )
             content = completion.choices[0].message.content
             self.add_context("assistant", content)
             return content
         except Exception as e:
             print(f"Error Occured \n {e}")
-    
-    def initiate(self,query):
+
+    def initiate(self, query):
         self.add_context("user", f"MESSAGE FROM SUPERIOR AGENT: {query}")
         call_myself = True
         msg_to_agent = ""
-        while call_myself != 'false':
+        while call_myself != "false":
             spinner_thread = threading.Thread(target=sub_thinking_dots)
             spinner_thread.start()
 
@@ -269,7 +330,10 @@ class Sub_Agent():
                     whole = f'CODE: {code} \n ERROR: {output["output"]}'
                     fixer = Code_Fixer(whole)
                     solution = fixer.initiate()
-                    self.add_context("user", f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {solution}")
+                    self.add_context(
+                        "user",
+                        f"Suggestion to fix the code from another agent. Follow this to mitigate the error. {solution}",
+                    )
                 else:
                     self.add_context(
                         "user", f"OUTPUT FROM PYTHON COMPILER {output['output']}"
@@ -289,7 +353,7 @@ class Sub_Agent():
                 self.add_context("user", f"OUTPUT FROM INSTALLATION {output}")
 
             elif tool == "search" and query != "None":
-                spinner_thread = threading.Thread(target = sub_search_dots)
+                spinner_thread = threading.Thread(target=sub_search_dots)
                 spinner_thread.start()
 
                 output = search.search(query)
@@ -313,4 +377,3 @@ class Sub_Agent():
 
         self.msg = copy.deepcopy(system_msg)
         return msg_to_agent
-

@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from flask import send_from_directory
 import time
 from flask_socketio import SocketIO, emit
 from miscellaneous import shorten_url
@@ -10,7 +11,15 @@ import webbrowser
 import os
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
-from agents import PerpSearch, PicSearch, InstallModule, Sub_Agent, Code_Fixer, GenerateImage
+from agents import (
+    PerpSearch,
+    PicSearch,
+    InstallModule,
+    Sub_Agent,
+    Code_Fixer,
+    GenerateImage,
+    file_judger,
+)
 from terminal_ui.terminal_animation import (
     kill_child_agent,
 )
@@ -126,6 +135,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                                 "content": f"Error executing code. Running again...",
                                 "msg_id": msg_id,
                                 "output": output["output"],
+                                "code": code,
                             },
                             room=sid,
                         )
@@ -167,6 +177,9 @@ def handle_agent_logic(prompt, sid, stop_event):
                         )
                         time.sleep(1)
                     else:
+                        f = file_judger(code)
+                        thread = threading.Thread(f.initiate())
+                        thread.start()
                         socketio.emit(
                             "agent_response",
                             {
@@ -177,7 +190,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                             room=sid,
                         )
                         time.sleep(1)
-
                         socketio.emit(
                             "agent_response",
                             {
@@ -211,7 +223,10 @@ def handle_agent_logic(prompt, sid, stop_event):
                         },
                         room=sid,
                     )
-                    add_context("user", f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'")
+                    add_context(
+                        "user",
+                        f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'",
+                    )
 
                 elif tool == "install" and query != "None":
 
@@ -398,6 +413,30 @@ def handle_user_prompt(data):
     else:
         emit_response = {"type": "error", "content": "No prompt provided."}
         emit("agent_response", emit_response, room=sid)
+
+
+@app.route("/render/<path:filename>")
+def serve_render_files(filename):
+    return send_from_directory("render", filename)
+
+
+@socketio.on("request_file_contents")
+def handle_request_file_contents():
+    sid = request.sid
+    try:
+        files = ["index.html", "styles.css", "test.js"]
+        file_contents = {}
+
+        for file_name in files:
+            file_path = os.path.join("render", file_name)
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+                file_contents[file_name] = content
+
+        emit("file_contents", file_contents, room=sid)
+    except Exception as e:
+        logger.error(f"Error reading files: {e}")
+        emit("file_contents", {"error": "Failed to read files."}, room=sid)
 
 
 @socketio.on("end_processing")
