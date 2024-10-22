@@ -178,7 +178,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         time.sleep(1)
                     else:
                         f = file_judger(code)
-                        thread = threading.Thread(f.initiate())
+                        thread = threading.Thread(target=f.initiate)
                         thread.start()
                         socketio.emit(
                             "agent_response",

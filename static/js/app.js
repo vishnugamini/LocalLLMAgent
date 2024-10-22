@@ -211,6 +211,26 @@ $(document).ready(function () {
           </div>
         </div>
       </div>
+      <style>
+        #preview-modal .modal-content::-webkit-scrollbar {
+          width: 12px;
+        }
+        #preview-modal .modal-content::-webkit-scrollbar-track {
+          background: #f1f1f1;
+          border-radius: 10px;
+        }
+        #preview-modal .modal-content::-webkit-scrollbar-thumb {
+          background: #888;
+          border-radius: 10px;
+        }
+        #preview-modal .modal-content::-webkit-scrollbar-thumb:hover {
+          background: #555;
+        }
+        #preview-modal .modal-content {
+          scrollbar-width: thin;
+          scrollbar-color: #888 #f1f1f1;
+        }
+      </style>
     `;
     $("body").append(modalHtml);
 
@@ -231,6 +251,7 @@ $(document).ready(function () {
       "background-color": "#fff",
       display: "flex",
       "flex-direction": "column",
+      overflow: "auto",
     });
 
     $("#preview-modal .modal-body").css({
@@ -252,12 +273,12 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .close-preview-modal").css({
-      position: "absolute",
-      top: "20px",
-      right: "30px",
+      position: "fixed",
+      top: "-10px",
+      right: "5px",
       "font-size": "40px",
       cursor: "pointer",
-      color: "#030303",
+      color: "#000000",
       "z-index": "1001",
     });
 
@@ -270,8 +291,17 @@ $(document).ready(function () {
         $("#preview-modal").remove();
       }
     });
+    $("#preview-modal").on("click", function (e) {
+      if ($(e.target).is("#preview-modal")) {
+        $("#preview-modal").remove();
+      }
+    });
 
     renderWebApp();
+  }
+
+  function renderWebApp() {
+    $("#preview-iframe").attr("src", "render/index.html");
   }
 
   function renderWebApp() {
