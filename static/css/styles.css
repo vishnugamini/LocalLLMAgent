@@ -272,17 +272,16 @@ pre {
   animation: fadeIn 0.3s ease-in-out;
 }
 
-.message span {
-  white-space: pre-wrap;
-}
-
-
 .user-message {
   font-family: "Roboto", sans-serif;
   align-self: flex-end;
   background: var(--message-bg-user);
   color: #ffffff;
   max-width: 100%;
+}
+
+.user-message span {
+  white-space: pre-wrap;
 }
 
 .agent-message {
