@@ -225,7 +225,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     )
                     add_context(
                         "user",
-                        f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'",
+                        f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'. download  it subsequently if the task involves downloading or displaying it in a html document etc.",
                     )
 
                 elif tool == "install" and query != "None":
