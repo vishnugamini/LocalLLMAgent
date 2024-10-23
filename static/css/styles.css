@@ -272,6 +272,11 @@ pre {
   animation: fadeIn 0.3s ease-in-out;
 }
 
+.message span {
+  white-space: pre-wrap;
+}
+
+
 .user-message {
   font-family: "Roboto", sans-serif;
   align-self: flex-end;
@@ -643,11 +648,11 @@ pre {
 
 /* @keyframes pulseBorder {
   0% {
-    box-shadow: 0 0 10px 5px var(--secondary-color);
+	box-shadow: 0 0 10px 5px var(--secondary-color);
   }
 
   100% {
-    box-shadow: 0 0 20px 15px var(--secondary-color);
+	box-shadow: 0 0 20px 15px var(--secondary-color);
   }
 } */
 

@@ -80,6 +80,38 @@ system_msg = [
         "role": "system",
         "content": 'You have another tool called "install" or "uninstall" which will allow you to install or uninstall python module. Simple mention the name of the python module in query. Whatever it is you want to install, USE THIS.',
     },
+    {"role": "system",
+     "content": '''Example of how you are going to create files without multiline string issue \n
+        import os
+        html_content = """
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="styles.css">
+            <title>OpenAI Offerings Mock</title>
+        </head>
+        <body>
+            <header>
+                <h1>OpenAI Offerings</h1>
+            </header>
+            <main>
+                <section class="offering">
+                    <h2>Product 1</h2>
+                    <p>Description of product 1...</p>
+                </section>
+            </main>
+            <footer>
+                <p>&copy; 2023 OpenAI Mock</p>
+            </footer>
+        </body>
+        </html>
+        """
+        with open('openai_offerings.html', 'w') as f:
+            f.write(html_content)
+        print('HTML file for OpenAI offerings mock created successfully.')'''
+    },
     {
         "role": "system",
         "content": "You have access to a tool called 'agent' which allows you to delegate smaller, detailed tasks to a sub-agent. When there are multiple tasks to achieve, use the 'agent' tool to offload specific tasks to avoid cluttering your memory with complex processes. The sub-agent will execute these tasks and provide you with a summary of the actions performed. To use this tool, include 'agent' in the tool, and in the 'query' field, provide a verbose and clear description of the task to delegate, breaking down the steps so the sub-agent can process them effectively.In file_location provide detailed location of the folder name and the file location where it needs to be saved.Please always delegate only 1 task at a time for more efficiency. Tasks like web developement and app development must only be executed by you."
@@ -116,5 +148,4 @@ system_msg = [
         "role": "system",
         "content": "also remember, the code you run is just a piece of code being sent to the compiler but is not being saved. So the next time you write code, do no assume that the previous code written by you is already present. It must all be rewritten again."
     }
-
 ]

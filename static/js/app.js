@@ -146,12 +146,14 @@ $(document).ready(function () {
     endProcessing();
   });
 
-  $("#prompt").keypress(function (e) {
-    if (e.which == 13) {
+  $("#prompt").on("keydown", function (e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault(); 
       sendPrompt();
       return false;
     }
   });
+
 
   socket.on("connect", function () {
     console.log("Connected to server");
@@ -603,19 +605,22 @@ $(document).ready(function () {
     if (prompt === "") {
       return;
     }
-
+  
     let html = `
-            <div class="message user-message">
-                <span>${prompt}</span>
-            </div>
-            
-        `;
+        <div class="message user-message">
+            <span>${prompt}</span>
+        </div>
+    `;
     $("#chat-window").append(html);
     scrollChatToBottom();
-    $("#prompt").val("");
-
+    $("#prompt").val(""); // Clear the textarea value
+  
+    // Reset the height of the textarea
+    $("#prompt").css("height", "");
+  
     socket.emit("user_prompt", { prompt: prompt });
   }
+  
 
   function scrollChatToBottom() {
     $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);

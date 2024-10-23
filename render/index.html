@@ -3,24 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Document</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Chat Interface</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Welcome to My Simple HTML Document</h1>
-    <p>This is a simple HTML document with lots of content.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    <p>In hac habitasse platea dictumst. Aenean pellentesque neque sed metus eleifend, sit amet sodales metus hendrerit.</p>
-    <p>Nunc fermentum nulla a dui hendrerit, eu accumsan erat ultrices.</p>
-    <p>Vestibulum egestas semper libero, eu consequat lorem consequat quis.</p>
-    <h2>More Information</h2>
-    <p>Curabitur sit amet ipsum arcu. Donec vel elit eget neque vulputate tincidunt.</p>
-    <p>Duis ac interdum ligula. In hac habitasse platea dictumst.</p>
-    <p>Phasellus varius nunc vitae nisi auctor gravida.</p>
-    <p>Donec lacinia ante eu nibh feugiat euismod.</p>
-    <h2>Contact</h2>
-    <p>If you have any questions, feel free to reach out!</p>
-    <p>Email: example@example.com</p>
+    <div id="chat-window"></div>
+    <textarea id="prompt" rows="3" placeholder="Type your message here..."></textarea>
+    <button onclick="sendPrompt()">Send</button>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="scripts.js"></script>
 </body>
 </html>
