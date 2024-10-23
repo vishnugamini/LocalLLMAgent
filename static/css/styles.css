@@ -641,7 +641,7 @@ pre {
   animation: pulseBorder 1s ease-in-out infinite alternate;
 }
 
-@keyframes pulseBorder {
+/* @keyframes pulseBorder {
   0% {
     box-shadow: 0 0 10px 5px var(--secondary-color);
   }
@@ -649,7 +649,7 @@ pre {
   100% {
     box-shadow: 0 0 20px 15px var(--secondary-color);
   }
-}
+} */
 
 .think-bubble {
   background-color: #e0f7fa;
@@ -989,7 +989,7 @@ pre {
 #code-snippets-container {
   max-height: 80vh;
   overflow-y: auto;
-
+  line-break: auto;
   scrollbar-width: thin;
   scrollbar-color: #888 #f0f0f0;
 }
