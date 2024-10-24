@@ -68,7 +68,6 @@ class PerpSearch:
         self.msg.append({"role": "assistant", "content": response})
         return response
 
-
 class GenerateImage:
     def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
@@ -92,7 +91,7 @@ class PicSearch:
         self.store = []
         self.url = "https://pixabay.com/api/"
         self.params = {
-            "key": "45949203-7642853208ee397943d748af1",
+            "key": os.getenv("PIXABAY_API"),
             "q": "",
             "image_type": "photo",
             "pretty": "true",
@@ -112,7 +111,6 @@ class PicSearch:
                 count = count - 1
             r = random.randint(0, size - count)
             for links in range(r, r + count):
-                print(results[links]["webformatURL"])
                 self.store.append(results[links]["webformatURL"])
             
             self.store = shorten_urls(self.store)
@@ -141,10 +139,9 @@ class PicDownloader:
         ]
         messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
-        print(content)
         messages.append({"role": "assistant", "content": content})
         msg = json.loads(content)
         type = msg["type"]
@@ -212,7 +209,6 @@ class file_judger:
         self.client = OpenAI(api_key=self.key)
 
     def initiate(self):
-        print("judging")
         messages = [
             {
                 "role": "system",
@@ -225,7 +221,7 @@ class file_judger:
         ]
         messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
         messages.append({"role": "assistant", "content": content})
@@ -235,8 +231,6 @@ class file_judger:
         json_content = json.loads(content)
         type = json_content["file_type"]
         code = json_content["code"]
-        print(type)
-        print(code)
         if type != "none":
 
             if type == "html":
@@ -283,7 +277,7 @@ class Code_Fixer:
         ]
         messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
         messages.append({"role": "assistant", "content": content})

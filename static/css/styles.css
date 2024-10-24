@@ -988,6 +988,7 @@ pre {
   cursor: pointer;
   border-radius: 4px;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  line-break:auto;
 }
 
 .code-snippet-widget:hover {
@@ -1094,4 +1095,11 @@ pre {
 .copy-button:hover {
   background-color: #e0e0e0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.result-header {
+  --tw-text-opacity: 1
+  color: #d3d3d3;
+  font-weight: bold;
+  margin-bottom: 5px;
 }
