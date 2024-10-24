@@ -169,7 +169,6 @@ $(document).ready(function () {
       updateSearchResults(data.content, data.results, data.msg_id);
     } else if (data.type === "compiler_message") {
       displayCodeExecutionMessage(data.content, data.code, data.msg_id);
-      console.log(data.code);
     } else if (data.type === "success_message") {
       updateLoadingMessage(data.msg_id, data.content);
     } else if (data.type === "error_message") {
@@ -497,7 +496,7 @@ $(document).ready(function () {
 
     if (codeBlock.is(":visible")) {
       codeBlock.hide();
-      showCodeBtn.text("Show Code");
+      showCodeBtn.text("Code");
     } else {
       codeBlock.show();
       showCodeBtn.text("Hide Code");

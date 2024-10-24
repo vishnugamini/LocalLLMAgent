@@ -180,9 +180,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                         f = file_judger(code)
                         g = PicDownloader(code)
                         thread = threading.Thread(target=f.initiate)
-                        print("thread1 started")
                         thread2 = threading.Thread(target=g.initiate)
-                        print("thread2 started")
                         thread.start()
                         thread2.start()
                         socketio.emit(
