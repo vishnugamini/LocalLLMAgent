@@ -1,23 +1,23 @@
 :root {
-    --primary-color: #6c5ce7;
-    --secondary-color: #00cec9;
-    --background-color: #000000;
-    --text-color: #ffffff;
-    --message-bg-user: #1b1a16;
-    --message-bg-agent: #333230;
-    --input-bg: rgba(255, 255, 255, 0.1);
-    --button-bg: #a3512b;
-    --button-hover: #d04d11;
-    --scrollbar-thumb: #ada7a7b6;
-    --scrollbar-track: rgba(255, 255, 255, 0.1);
-    --success-color: #27ae60;
-    --error-color: #e74c3c;
-    --code-bg: #2c3e50;
-    --code-color: #ecf0f1;
-    --loading-color: #f1c40f;
-    --chat-box-bg: rgb(43, 42, 39);
-    --chat-window-bg: rgba(30, 30, 30, 0.9);
-    --input-group-bg: rgba(30, 30, 30, 0.9);
+  --primary-color: #6c5ce7;
+  --secondary-color: #00cec9;
+  --background-color: #000000;
+  --text-color: #ffffff;
+  --message-bg-user: #3f3e3e;
+  --message-bg-agent: #212121;
+  --input-bg: rgba(255, 255, 255, 0.1);
+  --button-bg: #a3512b;
+  --button-hover: #d04d11;
+  --scrollbar-thumb: #ada7a7b6;
+  --scrollbar-track: rgba(255, 255, 255, 0.1);
+  --success-color: #27ae60;
+  --error-color: #e74c3c;
+  --code-bg: #2c3e50;
+  --code-color: #ecf0f1;
+  --loading-color: #f1c40f;
+  --chat-box-bg: rgb(43, 42, 39);
+  --chat-window-bg: rgba(30, 30, 30, 0.9);
+  --input-group-bg: rgba(30, 30, 30, 0.9);
 }
 
 body {
@@ -285,12 +285,17 @@ pre {
     max-width: 100%;
 }
 
+.user-message span {
+  white-space: pre-wrap;
+}
+
 .agent-message {
-    align-self: flex-start;
-    background: var(--message-bg-agent);
-    color: #ffffff;
-    max-width: 100%;
-    font-size: 1.2rem;
+  align-self: flex-start;
+  background: var(--message-bg-agent);
+  color: #ffffff;
+  max-width: 100%;
+  font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 .agent-message p:last-child {
@@ -316,18 +321,17 @@ pre {
 }
 
 .success-message {
-    align-self: flex-start;
-    font-size: 1.2rem;
-    background: var(--success-color);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    border-radius: 20px;
-    padding: 15px 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+  font-size: 1.2rem;
+  background: var(--success-color);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  border-radius: 20px 20px 0 0;
+  padding: 15px 20px;
+  margin-bottom: 0px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
 .success-message .tick-icon {
     margin-left: 10px;
     color: #ffffff;
@@ -353,14 +357,12 @@ pre {
 }
 
 .code-execution-message {
-    align-self: flex-start;
-    background: var(--code-bg);
-    color: #2ecc71;
-    border: 1px solid #2ecc71;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    font-family: "Fira Code", monospace;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  align-self: flex-start;
+  background: #424242;
+  color: #fff;
+  border-radius: 0px 10px 10px 10px;
+  margin-bottom: 15px;
+  font-family: "Fira Code", monospace;
 }
 
 .hidden-code,
@@ -617,12 +619,12 @@ pre {
 }
 
 .thinking-card {
-    border: 1px solid rgba(224, 224, 224, 0.8);
-    border-radius: 12px;
-    overflow: hidden;
-    background: linear-gradient(145deg, #ffffff, #f1f1f1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #3F3E3E;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #000;
 }
 
 .thinking-card:hover {
@@ -631,19 +633,18 @@ pre {
 }
 
 .thinking-card .card-header {
-    background-color: #f7f7f7;
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(224, 224, 224, 0.8);
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333333;
+  background-color: #1b1a16;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .thinking-card .card-body {
-    padding: 15px;
-    color: #555555;
-    line-height: 1.6;
-    font-size: 1rem;
+  padding: 15px;
+  color: #fff;
+  line-height: 1.6;
+  font-size: 1.2rem;
 }
 
 .highlight {
@@ -652,11 +653,11 @@ pre {
 
 /* @keyframes pulseBorder {
   0% {
-    box-shadow: 0 0 10px 5px var(--secondary-color);
+	box-shadow: 0 0 10px 5px var(--secondary-color);
   }
 
   100% {
-    box-shadow: 0 0 20px 15px var(--secondary-color);
+	box-shadow: 0 0 20px 15px var(--secondary-color);
   }
 } */
 
@@ -887,7 +888,10 @@ pre {
     visibility: visible;
     animation: popIn 1s forwards;
 }
-
+#send-btn:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+}
 @keyframes popIn {
     0% {
         opacity: 0;

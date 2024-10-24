@@ -10,7 +10,7 @@
 
 ### Let's look at a video of one aspect of its functionality.
 
-https://github.com/user-attachments/assets/0d4390af-7ed9-450b-b5e2-7a5ec12b630c
+https://github.com/user-attachments/assets/c7d64dc4-004a-45a5-864c-514297234aa5
 
 # `Workflow Diagram`
 ![workflow](https://github.com/user-attachments/assets/71e2c360-f1be-4d50-8714-1ef79e1a3b15)
@@ -39,24 +39,17 @@ https://github.com/user-attachments/assets/0d4390af-7ed9-450b-b5e2-7a5ec12b630c
 ### 6. `Internet Search & Research`
 - **Internet Search Functionality:** The agent can search the web for real-time information, news, or technical resources.
 
-https://github.com/user-attachments/assets/5ed5f0fe-7238-475c-9c94-34708d662143
-
 ### 7. `Research & Summarization`
 - Conduct research on any topic and summarize the findings or draft blog posts.
   
 ### 8. `Download pictures`
 **Search and download pictures:** The agent has a picture tool using which it can download pictures.
 
-https://github.com/user-attachments/assets/90945a68-93f7-427a-9194-474a5760c62e
-
 ## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
 
 SOME EXAMPLES ARE:
 - `PPT/PDF Preparation:`Prepare a PPT about a topic within seconds with just a simple prompt
-
-https://github.com/user-attachments/assets/14ab398e-5cdc-477c-b626-c83fff01a73a
-
 - `PDF Merging:`Combine multiple PDF files into one with a simple command.
 - `URL Shortening:`Shorten long URLs for sharing.
 - `File Sorting:`Automatically move, rename, or delete files based on predefined conditions (e.g., file type, date created).
@@ -102,7 +95,6 @@ To start using the Local LLM Agent, follow these steps:
    
   ### `TERMINAL VERSION`
        python interact_AGENT.py
-
 
 7. **Interact with the Agent**: Once the agent is running, you can start interacting with it through the terminal. You can give it tasks like "Create a Tic Tac Toe game" or "Debug this piece of code," and the agent will handle everything from development to debugging and even self-correction.
 

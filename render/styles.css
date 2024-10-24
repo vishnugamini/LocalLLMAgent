@@ -46,15 +46,20 @@ button:hover {
 button:active {
     background-color: #004494;
 }
-.history {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #ffffff;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; /* Increased gap between buttons */
 }
-#historyList {
-    list-style-type: none;
-    padding: 0;
+button {
+    padding: 20px; /* Increased button size */
+    font-size: 20px; /* Increased button font size */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
 }

@@ -146,12 +146,14 @@ $(document).ready(function () {
     endProcessing();
   });
 
-  $("#prompt").keypress(function (e) {
-    if (e.which == 13) {
+  $("#prompt").on("keydown", function (e) {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault(); 
       sendPrompt();
       return false;
     }
   });
+
 
   socket.on("connect", function () {
     console.log("Connected to server");
@@ -463,7 +465,7 @@ $(document).ready(function () {
     let html = `
       <div class="message code-execution-message" id="msg-${msg_id}">
         <span>${escapeHtml(message)}</span>
-        <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">Show Code</button>
+        <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">code</button>
         <pre class="hidden-code" id="code-block-${msg_id}" style="display: none;"><code>${escapeHtml(
       code
     )}</code></pre>
@@ -603,19 +605,22 @@ $(document).ready(function () {
     if (prompt === "") {
       return;
     }
-
+  
     let html = `
-            <div class="message user-message">
-                <span>${prompt}</span>
-            </div>
-            
-        `;
+        <div class="message user-message">
+            <span>${prompt}</span>
+        </div>
+    `;
     $("#chat-window").append(html);
     scrollChatToBottom();
-    $("#prompt").val("");
-
+    $("#prompt").val(""); // Clear the textarea value
+  
+    // Reset the height of the textarea
+    $("#prompt").css("height", "");
+  
     socket.emit("user_prompt", { prompt: prompt });
   }
+  
 
   function scrollChatToBottom() {
     $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
