@@ -229,21 +229,25 @@ class file_judger:
 
     def act(self, content):
         json_content = json.loads(content)
-        type = json_content["file_type"]
+        file_type = json_content["file_type"]
         code = json_content["code"]
-        if type != "none":
 
-            if type == "html":
+        if not os.path.exists("render"):
+            os.makedirs("render")
+
+        if file_type != "none":
+            if file_type == "html":
                 with open("render/index.html", "w") as file:
                     file.write(code)
-            elif type == "css":
+            elif file_type == "css":
                 with open("render/styles.css", "w") as file:
                     file.write(code)
-            elif type == "js":
+            elif file_type == "js":
                 with open("render/scripts.js", "w") as file:
                     file.write(code)
-            elif type == "python":
+            elif file_type == "python":
                 exec(code)
+
 
 class Code_Fixer:
     class Format(BaseModel):

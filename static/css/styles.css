@@ -47,9 +47,12 @@ body {
 }
 
 .chat-box h2 {
+  padding: 10px;
+  background-color: #333;
+ 
+  border-radius: 10px;
   font-family: "Orbitron", sans-serif;
-  color: var(--secondary-color);
-  text-shadow: 0 0 15px rgba(0, 206, 201, 0.7);
+  color: #F5F4EF;
   text-align: left;
   font-size: 3vh;
   letter-spacing: 1.5px;
@@ -61,7 +64,6 @@ body {
   top: 12.5%;
   min-width: 60%;
   max-width: 60%;
-
   height: 70%;
   overflow-y: scroll;
   padding: 20px;
@@ -587,7 +589,7 @@ pre {
 .think-header {
   padding: 15px 20px;
   background: rgb(43, 42, 39);
-  border: 2px solid rgba(255, 255, 255, 0.15);
+ 
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
@@ -595,12 +597,19 @@ pre {
 
 .think-header h3 {
   font-family: "Orbitron", sans-serif;
-  color: var(--secondary-color);
-  text-shadow: 0 0 15px rgba(0, 206, 201, 0.7);
-  margin-bottom: 20px;
-  font-size: 1.4rem;
+  color: #F5F4EF;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
   letter-spacing: 1.5px;
+  position: fixed;
+  background-color: #333;
+  padding: 5px;
+  z-index: 1000;
+  left: 50%;          
+  transform: translateX(-50%);  
+  text-align: center;  
 }
+
 
 .thinking-container {
   display: flex;
@@ -642,15 +651,7 @@ pre {
   animation: pulseBorder 1s ease-in-out infinite alternate;
 }
 
-/* @keyframes pulseBorder {
-  0% {
-	box-shadow: 0 0 10px 5px var(--secondary-color);
-  }
 
-  100% {
-	box-shadow: 0 0 20px 15px var(--secondary-color);
-  }
-} */
 
 @media (max-width: 768px) {
   #think-window {
@@ -663,7 +664,7 @@ pre {
 
 #widget-container {
   position: absolute;
-  top: 14.5%;
+  top: 16.5%;
   height: 10%;
   right: 10%;
   width: 28%;
@@ -690,7 +691,6 @@ pre {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
-  font-weight: bold;
   font-stretch: extra-expanded;
   display: flex;
   justify-content: center;
@@ -949,7 +949,9 @@ pre {
 }
 
 #code-sidebar h3 {
-  border: 3px dashed #393737;
+  color: #F5F4EF;
+  background-color: #333;
+  border: 3px solid #393737;
   text-align: center;
   margin-top: 5px;
   margin-right: 9px;
@@ -1103,3 +1105,10 @@ pre {
   font-weight: bold;
   margin-bottom: 5px;
 }
+
+.modal-content {
+  max-height: 100vh;
+  max-width: 120vh;
+  overflow-y: auto; 
+}
+

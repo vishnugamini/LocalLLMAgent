@@ -270,7 +270,7 @@ $(document).ready(function () {
 
     $("#preview-modal .close-preview-modal").css({
       position: "fixed",
-      top: "10px",
+      top: "-5px",
       right: "20px",
       "font-size": "40px",
       cursor: "pointer",
@@ -304,6 +304,22 @@ $(document).ready(function () {
       try {
         const iframeDoc =
           iframe.contentDocument || iframe.contentWindow.document;
+        const style = document.createElement("style");
+        style.textContent = `
+            ::-webkit-scrollbar {
+                width: 12px;
+            }
+            ::-webkit-scrollbar-thumb {
+                background-color: #444;
+                border-radius: 5px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: #e0e0e0;
+            }
+
+          `;
+        iframeDoc.head.appendChild(style);
 
         if (!iframeDoc.querySelector('meta[name="viewport"]')) {
           const meta = iframeDoc.createElement("meta");
@@ -331,14 +347,13 @@ $(document).ready(function () {
   }
 
   function displayThinkingMessage(message, msg_id) {
-    // Updated regex to match just the step number with optional parenthesis
     let regex = /(\d+)\)/g;
     let parts = message.split(regex);
     let items = [];
 
     for (let i = 1; i < parts.length; i += 2) {
-      let number = parts[i].trim(); // Get the number without the closing parenthesis
-      let content = parts[i + 1] ? parts[i + 1].trim() : ""; // Get the content after the number
+      let number = parts[i].trim();
+      let content = parts[i + 1] ? parts[i + 1].trim() : "";
       items.push({ number: number, content: content });
     }
 
@@ -365,7 +380,7 @@ $(document).ready(function () {
         let stepHtml = `
                     <div class="thinking-card" id="thinking-card-${msg_id}-${stepIndex}">
                     <div class="card-header">
-                        <span class="step-number">Step ${step.number}</span>
+                        <span class="step-number">↓</span>
                     </div>
                     <div class="card-body">
                         <p id="step-content-${msg_id}-${stepIndex}"></p>
@@ -518,7 +533,7 @@ $(document).ready(function () {
   function updateCodeSidebar(msg_id, code, isError = false) {
     let codePreview = code.split("\n")[0];
     if (codePreview.length > 30) {
-      codePreview = codePreview.substring(0, 27) + "...";
+      codePreview = codePreview.substring(10, 27) + "...";
     }
 
     let snippetClass = "code-snippet-widget";
