@@ -2,7 +2,6 @@ import sys
 import subprocess
 import shlex
 
-
 def exec_code(code, python_interpreter=None):
     code = "import os\n" + code
 
