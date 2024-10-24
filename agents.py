@@ -86,10 +86,6 @@ class GenerateImage:
         image_url = response.data[0].url
         return image_url
 
-
-GenerateImage().generate("cat")
-
-
 class PicSearch:
     def __init__(self):
         self.store = []
