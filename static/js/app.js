@@ -148,12 +148,11 @@ $(document).ready(function () {
 
   $("#prompt").on("keydown", function (e) {
     if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault(); 
+      e.preventDefault();
       sendPrompt();
       return false;
     }
   });
-
 
   socket.on("connect", function () {
     console.log("Connected to server");
@@ -169,7 +168,6 @@ $(document).ready(function () {
       updateSearchResults(data.content, data.results, data.msg_id);
     } else if (data.type === "compiler_message") {
       displayCodeExecutionMessage(data.content, data.code, data.msg_id);
-      console.log(data.code);
     } else if (data.type === "success_message") {
       updateLoadingMessage(data.msg_id, data.content);
     } else if (data.type === "error_message") {
@@ -333,13 +331,15 @@ $(document).ready(function () {
   }
 
   function displayThinkingMessage(message, msg_id) {
-    let regex = /(\d+\)\s+)/g;
+    // Updated regex to match just the step number with optional parenthesis
+    let regex = /(\d+)\)/g;
     let parts = message.split(regex);
     let items = [];
+
     for (let i = 1; i < parts.length; i += 2) {
-      let number = parts[i];
-      let content = parts[i + 1] ? parts[i + 1].trim() : "";
-      items.push({ number: number.trim(), content: content });
+      let number = parts[i].trim(); // Get the number without the closing parenthesis
+      let content = parts[i + 1] ? parts[i + 1].trim() : ""; // Get the content after the number
+      items.push({ number: number, content: content });
     }
 
     let html = `
@@ -348,7 +348,7 @@ $(document).ready(function () {
         </h3>
         <div class="thinking-container" id="thinking-container-${msg_id}">
         </div>
-        `;
+    `;
     $("#think-window").html(html);
 
     typeThinkingSteps(items, msg_id);
@@ -391,7 +391,7 @@ $(document).ready(function () {
   function typeStepContent(content, msg_id, stepIndex, callback) {
     let contentElement = $(`#step-content-${msg_id}-${stepIndex}`);
     let index = 0;
-    let speed = 10;
+    let speed = 5;
     let tempContent = "";
 
     function typeChar() {
@@ -464,6 +464,7 @@ $(document).ready(function () {
 
     let html = `
       <div class="message code-execution-message" id="msg-${msg_id}">
+        <div class="result-header">Result</div>
         <span>${escapeHtml(message)}</span>
         <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">code</button>
         <pre class="hidden-code" id="code-block-${msg_id}" style="display: none;"><code>${escapeHtml(
@@ -497,7 +498,7 @@ $(document).ready(function () {
 
     if (codeBlock.is(":visible")) {
       codeBlock.hide();
-      showCodeBtn.text("Show Code");
+      showCodeBtn.text("Code");
     } else {
       codeBlock.show();
       showCodeBtn.text("Hide Code");
@@ -605,7 +606,7 @@ $(document).ready(function () {
     if (prompt === "") {
       return;
     }
-  
+
     let html = `
         <div class="message user-message">
             <span>${prompt}</span>
@@ -613,14 +614,12 @@ $(document).ready(function () {
     `;
     $("#chat-window").append(html);
     scrollChatToBottom();
-    $("#prompt").val(""); // Clear the textarea value
-  
-    // Reset the height of the textarea
+    $("#prompt").val("");
+
     $("#prompt").css("height", "");
-  
+
     socket.emit("user_prompt", { prompt: prompt });
   }
-  
 
   function scrollChatToBottom() {
     $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
