@@ -3,8 +3,8 @@
   --secondary-color: #00cec9;
   --background-color: #000000;
   --text-color: #ffffff;
-  --message-bg-user: #1b1a16;
-  --message-bg-agent: #333230;
+  --message-bg-user: #3f3e3e;
+  --message-bg-agent: #212121;
   --input-bg: rgba(255, 255, 255, 0.1);
   --button-bg: #a3512b;
   --button-hover: #d04d11;
@@ -290,6 +290,7 @@ pre {
   color: #ffffff;
   max-width: 100%;
   font-size: 1.2rem;
+  margin-bottom: 15px;
 }
 
 .agent-message p:last-child {
@@ -321,12 +322,11 @@ pre {
   color: #ffffff;
   display: flex;
   align-items: center;
-  border-radius: 20px;
+  border-radius: 20px 20px 0 0;
   padding: 15px 20px;
-  margin-bottom: 15px;
+  margin-bottom: 0px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
-
 .success-message .tick-icon {
   margin-left: 10px;
   color: #ffffff;
@@ -353,13 +353,11 @@ pre {
 
 .code-execution-message {
   align-self: flex-start;
-  background: var(--code-bg);
-  color: #2ecc71;
-  border: 1px solid #2ecc71;
-  border-radius: 10px;
+  background: #424242;
+  color: #fff;
+  border-radius: 0px 10px 10px 10px;
   margin-bottom: 15px;
   font-family: "Fira Code", monospace;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .hidden-code,
@@ -882,7 +880,10 @@ pre {
   visibility: visible;
   animation: popIn 1s forwards;
 }
-
+#send-btn:hover {
+  background-color: var(--button-hover);
+  transform: translateY(-2px);
+}
 @keyframes popIn {
   0% {
     opacity: 0;

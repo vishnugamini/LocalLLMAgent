@@ -216,7 +216,7 @@ class file_judger:
         messages = [
             {
                 "role": "system",
-                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js.",
+                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js.Remember it should always be scripts.js and styles.css"
             },
             {
                 "role": "system",

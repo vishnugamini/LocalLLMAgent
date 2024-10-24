@@ -465,7 +465,7 @@ $(document).ready(function () {
     let html = `
       <div class="message code-execution-message" id="msg-${msg_id}">
         <span>${escapeHtml(message)}</span>
-        <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">Show Code</button>
+        <button class="show-code-btn" id="show-code-${msg_id}" data-msg-id="${msg_id}">code</button>
         <pre class="hidden-code" id="code-block-${msg_id}" style="display: none;"><code>${escapeHtml(
       code
     )}</code></pre>
