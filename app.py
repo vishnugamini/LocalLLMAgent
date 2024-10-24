@@ -19,6 +19,7 @@ from agents import (
     Code_Fixer,
     GenerateImage,
     file_judger,
+    PicDownloader
 )
 from terminal_ui.terminal_animation import (
     kill_child_agent,
@@ -36,6 +37,7 @@ install = InstallModule()
 image = GenerateImage()
 
 processing_tasks = {}
+
 
 
 def handle_agent_logic(prompt, sid, stop_event):
@@ -62,7 +64,6 @@ def handle_agent_logic(prompt, sid, stop_event):
             time.sleep(0.1)
 
             response = llm()
-            print(response)
             msg_id = str(uuid.uuid4())
             response_json = json.loads(response)
             msg_to_user = response_json.get("message_to_the_user", "")
@@ -126,8 +127,6 @@ def handle_agent_logic(prompt, sid, stop_event):
                     )
 
                     if output.get("error"):
-                        print(code)
-
                         socketio.emit(
                             "agent_response",
                             {
@@ -162,7 +161,8 @@ def handle_agent_logic(prompt, sid, stop_event):
                         c = f"{a} \n CODE to FIX {b}"
                         add_context(
                             "user",
-                            f"The code ran into an error, follow this exactly.Suggestion to fix the code from another agent. Follow this to mitigate the error. {c} \n YOU CAN Always DO A WEB SEARCH IF YOU HAVE TO",
+                            f"code to fix the error \n {b}. something to also keep in mind When writing multi-line HTML, CSS, JS, or Python code, always enclose it within triple quotes (\"\"\"\"). "
+                            "Ensure that you do not include '\\n' or '\"' in it, as it will cause errors.",
                         )
                         logger.info(f"Solution from Code Fixer: {c}")
 
@@ -178,8 +178,13 @@ def handle_agent_logic(prompt, sid, stop_event):
                         time.sleep(1)
                     else:
                         f = file_judger(code)
+                        g = PicDownloader(code)
                         thread = threading.Thread(target=f.initiate)
+                        print("thread1 started")
+                        thread2 = threading.Thread(target=g.initiate)
+                        print("thread2 started")
                         thread.start()
+                        thread2.start()
                         socketio.emit(
                             "agent_response",
                             {

@@ -23,7 +23,7 @@ def exec_code(code, python_interpreter=None):
             output = result.stdout.strip()
             error = False
             if not output:
-                output = "empty, add a print statement maybe to debug if needed! (don't use if __name__ == '__main__' as that might cause errors). You dont have to write code again if you think no print statements are expected."
+                output = ""
                 error = False
 
         return {"output": output, "error": error}

@@ -1,37 +1,42 @@
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f7;
-    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f3f3f3;
 }
-h1 {
-    color: #000;
-    font-size: 2.5em;
-    margin: 20px 0;
-}
-header {
-    background-color: #ffffff;
+.calculator {
+    border: 1px solid #ccc;
     padding: 20px;
-    text-align: center;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-#products {
-    margin: 40px;
-    text-align: center;
-}
-#products img {
-    max-width: 80%;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: transform 0.2s;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    width: 400px; /* Increased width */
 }
-#products img:hover {
-    transform: scale(1.05);
+#display {
+    width: 100%;
+    height: 60px; /* Increased height */
+    text-align: right;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 24px; /* Increased font size */
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
-footer {
-    background-color: #f8f8f8;
-    padding: 20px;
-    text-align: center;
-    position: relative;
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px; /* Increased gap between buttons */
+}
+button {
+    padding: 20px; /* Increased button size */
+    font-size: 20px; /* Increased button font size */
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
 }
