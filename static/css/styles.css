@@ -581,7 +581,7 @@ pre {
 }
 
 #think-window::-webkit-scrollbar-thumb:hover {
-  background: #8c7ae6;
+  background: #98989a;
 }
 
 .think-header {
@@ -610,12 +610,12 @@ pre {
 }
 
 .thinking-card {
-  border: 1px solid rgba(224, 224, 224, 0.8);
   border-radius: 12px;
   overflow: hidden;
-  background: linear-gradient(145deg, #ffffff, #f1f1f1);
+  background: #3F3E3E;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #000;
 }
 
 .thinking-card:hover {
@@ -624,19 +624,18 @@ pre {
 }
 
 .thinking-card .card-header {
-  background-color: #f7f7f7;
+  background-color: #1b1a16;
   padding: 10px 15px;
-  border-bottom: 1px solid rgba(224, 224, 224, 0.8);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
-  color: #333333;
+  color: #fff;
 }
 
 .thinking-card .card-body {
   padding: 15px;
-  color: #555555;
+  color: #fff;
   line-height: 1.6;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 .highlight {
@@ -652,39 +651,6 @@ pre {
 	box-shadow: 0 0 20px 15px var(--secondary-color);
   }
 } */
-
-.think-bubble {
-  background-color: #e0f7fa;
-  border-radius: 20px;
-  padding: 12px 18px;
-  margin: 5px;
-  position: relative;
-  max-width: 320px;
-  word-wrap: break-word;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.think-bubble:hover {
-  transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.think-bubble::after {
-  content: "";
-  position: absolute;
-  bottom: 10px;
-  left: -15px;
-  border-width: 10px 15px 10px 0;
-  border-style: solid;
-  border-color: transparent #e0f7fa transparent transparent;
-}
-
-.bubble-content p {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #00796b;
-}
 
 @media (max-width: 768px) {
   #think-window {
