@@ -68,7 +68,6 @@ class PerpSearch:
         self.msg.append({"role": "assistant", "content": response})
         return response
 
-
 class GenerateImage:
     def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
@@ -86,16 +85,13 @@ class GenerateImage:
         image_url = response.data[0].url
         return image_url
 
-
-GenerateImage().generate("cat")
-
-
+from miscellaneous import shorten_urls
 class PicSearch:
     def __init__(self):
         self.store = []
         self.url = "https://pixabay.com/api/"
         self.params = {
-            "key": "45949203-7642853208ee397943d748af1",
+            "key": os.getenv("PIXABAY_API"),
             "q": "",
             "image_type": "photo",
             "pretty": "true",
@@ -115,15 +111,43 @@ class PicSearch:
                 count = count - 1
             r = random.randint(0, size - count)
             for links in range(r, r + count):
-                print(results[links]["webformatURL"])
                 self.store.append(results[links]["webformatURL"])
+            
+            self.store = shorten_urls(self.store)
             return self.store
         except:
             return "no pictures found! make the search query simpler"
 
         finally:
             self.store = []
+class PicDownloader:
+    class Format(BaseModel):
+        type: str
+        code: str
 
+    def __init__(self, query):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.query = query
+        self.client = OpenAI(api_key=self.key)
+
+    def act(self,code):
+        exec(code)
+
+    def initiate(self):
+        messages = [{"role": "system", "content": "Your job is to indentify if the code being given to you is downloading a picture or not and it is downlaoding picture, modify the code such that picture or pictures is/are downloaded to the folder 'render' with names same as the ones specified in the code being supplied to you"}, {"role": "system","content": '''the output format is in this manner
+        {"type": "True or False", "code": "entire modified code of python"}. type should only be true if the code given is downloading pictures'''}
+        ]
+        messages.append({"role": "user", "content": self.query})
+        completion = self.client.beta.chat.completions.parse(
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
+        )
+        content = completion.choices[0].message.content
+        messages.append({"role": "assistant", "content": content})
+        msg = json.loads(content)
+        type = msg["type"]
+        code = msg["code"]
+        if type:
+            self.act(code)
 
 class InstallModule:
     def __init__(self):
@@ -188,7 +212,7 @@ class file_judger:
         messages = [
             {
                 "role": "system",
-                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js",
+                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js.Remember it should always be scripts.js and styles.css"
             },
             {
                 "role": "system",
@@ -197,7 +221,7 @@ class file_judger:
         ]
         messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
         messages.append({"role": "assistant", "content": content})
@@ -218,7 +242,8 @@ class file_judger:
             elif type == "js":
                 with open("render/scripts.js", "w") as file:
                     file.write(code)
-
+            elif type == "python":
+                exec(code)
 
 class Code_Fixer:
     class Format(BaseModel):
@@ -252,7 +277,7 @@ class Code_Fixer:
         ]
         messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-2024-08-06", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
         messages.append({"role": "assistant", "content": content})
