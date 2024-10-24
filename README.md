@@ -10,7 +10,7 @@
 
 ### Let's look at a video of one aspect of its functionality.
 
-https://github.com/user-attachments/assets/0d4390af-7ed9-450b-b5e2-7a5ec12b630c
+https://github.com/user-attachments/assets/c7d64dc4-004a-45a5-864c-514297234aa5
 
 # `Workflow Diagram`
 ![workflow](https://github.com/user-attachments/assets/71e2c360-f1be-4d50-8714-1ef79e1a3b15)
@@ -39,15 +39,11 @@ https://github.com/user-attachments/assets/0d4390af-7ed9-450b-b5e2-7a5ec12b630c
 ### 6. `Internet Search & Research`
 - **Internet Search Functionality:** The agent can search the web for real-time information, news, or technical resources.
 
-https://github.com/user-attachments/assets/5ed5f0fe-7238-475c-9c94-34708d662143
-
 ### 7. `Research & Summarization`
 - Conduct research on any topic and summarize the findings or draft blog posts.
   
 ### 8. `Download pictures`
 **Search and download pictures:** The agent has a picture tool using which it can download pictures.
-
-https://github.com/user-attachments/assets/90945a68-93f7-427a-9194-474a5760c62e
 
 ## `Automating Menial Tasks`
 The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
