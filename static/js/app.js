@@ -230,6 +230,7 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .modal-contents").css({
+      
       position: "relative",
       width: "100vw",
       height: "100vh",
@@ -242,6 +243,7 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .modal-body").css({
+      
       flex: "1",
       overflow: "hidden",
       padding: "0",
@@ -251,6 +253,7 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .web-app-preview").css({
+      
       width: "100%",
       height: "100%",
       "background-color": "#fff",
@@ -259,6 +262,7 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .web-app-preview iframe").css({
+      border: "solid 12px",
       width: "100%",
       height: "100%",
       border: "none",
@@ -531,9 +535,9 @@ $(document).ready(function () {
     }
   }
   function updateCodeSidebar(msg_id, code, isError = false) {
-    let codePreview = code.split("\n")[0];
+    let codePreview = code.split("\n")[2];
     if (codePreview.length > 30) {
-      codePreview = codePreview.substring(10, 27) + "...";
+      codePreview = codePreview.substring(13, 27) + "...";
     }
 
     let snippetClass = "code-snippet-widget";
