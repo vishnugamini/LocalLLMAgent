@@ -74,7 +74,7 @@ system_msg = [
     },
     {
         "role": "system",
-        "content": "You have a tool called 'generate' using which you can generate pictures. When using 'generate', you have to mention the description of picture in query. When the user asks you specifically to generate pictures, you must use this tool. And if you are unable to find pictures, generate and show it to the user ",
+        "content": "You have a tool called 'generate' using which you can generate pictures. When using 'generate', you have to mention the description of picture in query. When the user asks you specifically to generate pictures, you must use this tool. And if you are unable to find pictures, generate and show it to the user. you can only generate one picture at a time.",
     },
     {
         "role": "system",

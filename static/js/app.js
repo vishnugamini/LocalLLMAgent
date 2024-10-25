@@ -202,7 +202,7 @@ $(document).ready(function () {
   function showPreviewModal() {
     let modalHtml = `
       <div class="modal" id="preview-modal">
-        <div class="modal-content">
+        <div class="modal-contents">
           <span class="close-preview-modal">&times;</span>
           <div class="modal-body">
             <div class="web-app-preview">
@@ -229,7 +229,7 @@ $(document).ready(function () {
       "justify-content": "center",
     });
 
-    $("#preview-modal .modal-content").css({
+    $("#preview-modal .modal-contents").css({
       position: "relative",
       width: "100vw",
       height: "100vh",
