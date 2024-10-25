@@ -48,7 +48,7 @@ body {
 
 .chat-box h2 {
   padding: 10px;
-  background-color: #333;
+  background-color: #3b3b3b;
  
   border-radius: 10px;
   font-family: "Orbitron", sans-serif;
@@ -372,7 +372,7 @@ pre {
   font-family: "Fira Code", monospace;
   display: none;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-  border: 1px solid #27ae60;
+ 
   transition: all 0.3s ease-in-out;
   word-wrap: break-word;
 }
@@ -499,7 +499,7 @@ pre {
 
 .active {
   position: relative;
-  background-color: var(--success-color);
+  background-color: #3f3e3e; 
   border-radius: 20px;
   overflow: hidden;
   padding: 10px 20px;
@@ -517,14 +517,16 @@ pre {
   bottom: -5px;
   background: conic-gradient(
     from 0deg,
-    var(--secondary-color),
-    var(--primary-color),
-    var(--secondary-color)
+    #a3512b,
+    #d04d11,
+    #a3512b 
   );
   border-radius: 25px;
   animation: rotate 4s linear infinite;
   z-index: -1;
 }
+
+
 
 @keyframes rotate {
   from {
@@ -589,10 +591,11 @@ pre {
 .think-header {
   padding: 15px 20px;
   background: rgb(43, 42, 39);
- 
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 10;       
 }
 
 .think-header h3 {
@@ -601,13 +604,14 @@ pre {
   margin-bottom: 15px;
   font-size: 1.2rem;
   letter-spacing: 1.5px;
-  position: fixed;
+  position: fixed;      
   background-color: #333;
   padding: 5px;
-  z-index: 1000;
-  left: 50%;          
+  z-index: 1000;        
+  left: 50%;             
   transform: translateX(-50%);  
-  text-align: center;  
+  top: 0;               
+  text-align: center;
 }
 
 
@@ -662,23 +666,26 @@ pre {
   }
 }
 
+
 #widget-container {
   position: absolute;
   top: 16.5%;
-  height: 10%;
   right: 10%;
   width: 28%;
+  height: 10%;
   display: flex;
   justify-content: space-around;
-  flex-direction: row;
-  padding: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.625rem; 
   background: rgb(43, 42, 39);
-  border-radius: 12px;
+  border-radius: 0.75rem; 
   z-index: 10;
   box-sizing: border-box;
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
 }
 
 #widget-container button {
@@ -686,18 +693,21 @@ pre {
   background: var(--button-bg);
   border: none;
   color: #ffffff;
-  padding: 10px 16px;
-  border-radius: 14px;
+  padding: 0.625rem 1rem; 
+  border-radius: 0.875rem; 
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   font-size: 1rem;
   font-stretch: extra-expanded;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
-  width: 30%;
-  margin: 5px;
+  gap: 0.3125rem; 
+  flex: 1 1 30%;
+  margin: 0.3125rem; 
+  min-width: 80px;
+  box-sizing: border-box;
+  font-family: "Playwrite GB S", cursive;
 }
 
 #widget-container button i {
@@ -710,25 +720,25 @@ pre {
 #widget-container button::after {
   content: attr(data-tooltip);
   position: absolute;
-  bottom: 110%;
+  bottom: 120%;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(128, 128, 128, 0.5);
+  background: rgba(128, 128, 128, 0.8);
   color: #ffffff;
-  padding: 6px 10px;
-  border-radius: 6px;
+  padding: 0.375rem 0.625rem; 
+  border-radius: 0.375rem; 
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.3s ease;
-  font-size: 0.9rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  font-size: 0.875rem; 
   z-index: 1002;
 }
 
 #widget-container button::before {
   content: "";
   position: absolute;
-  bottom: 100%;
+  bottom: 110%;
   left: 50%;
   transform: translateX(-50%);
   border-width: 6px;
@@ -747,20 +757,64 @@ pre {
 
 #widget-container button:hover {
   background: var(--button-hover);
-  transform: translateY(-1px);
+  transform: translateY(-0.0625rem); 
 }
 
 #widget-container button:active {
   background: var(--button-active-bg);
   transform: scale(0.95);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0.25rem 0.9375rem rgba(0, 0, 0, 0.3);
+}
+
+#widget-container button:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1024px) {
+  #widget-container {
+    width: 35%;
+    right: 5%;
+    padding: 0.5rem;
+  }
+
+  #widget-container button {
+    flex: 1 1 45%;
+    min-width: 70px;
+    padding: 0.5rem 0.8rem;
+  }
 }
 
 @media (max-width: 768px) {
   #widget-container {
     width: 90%;
-    right: 10px;
+    right: 5%;
     bottom: calc(33px + 50vh + 10px);
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    padding: 0.5rem;
+  }
+
+  #widget-container button {
+    flex: 1 1 45%;
+    min-width: 60px;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  #widget-container {
+    flex-direction: column;
+    width: 95%;
+    padding: 0.5rem;
+  }
+
+  #widget-container button {
+    flex: 1 1 100%;
+    margin: 0.25rem 0;
+    padding: 0.5rem 1rem;
   }
 }
 
@@ -1106,9 +1160,80 @@ pre {
   margin-bottom: 5px;
 }
 
-.modal-content {
-  max-height: 100vh;
+.modal-contents {
+  max-height: 80vh;
   max-width: 120vh;
   overflow-y: auto; 
 }
 
+@media (max-width: 1024px) {
+  .chat-window,
+  .futuristic-input-group {
+    max-width: 80%;
+  }
+  #widget-container {
+    width: 35%;
+    right: 5%;
+    padding: 0.5rem;
+  }
+  #widget-container button {
+    flex: 1 1 45%;
+    min-width: 70px;
+    padding: 0.5rem 0.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-box {
+    padding: 2vh 2vw;
+  }
+  .chat-window,
+  .futuristic-input-group {
+    max-width: 90%;
+  }
+  .chat-window {
+    height: 75vh;
+  }
+  .message {
+    max-width: 85%;
+  }
+  .chat-box h2 {
+    font-size: 1.8rem;
+  }
+  #widget-container {
+    width: 90%;
+    right: 5%;
+    bottom: calc(33px + 50vh + 10px);
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    height: auto;
+    padding: 0.5rem;
+  }
+  #widget-container button {
+    flex: 1 1 45%;
+    min-width: 60px;
+    padding: 0.5rem 0.8rem;
+  }
+  #think-window {
+    bottom: 10px;
+    right: 10px;
+    width: 90%;
+    padding: 1.5vh;
+    height: auto;
+    max-height: 70vh;
+  }
+}
+
+@media (max-width: 480px) {
+  #widget-container {
+    flex-direction: column;
+    width: 95%;
+    padding: 0.5rem;
+  }
+  #widget-container button {
+    flex: 1 1 100%;
+    margin: 0.25rem 0;
+    padding: 0.5rem 1rem;
+  }
+}

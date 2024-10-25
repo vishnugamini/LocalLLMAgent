@@ -245,17 +245,26 @@ def handle_agent_logic(prompt, sid, stop_event):
                     time.sleep(1)
                     output = install.install(query)
                     add_context("user", f"OUTPUT FROM INSTALLATION {output}")
-
                     socketio.emit(
                         "agent_response",
                         {
                             "type": "success_message",
-                            "content": f"Module '{query}' installed successfully.",
-                            "msg_id": msg_id,
+                            "content": f"Executed Successfully",
+                            "msg_id": msg_id
                         },
                         room=sid,
                     )
                     time.sleep(1)
+                    socketio.emit(
+                        "agent_response",
+                        {
+                            "type": "compiler_message",
+                            "content": f"Module '{query}' installed successfully.",
+                            "msg_id": msg_id,
+                            "code": output["code"]
+                        },
+                        room=sid,
+                    )
 
                 elif tool == "uninstall" and query != "None":
 

@@ -165,6 +165,7 @@ class InstallModule:
             return {
                 "output": f"{module} module installed successfully",
                 "error": False,
+                "code": f"pip install {module}"
             }
         except subprocess.CalledProcessError as e:
             return {
