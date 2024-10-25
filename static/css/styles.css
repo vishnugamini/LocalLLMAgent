@@ -697,7 +697,7 @@ pre {
   border-radius: 0.875rem; 
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-  font-size: 1rem;
+  font-size: 0.8rem;
   font-stretch: extra-expanded;
   display: flex;
   justify-content: center;

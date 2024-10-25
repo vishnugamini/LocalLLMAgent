@@ -192,7 +192,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             },
                             room=sid,
                         )
-                        time.sleep(1)
+                        time.sleep(0.5)
                         socketio.emit(
                             "agent_response",
                             {
@@ -307,7 +307,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     output = search.search(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_the_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT in message_to_the_user. use different colors if needed)",
+                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_the_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT in message_to_the_user. use different colors if needed). once summarizing is done, ask the user if he wants the information to be presented in a html document in a beautiful manner. if he says yes, make sure to include a lot of css to beautify it.",
                     )
 
                     socketio.emit(
