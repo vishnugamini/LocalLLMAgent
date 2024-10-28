@@ -136,8 +136,8 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1.1rem;
-  font-weight: bold;
   margin-left: 10px;
+  font-family: "Playwrite GB S", cursive;
 }
 
 .futuristic-input-group button:hover {
@@ -171,8 +171,8 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1rem;
-  font-weight: bold;
   margin-left: 10px;
+  
 }
 
 .futuristic-input-group #end-btn:hover {
@@ -477,7 +477,7 @@ pre {
 }
 
 #agent-status {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   position: sticky;
   top: 10px;
   left: 55%;
@@ -485,11 +485,12 @@ pre {
   padding: 6px 8px;
   border-radius: 20px 20px 0 0;
   color: white;
-  font-weight: bold;
   display: flex;
   align-items: center;
   z-index: 1000;
   transition: background-color 0.3s ease;
+  font-family: "Playwrite GB S";
+  
 }
 
 #agent-status .bi {
@@ -543,7 +544,6 @@ pre {
   border-radius: 20px;
   color: #fff;
   padding: 10px 20px;
-  font-weight: bold;
   text-align: center;
 }
 
@@ -893,6 +893,7 @@ pre {
 #send-btn {
   opacity: 0;
   visibility: hidden;
+  font-family: "Playwrite GB S", cursive;
 }
 
 #send-btn.show {
@@ -1006,11 +1007,15 @@ pre {
   color: #F5F4EF;
   background-color: #333;
   border: 3px solid #393737;
+  border-radius: 10px;
   text-align: center;
   margin-top: 5px;
-  margin-right: 9px;
-  font-size: 1.3rem;
+  margin-right: 3px;
+  font-size: 1.2rem;
   word-wrap: break-word;
+  font-family: "Orbitron", sans-serif;
+  letter-spacing: 1.5px;
+  padding: 5px;
 }
 
 #code-snippets-container {
@@ -1037,7 +1042,7 @@ pre {
 }
 
 .code-snippet-widget {
-  background: var(--message-bg-user);
+  background: #1b1a16;
   border: 3px solid #393737;
   padding: 10px;
   margin-bottom: 10px;
@@ -1045,6 +1050,8 @@ pre {
   border-radius: 4px;
   transition: background-color 0.3s ease, transform 0.2s ease;
   line-break:auto;
+  border-radius: 15px
+  
 }
 
 .code-snippet-widget:hover {

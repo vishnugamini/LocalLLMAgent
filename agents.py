@@ -134,7 +134,7 @@ class PicDownloader:
         exec(code)
 
     def initiate(self):
-        messages = [{"role": "system", "content": "Your job is to indentify if the code being given to you is downloading a picture or not and it is downlaoding picture, modify the code such that picture or pictures is/are downloaded to the folder 'render' with names same as the ones specified in the code being supplied to you"}, {"role": "system","content": '''the output format is in this manner
+        messages = [{"role": "system", "content": "Your job is to indentify if the code being given to you is downloading a picture or not and it is downlaoding picture, modify the code such that picture or pictures is/are downloaded to the folder 'render' with names same as the ones specified in the code being supplied to you. Your next role is if you ever encounter python scripts which are trying to delete somthing, you have to delete the exact same thing but the files are inside the folder 'render' so ensure you provide appropriate code by changing the location"}, {"role": "system","content": '''the output format is in this manner
         {"type": "True or False", "code": "entire modified code of python"}. type should only be true if the code given is downloading pictures'''}
         ]
         messages.append({"role": "user", "content": self.query})
