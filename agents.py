@@ -445,7 +445,7 @@ class DeepResearch:
         self.msg = [
             {
                 "role": "system",
-                "content": "You are an assistant that provides up to date information about the query. You need to make sure you only provide information pertinent to the topic only. dont produce plethora of info, just generate the info that is relavant. You can also provide links",
+                "content": "You are an assistant that provides up to date information about the query. You need to make sure you only provide information pertinent to the topic only.You can also provide links",
             },
         ]
         self.payload = {
