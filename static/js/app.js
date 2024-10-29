@@ -1,3 +1,38 @@
+let selectedMode = "agent";
+document.addEventListener("DOMContentLoaded", () => {
+  const dropupMenu = document.getElementById("dropupMenuButton");
+  const dropdownItems = document.querySelectorAll(".dropdown-item");
+  dropdownItems.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      selectedMode = item.getAttribute("data-mode");
+
+      dropupMenu.innerHTML = item.textContent;
+
+      dropupMenu.classList.remove(
+        "btn-secondary",
+        "btn-primary",
+        "btn-info",
+        "btn-danger",
+        "btn-success"
+      );
+
+      switch (selectedMode) {
+        case "search":
+          dropupMenu.classList.add("btn-secondary");
+          break;
+        case "agent":
+          dropupMenu.classList.add("btn-primary");
+          break;
+        default:
+          dropupMenu.classList.add("btn-primary");
+      }
+
+      console.log(`Selected mode: ${selectedMode}`);
+    });
+  });
+});
+
 let codeSnippets = [];
 $(document).on("click", ".code-snippet-widget", function () {
   let msg_id = $(this).data("msg-id");
@@ -176,11 +211,68 @@ $(document).ready(function () {
       displayErrorMessage(data.content);
     } else if (data.type === "thinking_message") {
       displayThinkingMessage(data.content, data.msg_id);
+    } else if (data.type === "search_agent_message") {
+      SearchAgentMessage(data.content);
     } else {
       displayAgentMessage(data.content);
     }
     scrollChatToBottom();
   });
+  socket.on("search_response", function (data) {
+    if (data.type === "init") {
+      displaySearchStatus(data.labels, data.msg_id);
+    } else if (data.type === "update") {
+      updateSearchStatus(data.index, data.status, data.msg_id);
+    }
+  });
+  function displaySearchStatus(labels, msg_id) {
+    let html = `
+      <div class="message search-status-message" id="search-status-${msg_id}">
+        <div class="search-status-container">
+          <ul class="search-status-list" id="search-status-list-${msg_id}">
+          </ul>
+        </div>
+      </div>
+    `;
+    $("#chat-window").append(html);
+    labels.forEach(function (label, index) {
+      let itemHtml = `
+        <li class="search-status-item" id="search-item-${msg_id}-${index}">
+          <div class="search-label">${escapeHtml(label)}</div>
+        </li>
+      `;
+      $(`#search-status-list-${msg_id}`).append(itemHtml);
+    });
+    scrollChatToBottom();
+  }
+
+  function updateSearchStatus(index, status, msg_id) {
+    let item = $(`#search-item-${msg_id}-${index}`);
+    if (item.length) {
+      item.removeClass("searching completed");
+
+      item.find(".spinner, .bi-check-circle-fill").remove();
+
+      if (status === "searching") {
+        item.addClass("searching");
+
+        if (item.find(".search-label .spinner").length === 0) {
+          let spinner = $('<div class="spinner"></div>');
+          item.find(".search-label").append(spinner);
+        }
+      } else if (status === "complete") {
+        item.addClass("completed");
+
+        if (item.find(".search-label i").length === 0) {
+          let tickIcon = $('<i class="bi bi-check-circle-fill"></i>');
+          item.find(".search-label").append(tickIcon);
+        }
+      } else {
+        item.addClass(status);
+      }
+    }
+  }
+
   socket.on("agent_status", function (data) {
     const statusElement = $("#agent-status");
     if (data.status === "true") {
@@ -230,7 +322,6 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .modal-contents").css({
-      
       position: "relative",
       width: "100vw",
       height: "100vh",
@@ -243,7 +334,6 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .modal-body").css({
-      
       flex: "1",
       overflow: "hidden",
       padding: "0",
@@ -253,7 +343,6 @@ $(document).ready(function () {
     });
 
     $("#preview-modal .web-app-preview").css({
-      
       width: "100%",
       height: "100%",
       "background-color": "#fff",
@@ -609,6 +698,16 @@ $(document).ready(function () {
     }
     typeChar();
   }
+  function SearchAgentMessage(message) {
+    let msg_id = Date.now();
+    let parsedMessage = marked.parse(message);
+    let html = `
+        <div class="message agent-message" id="msg-${msg_id}">
+            <span>${parsedMessage}</span>
+        </div>
+    `;
+    $("#chat-window").append(html);
+  }
 
   function clear() {
     const outerDiv = document.getElementById("think-window");
@@ -637,7 +736,7 @@ $(document).ready(function () {
 
     $("#prompt").css("height", "");
 
-    socket.emit("user_prompt", { prompt: prompt });
+    socket.emit("user_prompt", { prompt: prompt, mode: selectedMode });
   }
 
   function scrollChatToBottom() {

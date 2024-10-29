@@ -1,6 +1,16 @@
 <div class="futuristic-input-group">
+    <div class="dropup">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="dropupMenuButton" data-bs-toggle="dropdown" aria-label="Select Mode">
+            🤖 Agent
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropupMenuButton">
+            <li><a class="dropdown-item" href="#" data-mode="search">🔍 Search</a></li>
+            <li><a class="dropdown-item" href="#" data-mode="agent">🤖 Agent</a></li>
+        </ul>
+    </div>
     <textarea id="prompt" class="form-control" rows="1" placeholder="🔮 Enter your prompt here..."
         aria-label="User prompt"></textarea>
+
     <button class="btn btn-primary" id="send-btn" aria-label="Send prompt">Send</button>
     <button id="end-btn" style="display: none;" aria-label="Stop the Response">End</button>
     <button id="voice-input-btn" aria-label="Click to speak">🎤</button>
