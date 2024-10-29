@@ -27,19 +27,24 @@ from terminal_ui.terminal_animation2 import (
 
 load_dotenv()
 
-
-class PerpSearch:
-    def __init__(self):
-        self.key = os.getenv("PERPLEXITY_API")
-        self.url = "https://api.perplexity.ai/chat/completions"
-        self.msg = [
+Perp_msg = [
             {
                 "role": "system",
                 "content": "Be very precise as the tokens you produce will affect another LLM's response. The information should be up to date, you will be mostly used for searches. Provide valid responses to the LLM. Do not provide extraneous, unsolicited content.The content must be Verbose and Valid. If the agent asks for a link, provide th actual link of the whatever's been asked without any wrapper on top",
             },
         ]
+
+class PerpSearch:
+    def refresh(self):
+        self.msg = copy.deepcopy(Perp_msg)
+        self.payload["messages"] = self.msg 
+
+    def __init__(self):
+        self.key = os.getenv("PERPLEXITY_API")
+        self.url = "https://api.perplexity.ai/chat/completions"
+        self.msg = copy.deepcopy(Perp_msg)
         self.payload = {
-            "model": "llama-3.1-sonar-large-128k-online",
+            "model": "llama-3.1-sonar-small-128k-online",
             "messages": self.msg,
             "temperature": 0.2,
             "top_p": 0.9,
@@ -60,6 +65,7 @@ class PerpSearch:
 
     def search(self, query):
         self.msg.append({"role": "user", "content": query})
+        self.payload["messages"] = self.msg  
         response = requests.request(
             "POST", self.url, json=self.payload, headers=self.headers
         )
@@ -67,6 +73,7 @@ class PerpSearch:
         response = response["choices"][0]["message"]["content"]
         self.msg.append({"role": "assistant", "content": response})
         return response
+
 
 class GenerateImage:
     def __init__(self):
@@ -438,18 +445,22 @@ class Labels:
         return {"labels": labels, "think": event["think"]}
 
 
-class DeepResearch:
-    def __init__(self):
-        self.key = os.getenv("PERPLEXITY_API")
-        self.url = "https://api.perplexity.ai/chat/completions"
-        self.msg = [
+deep_msg = [
             {
                 "role": "system",
                 "content": "You are an assistant that provides up to date information about the query. You need to make sure you only provide information pertinent to the topic only.You can also provide links",
             },
         ]
+class DeepResearch:
+    def refresh(self):
+        self.msg = copy.deepcopy(deep_msg)
+        self.payload["messages"] = self.msg
+    def __init__(self):
+        self.key = os.getenv("PERPLEXITY_API")
+        self.url = "https://api.perplexity.ai/chat/completions"
+        self.msg = copy.deepcopy(deep_msg)
         self.payload = {
-            "model": "llama-3.1-sonar-large-128k-online",
+            "model": "llama-3.1-sonar-small-128k-online",
             "messages": self.msg,
             "temperature": 0.2,
             "top_p": 0.9,
@@ -478,17 +489,7 @@ class DeepResearch:
         self.msg.append({"role": "assistant", "content": response})
         return response
 
-class ReseachSummary:
-    class Format(BaseModel):
-        readme_content: str
-
-    def __init__(self, query):
-        self.key = os.getenv("OPENAPI_KEY")
-        self.query = query
-        self.client = OpenAI(api_key=self.key)
-
-    def initiate(self):
-        messages = [
+research_msg = [
             {
                 "role": "system",
                 "content": "You are a a summarizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc"
@@ -498,13 +499,25 @@ class ReseachSummary:
                 "content": """This is how you provide your output {'readme_content': 'provide the readme content here'}""",
             },
         ]
-        messages.append({"role": "user", "content": self.query})
+class ReseachSummary:
+    def refresh(self):
+        self.msg = copy.deepcopy(research_msg)
+
+    class Format(BaseModel):
+        readme_content: str
+
+    def __init__(self):
+        self.messages = copy.deepcopy(research_msg)
+        self.key = os.getenv("OPENAPI_KEY")
+        self.client = OpenAI(api_key=self.key)
+
+    def initiate(self,query):
+        self.messages.append({"role": "user", "content": query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=self.messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
-        messages.append({"role": "assistant", "content": content})
+        self.messages.append({"role": "assistant", "content": content})
         content = json.loads(content)
-        print(content['readme_content'])
         return content['readme_content']
 

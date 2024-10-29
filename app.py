@@ -40,12 +40,16 @@ install = InstallModule()
 image = GenerateImage()
 processing_tasks = {}
 research = DeepResearch()
+summary = ReseachSummary()
 
 def handle_search_logic(prompt, sid, stop_event):
     try:
         @socketio.on("refresh")
         def refresh_memory():
             response = refresh()
+            summary.refresh()
+            research.refresh()
+            search.refresh()
             emit_response = {"type": "refresh", "content": response}
             socketio.emit("agent_response", emit_response, room=sid)
 
@@ -70,9 +74,8 @@ def handle_search_logic(prompt, sid, stop_event):
             "status": 'searching',
             "msg_id": msg_id
             })
-            time.sleep(0.3)
+            time.sleep(0.5)
             answer = research.search(labels[tasks])
-            print(answer)
             content = content + f"{labels[tasks]} \n {answer} \n"
             socketio.emit('search_response', {
             "type": 'update',
@@ -80,15 +83,14 @@ def handle_search_logic(prompt, sid, stop_event):
             "status": 'complete',
             "msg_id": msg_id
             })
-            time.sleep(0.3)
-        summary = ReseachSummary(content)
-        val = summary.initiate()
+            time.sleep(0.5)
+        summarize = summary.initiate(content)
         socketio.emit(
             "agent_response",
-            {"type": "search_agent_message", "content": val},
+            {"type": "search_agent_message", "content": summarize},
             room=sid,
         )
-        time.sleep(0.2)
+        time.sleep(0.5)
 
     except Exception as e:
         logger.error(f"Error in handle_agent_logic: {e}")
@@ -107,10 +109,12 @@ def handle_search_logic(prompt, sid, stop_event):
 
 def handle_agent_logic(prompt, sid, stop_event):
     try:
-
         @socketio.on("refresh")
         def refresh_memory():
             response = refresh()
+            summary.refresh()
+            research.refresh()
+            search.refresh()
             emit_response = {"type": "refresh", "content": response}
             socketio.emit("agent_response", emit_response, room=sid)
 
