@@ -19,7 +19,10 @@ from agents import (
     Code_Fixer,
     GenerateImage,
     file_judger,
-    PicDownloader
+    PicDownloader,
+    Labels,
+    DeepResearch,
+    ReseachSummary
 )
 from terminal_ui.terminal_animation import (
     kill_child_agent,
@@ -35,10 +38,72 @@ search = PerpSearch()
 picture = PicSearch()
 install = InstallModule()
 image = GenerateImage()
-
 processing_tasks = {}
+research = DeepResearch()
 
+def handle_search_logic(prompt, sid, stop_event):
+    try:
+        @socketio.on("refresh")
+        def refresh_memory():
+            response = refresh()
+            emit_response = {"type": "refresh", "content": response}
+            socketio.emit("agent_response", emit_response, room=sid)
 
+        msg_id = str(uuid.uuid4())
+        socketio.emit("agent_status", {"status": "true"}, room=sid)
+        lab = Labels(prompt)
+        params = lab.initiate()
+        labels = params["labels"]
+        think = params["think"]
+        length = len(labels)
+        content = f"QUERY: {prompt}"
+        socketio.emit('search_response', {
+        "type": 'init',
+        "labels":labels,
+        "msg_id": msg_id
+        })
+        time.sleep(0.5)
+        for tasks in range(0,length):
+            socketio.emit('search_response', {
+            "type": 'update',
+            "index": tasks,
+            "status": 'searching',
+            "msg_id": msg_id
+            })
+            time.sleep(0.3)
+            answer = research.search(labels[tasks])
+            print(answer)
+            content = content + f"{labels[tasks]} \n {answer} \n"
+            socketio.emit('search_response', {
+            "type": 'update',
+            "index": tasks,
+            "status": 'complete',
+            "msg_id": msg_id
+            })
+            time.sleep(0.3)
+        summary = ReseachSummary(content)
+        val = summary.initiate()
+        socketio.emit(
+            "agent_response",
+            {"type": "search_agent_message", "content": val},
+            room=sid,
+        )
+        time.sleep(0.2)
+
+    except Exception as e:
+        logger.error(f"Error in handle_agent_logic: {e}")
+        emit_response = {
+            "type": "error",
+            "content": "An error occurred while processing your request.",
+        }
+        socketio.emit("agent_response", emit_response, room=sid)
+    finally:
+
+        socketio.emit("agent_status", {"status": "false"}, room=sid)
+
+        if sid in processing_tasks:
+            del processing_tasks[sid]
+        logger.info(f"Processing task for session {sid} has ended.")
 
 def handle_agent_logic(prompt, sid, stop_event):
     try:
@@ -403,9 +468,10 @@ def handle_agent_logic(prompt, sid, stop_event):
 @socketio.on("user_prompt")
 def handle_user_prompt(data):
     prompt = data.get("prompt")
+    mode = data.get("mode")
     sid = request.sid
 
-    if prompt:
+    if prompt and mode == 'agent':
         if sid in processing_tasks:
 
             emit_response = {
@@ -419,6 +485,24 @@ def handle_user_prompt(data):
 
         thread = socketio.start_background_task(
             handle_agent_logic, prompt=prompt, sid=sid, stop_event=stop_event
+        )
+
+        processing_tasks[sid] = {"thread": thread, "stop_event": stop_event}
+
+    elif prompt and mode == "search":
+        if sid in processing_tasks:
+
+            emit_response = {
+                "type": "error",
+                "content": "A task is already in progress. Please wait or end the current task.",
+            }
+            emit("agent_response", emit_response, room=sid)
+            return
+
+        stop_event = threading.Event()
+
+        thread = socketio.start_background_task(
+            handle_search_logic, prompt=prompt, sid=sid, stop_event=stop_event
         )
 
         processing_tasks[sid] = {"thread": thread, "stop_event": stop_event}

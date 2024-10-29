@@ -407,3 +407,104 @@ class Sub_Agent:
 
         self.msg = copy.deepcopy(system_msg)
         return msg_to_agent
+
+class Labels:
+    class research(BaseModel):
+        think: str
+        labels: str
+
+    def __init__(self, query):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.client = OpenAI(api_key=self.key)
+        self.query = query
+        self.messages_gpt = [
+            {"role": "system", "content": "You are an research bot. You will be given a query which essentially needs to be searched. But you dont search, rather you break the query down into 3 or more key queries which when searched should yield the entire information regarding the original query. If the topic needs comrehensive infomation to be searched, labels can be more than 3(like a vast topic). We are trying to do a deeper research which is why breaking down the contents of query is essential"},
+            {"role": "system", "content": "You have to reply in json format. the format is as follows {'think': 'this is the space for you to use chain of thought to identify the key points to be needed to searched about to answer the question full fledgedly', 'labels': 'here the labels to search for are presented seperated by a comma'}"}
+        ]
+        self.update_mem("user", query)
+    def update_mem(self,user,message):
+        self.messages_gpt.append({"role": user, "content": message})
+    def initiate(self):
+        completion = self.client.beta.chat.completions.parse(
+        model="gpt-4o-mini-2024-07-18",
+        messages=self.messages_gpt,
+        response_format=self.research,
+        )
+        event = completion.choices[0].message.content
+        self.update_mem('agent', event)
+        event = json.loads(event)
+        labels = event['labels']
+        labels = labels.split(",")
+        return {"labels": labels, "think": event["think"]}
+
+
+class DeepResearch:
+    def __init__(self):
+        self.key = os.getenv("PERPLEXITY_API")
+        self.url = "https://api.perplexity.ai/chat/completions"
+        self.msg = [
+            {
+                "role": "system",
+                "content": "You are an assistant that provides up to date information about the query. You need to make sure you only provide information pertinent to the topic only. dont produce plethora of info, just generate the info that is relavant. You can also provide links",
+            },
+        ]
+        self.payload = {
+            "model": "llama-3.1-sonar-large-128k-online",
+            "messages": self.msg,
+            "temperature": 0.2,
+            "top_p": 0.9,
+            "return_citations": True,
+            "search_domain_filter": ["perplexity.ai"],
+            "return_images": True,
+            "return_related_questions": True,
+            "search_recency_filter": "month",
+            "top_k": 0,
+            "stream": False,
+            "presence_penalty": 0,
+            "frequency_penalty": 1,
+        }
+        self.headers = {
+            "Authorization": f"Bearer {self.key}",
+            "Content-Type": "application/json",
+        }
+
+    def search(self, query):
+        self.msg.append({"role": "user", "content": query})
+        response = requests.request(
+            "POST", self.url, json=self.payload, headers=self.headers
+        )
+        response = json.loads(response.text)
+        response = response["choices"][0]["message"]["content"]
+        self.msg.append({"role": "assistant", "content": response})
+        return response
+
+class ReseachSummary:
+    class Format(BaseModel):
+        readme_content: str
+
+    def __init__(self, query):
+        self.key = os.getenv("OPENAPI_KEY")
+        self.query = query
+        self.client = OpenAI(api_key=self.key)
+
+    def initiate(self):
+        messages = [
+            {
+                "role": "system",
+                "content": "You are a a summarizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc"
+            },
+            {
+                "role": "system",
+                "content": """This is how you provide your output {'readme_content': 'provide the readme content here'}""",
+            },
+        ]
+        messages.append({"role": "user", "content": self.query})
+        completion = self.client.beta.chat.completions.parse(
+            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
+        )
+        content = completion.choices[0].message.content
+        messages.append({"role": "assistant", "content": content})
+        content = json.loads(content)
+        print(content['readme_content'])
+        return content['readme_content']
+
