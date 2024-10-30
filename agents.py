@@ -420,28 +420,28 @@ class Labels:
         think: str
         labels: str
 
-    def __init__(self, query):
+    def __init__(self):
         self.key = os.getenv("OPENAPI_KEY")
         self.client = OpenAI(api_key=self.key)
-        self.query = query
         self.messages_gpt = [
-            {"role": "system", "content": "You are an research bot. You will be given a query which essentially needs to be searched. But you dont search, rather you break the query down into 3 or more key queries which when searched should yield the entire information regarding the original query. If the topic needs comrehensive infomation to be searched, labels can be more than 3(like a vast topic). We are trying to do a deeper research which is why breaking down the contents of query is essential"},
-            {"role": "system", "content": "You have to reply in json format. the format is as follows {'think': 'this is the space for you to use chain of thought to identify the key points to be needed to searched about to answer the question full fledgedly', 'labels': 'here the labels to search for are presented seperated by a comma'}"}
+            {"role": "system", "content": "You are an research bot. You will be given a query which essentially needs to be searched. But you dont search, rather you break the query down into 3 or more key queries which when searched should yield the entire information regarding the original query. If the topic needs comrehensive infomation to be searched, labels can be more than 3(like a vast topic).The labels are full sentence which are questions as to what needs to be searched. We are trying to do a deeper research which is why breaking down the contents of query is essential. If enough information is not provided, link the context to previous qeuries."},
+            {"role": "system", "content": "You have to reply in json format. the format is as follows {'think': 'this is the space for you to use chain of thought to identify the key points to be needed to searched about to answer the question full fledgedly', 'labels': 'Here the labels to search for are presented seperated by []. example: cars[]bikes'}"}
         ]
-        self.update_mem("user", query)
+
     def update_mem(self,user,message):
         self.messages_gpt.append({"role": user, "content": message})
-    def initiate(self):
+    def initiate(self, query):
+        self.update_mem("user", query)
         completion = self.client.beta.chat.completions.parse(
         model="gpt-4o-mini-2024-07-18",
         messages=self.messages_gpt,
         response_format=self.research,
         )
         event = completion.choices[0].message.content
-        self.update_mem('agent', event)
+        self.update_mem('assistant', event)
         event = json.loads(event)
         labels = event['labels']
-        labels = labels.split(",")
+        labels = labels.split("[]")
         return {"labels": labels, "think": event["think"]}
 
 
@@ -492,7 +492,7 @@ class DeepResearch:
 research_msg = [
             {
                 "role": "system",
-                "content": "You are a a summarizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc"
+                "content": "You are a summarizer  and info organizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc. Everything must be in an orderly manner"
             },
             {
                 "role": "system",

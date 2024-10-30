@@ -41,6 +41,7 @@ image = GenerateImage()
 processing_tasks = {}
 research = DeepResearch()
 summary = ReseachSummary()
+lab = Labels()
 
 def handle_search_logic(prompt, sid, stop_event):
     try:
@@ -55,9 +56,9 @@ def handle_search_logic(prompt, sid, stop_event):
 
         msg_id = str(uuid.uuid4())
         socketio.emit("agent_status", {"status": "true"}, room=sid)
-        lab = Labels(prompt)
-        params = lab.initiate()
+        params = lab.initiate(prompt)
         labels = params["labels"]
+        labels.append("Compiling information, please hold on for a moment!")
         think = params["think"]
         length = len(labels)
         content = f"QUERY: {prompt}"
@@ -67,14 +68,14 @@ def handle_search_logic(prompt, sid, stop_event):
         "msg_id": msg_id
         })
         time.sleep(0.5)
-        for tasks in range(0,length):
+        for tasks in range(0,length - 1):
             socketio.emit('search_response', {
             "type": 'update',
             "index": tasks,
             "status": 'searching',
             "msg_id": msg_id
             })
-            time.sleep(0.5)
+            time.sleep(1)
             answer = research.search(labels[tasks])
             content = content + f"{labels[tasks]} \n {answer} \n"
             socketio.emit('search_response', {
@@ -83,14 +84,29 @@ def handle_search_logic(prompt, sid, stop_event):
             "status": 'complete',
             "msg_id": msg_id
             })
-            time.sleep(0.5)
+            time.sleep(2)
+        time.sleep(1)
+        socketio.emit('search_response', {
+        "type": 'update',
+        "index": length - 1,
+        "status": 'searching',
+        "msg_id": msg_id
+        })
+        time.sleep(1)
         summarize = summary.initiate(content)
+        socketio.emit('search_response', {
+        "type": 'update',
+        "index": length - 1,
+        "status": 'complete',
+        "msg_id": msg_id,
+        })
+        time.sleep(1)
         socketio.emit(
             "agent_response",
             {"type": "search_agent_message", "content": summarize},
             room=sid,
         )
-        time.sleep(0.5)
+        time.sleep(1)
 
     except Exception as e:
         logger.error(f"Error in handle_agent_logic: {e}")
