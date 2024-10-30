@@ -235,14 +235,20 @@ $(document).ready(function () {
       </div>
     `;
     $("#chat-window").append(html);
-    labels.forEach(function (label, index) {
+
+    if (labels.length > 0) {
+      let label = labels[0];
       let itemHtml = `
-        <li class="search-status-item" id="search-item-${msg_id}-${index}">
+        <li class="search-status-item" id="search-item-${msg_id}-0">
           <div class="search-label">${escapeHtml(label)}</div>
         </li>
       `;
       $(`#search-status-list-${msg_id}`).append(itemHtml);
-    });
+    }
+
+    $(`#search-status-${msg_id}`).data("labels", labels);
+    $(`#search-status-${msg_id}`).data("currentIndex", 0);
+
     scrollChatToBottom();
   }
 
@@ -267,8 +273,30 @@ $(document).ready(function () {
           let tickIcon = $('<i class="bi bi-check-circle-fill"></i>');
           item.find(".search-label").append(tickIcon);
         }
+
+        let container = $(`#search-status-${msg_id}`);
+        let labels = container.data("labels");
+        let currentIndex = container.data("currentIndex");
+
+        if (currentIndex + 1 < labels.length) {
+          let nextIndex = currentIndex + 1;
+          let nextLabel = labels[nextIndex];
+
+          let itemHtml = `
+            <li class="search-status-item" id="search-item-${msg_id}-${nextIndex}">
+              <div class="search-label">${escapeHtml(nextLabel)}</div>
+            </li>
+          `;
+          let nextItem = $(itemHtml).hide();
+          $(`#search-status-list-${msg_id}`).append(nextItem);
+          nextItem.slideDown(300);
+
+          container.data("currentIndex", nextIndex);
+          scrollChatToBottom();
+        }
       } else {
         item.addClass(status);
+        scrollChatToBottom();
       }
     }
   }
