@@ -8,9 +8,14 @@
 1. GUI (Provides intermediary outputs at every step)
 2. TERMINAL (Light Weight Alternative)
 
-### Let's look at a video of one aspect of its functionality.
+## Let's look at a video of one aspect of its functionality.
+https://github.com/user-attachments/assets/65649aa9-e28a-4140-8b51-838983ec8dc5
 
-https://github.com/user-attachments/assets/05bb1d89-959d-4207-aa49-a15697c70891
+## Demonstration of Research Functionality
+https://github.com/user-attachments/assets/5084bb4b-7652-4996-b9b1-aa40a559cac6
+
+
+
 
 # `Workflow Diagram`
 ![workflow](https://github.com/user-attachments/assets/71e2c360-f1be-4d50-8714-1ef79e1a3b15)
