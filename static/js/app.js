@@ -225,6 +225,7 @@ $(document).ready(function () {
       updateSearchStatus(data.index, data.status, data.msg_id);
     }
   });
+
   function displaySearchStatus(labels, msg_id) {
     let html = `
       <div class="message search-status-message" id="search-status-${msg_id}">
@@ -240,10 +241,12 @@ $(document).ready(function () {
       let label = labels[0];
       let itemHtml = `
         <li class="search-status-item" id="search-item-${msg_id}-0">
-          <div class="search-label">${escapeHtml(label)}</div>
+          <div class="search-label"></div>
         </li>
       `;
       $(`#search-status-list-${msg_id}`).append(itemHtml);
+
+      typeLabelText(`#search-item-${msg_id}-0 .search-label`, label, 0, msg_id);
     }
 
     $(`#search-status-${msg_id}`).data("labels", labels);
@@ -255,20 +258,23 @@ $(document).ready(function () {
   function updateSearchStatus(index, status, msg_id) {
     let item = $(`#search-item-${msg_id}-${index}`);
     if (item.length) {
-      item.removeClass("searching completed");
+      let labelElement = item.find(".search-label");
+      if (!labelElement.data("typingComplete")) {
+        labelElement.data("pendingStatus", status);
+        return;
+      }
 
+      item.removeClass("searching completed");
       item.find(".spinner, .bi-check-circle-fill").remove();
 
       if (status === "searching") {
         item.addClass("searching");
-
         if (item.find(".search-label .spinner").length === 0) {
           let spinner = $('<div class="spinner"></div>');
           item.find(".search-label").append(spinner);
         }
       } else if (status === "complete") {
         item.addClass("completed");
-
         if (item.find(".search-label i").length === 0) {
           let tickIcon = $('<i class="bi bi-check-circle-fill"></i>');
           item.find(".search-label").append(tickIcon);
@@ -284,12 +290,19 @@ $(document).ready(function () {
 
           let itemHtml = `
             <li class="search-status-item" id="search-item-${msg_id}-${nextIndex}">
-              <div class="search-label">${escapeHtml(nextLabel)}</div>
+              <div class="search-label"></div>
             </li>
           `;
           let nextItem = $(itemHtml).hide();
           $(`#search-status-list-${msg_id}`).append(nextItem);
-          nextItem.slideDown(300);
+          nextItem.slideDown(300, function () {
+            typeLabelText(
+              `#search-item-${msg_id}-${nextIndex} .search-label`,
+              nextLabel,
+              nextIndex,
+              msg_id
+            );
+          });
 
           container.data("currentIndex", nextIndex);
           scrollChatToBottom();
@@ -299,6 +312,26 @@ $(document).ready(function () {
         scrollChatToBottom();
       }
     }
+  }
+
+  function typeLabelText(selector, text, index, msg_id) {
+    let element = $(selector);
+    let charIndex = 0;
+    let interval = setInterval(function () {
+      if (charIndex < text.length) {
+        element.append(escapeHtml(text.charAt(charIndex)));
+        charIndex++;
+      } else {
+        clearInterval(interval);
+        element.data("typingComplete", true);
+
+        let pendingStatus = element.data("pendingStatus");
+        if (pendingStatus) {
+          updateSearchStatus(index, pendingStatus, msg_id);
+          element.removeData("pendingStatus");
+        }
+      }
+    }, 8);
   }
 
   socket.on("agent_status", function (data) {

@@ -49,12 +49,11 @@ body {
 .chat-box h2 {
   padding: 10px;
   background-color: #3b3b3b;
- 
   border-radius: 10px;
   font-family: "Orbitron", sans-serif;
   color: #F5F4EF;
   text-align: left;
-  font-size: 2.5vh;
+  font-size: 2.8vh;
   letter-spacing: 1.5px;
   align-self: flex-start;
   text-align: center;
@@ -1403,6 +1402,7 @@ pre {
 
 .search-status-item.searching::before,
 .search-status-item.searching::after {
+  margin-top: 8px;
   background-color: var(--primary-color);
 }
 

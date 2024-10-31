@@ -425,7 +425,7 @@ class Labels:
         self.client = OpenAI(api_key=self.key)
         self.messages_gpt = [
             {"role": "system", "content": "You are an research bot. You will be given a query which essentially needs to be searched. But you dont search, rather you break the query down into 3 or more key queries which when searched should yield the entire information regarding the original query. If the topic needs comrehensive infomation to be searched, labels can be more than 3(like a vast topic).The labels are full sentence which are questions as to what needs to be searched. We are trying to do a deeper research which is why breaking down the contents of query is essential. If enough information is not provided, link the context to previous qeuries."},
-            {"role": "system", "content": "You have to reply in json format. the format is as follows {'think': 'this is the space for you to use chain of thought to identify the key points to be needed to searched about to answer the question full fledgedly', 'labels': 'Here the labels to search for are presented seperated by []. example: cars[]bikes'}"}
+            {"role": "system", "content": "You have to reply in json format. the format is as follows {'think': 'this is the space for you to use chain of thought to identify the key points to be needed to searched about to answer the question full fledgedly', 'labels': 'Here the labels to search for are presented seperated by '[]'. example: who is the president of US[]Why has he done so and so[]impact of social media'}"}
         ]
 
     def update_mem(self,user,message):
@@ -492,7 +492,7 @@ class DeepResearch:
 research_msg = [
             {
                 "role": "system",
-                "content": "You are a summarizer  and info organizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc. Everything must be in an orderly manner"
+                "content": "If the query requires you to answer a question, answer the question with the info provided and proceed with these instrucitions: You are a summarizer  and info organizer bot. You will recieve large amounts of content with headings, along with the query. you should not condense the information too much. The content you write must be in decorative readme format. Everything must be in readme format with header, higlighter, etc. Everything must be in an orderly manner"
             },
             {
                 "role": "system",
