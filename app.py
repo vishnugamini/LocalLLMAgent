@@ -11,6 +11,7 @@ import webbrowser
 import os
 from LLM_response import llm, add_context, refresh
 from execute_code import exec_code
+from threading import Event
 from agents import (
     PerpSearch,
     PicSearch,
@@ -315,6 +316,19 @@ def handle_agent_logic(prompt, sid, stop_event):
                         "user",
                         f"OUTPUT FROM PICTURE GENERATION {link}. Display it in readme format to the user. This is the format '![Alt text](image-url)'. download  it subsequently if the task involves downloading or displaying it in a html document etc.",
                     )
+                elif tool == "suggestions" and query != "None":
+                    socketio.emit("suggestions", { "suggestions": query})
+                    time.sleep(1)
+                    exit_event = Event()
+
+                    while not exit_event.is_set():
+                        @socketio.on("selected_suggestions")
+                        def selected_suggestions(data):
+                            exit_event.set()  
+                            sug = data['suggestions']
+                            print(sug[0:])
+                            add_context("user", f"Make sure to work on implementing these additonal features as well: {sug[0:]}")
+                                                
 
                 elif tool == "install" and query != "None":
 
