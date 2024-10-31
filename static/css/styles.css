@@ -49,12 +49,11 @@ body {
 .chat-box h2 {
   padding: 10px;
   background-color: #3b3b3b;
- 
   border-radius: 10px;
   font-family: "Orbitron", sans-serif;
   color: #F5F4EF;
   text-align: left;
-  font-size: 2.5vh;
+  font-size: 2.8vh;
   letter-spacing: 1.5px;
   align-self: flex-start;
   text-align: center;
@@ -134,11 +133,11 @@ body {
   border: none;
   color: #ffffff;
   padding: 8px 16px;
-  border-radius: 14px;
+  /* border-radius: 14px; */
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 1.1rem;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   font-family: "Playwrite GB S", cursive;
 }
 
@@ -169,12 +168,11 @@ body {
   border: none;
   color: #ffffff;
   padding: 8px 16px;
-  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-size: 1rem;
-  margin-left: 10px;
-
+  font-size: 1.1rem;
+  /* margin-left: 10px; */
+  border-radius: 10px 0 0 10px;
 }
 
 .futuristic-input-group #end-btn:hover {
@@ -697,7 +695,7 @@ pre {
   border: none;
   color: #ffffff;
   padding: 0.625rem 1rem; 
-  border-radius: 0.875rem; 
+  /* border-radius: 0.875rem;  */
   cursor: pointer;
   transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
   font-size: 0.8rem;
@@ -707,7 +705,7 @@ pre {
   align-items: center;
   gap: 0.3125rem; 
   flex: 1 1 30%;
-  margin: 0.3125rem; 
+  /* margin: 0.3125rem;  */
   min-width: 80px;
   box-sizing: border-box;
   font-family: "Playwrite GB S", cursive;
@@ -894,6 +892,7 @@ pre {
 }
 
 #send-btn {
+  border-radius: 10px 0 0 10px;
   opacity: 0;
   visibility: hidden;
   font-family: "Playwrite GB S", cursive;
@@ -1256,6 +1255,7 @@ pre {
   display: flex;
   align-items: center;
   gap: 5px;
+  border-radius: 10px;
 }
 
 .dropdown-menu {
@@ -1403,6 +1403,7 @@ pre {
 
 .search-status-item.searching::before,
 .search-status-item.searching::after {
+  margin-top: 8px;
   background-color: var(--primary-color);
 }
 
@@ -1464,3 +1465,18 @@ pre {
 .search-status-item .search-label:hover {
   text-decoration: underline;
 }
+
+
+#preview-btn{
+  border-radius: 0 10px 10px 0
+}
+
+
+#api-btn{
+  border-radius: 0 10px 10px 0;
+}
+
+#refresh-btn{
+  border-radius: 10px 0 0 10px;
+}
+
