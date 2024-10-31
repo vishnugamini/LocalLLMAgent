@@ -192,6 +192,78 @@ $(document).ready(function () {
   socket.on("connect", function () {
     console.log("Connected to server");
   });
+  socket.on("suggestions", function (data) {
+    let suggestionsStr = data.suggestions;
+    let suggestions = suggestionsStr.split(",").map((s) => s.trim());
+
+    
+    displaySuggestions(suggestions);
+  });
+
+  function displaySuggestions(suggestions) {
+    
+    let suggestionsHtml = `
+      <div class="message suggestions-message">
+        <div class="suggestions-container">
+          <p>Select one or more suggestions:</p>
+          <div class="suggestions-buttons">
+            ${suggestions
+              .map(
+                (s, index) => `
+              <button class="suggestion-btn btn btn-outline-primary" data-suggestion="${s}" id="suggestion-btn-${index}">${escapeHtml(
+                  s
+                )}</button>
+            `
+              )
+              .join("")}
+          </div>
+          <button id="submit-suggestions-btn" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    `;
+    $("#chat-window").append(suggestionsHtml);
+  
+    
+    scrollChatToBottom();
+  
+    
+    $(".suggestion-btn").on("click", function () {
+      $(this).toggleClass("selected");
+    });
+  
+    
+    $("#submit-suggestions-btn").on("click", function () {
+      let selectedSuggestions = [];
+      $(".suggestion-btn.selected").each(function () {
+        selectedSuggestions.push($(this).data("suggestion"));
+      });
+      if (selectedSuggestions.length === 0) {
+        alert("Please select at least one suggestion.");
+        return;
+      }
+      
+      socket.emit("selected_suggestions", { suggestions: selectedSuggestions });
+  
+      
+      let selectedHtml = `
+        <div class="message final-suggestions">
+          <p>Selected options:</p>
+          <ul>
+            ${selectedSuggestions.map(s => `<li>${escapeHtml(s)}</li>`).join("")}
+          </ul>
+        </div>
+      `;
+      $("#chat-window").append(selectedHtml);
+  
+      
+      $(".suggestions-message").remove();
+  
+      
+      scrollChatToBottom();
+    });
+  }
+  
+
 
   socket.on("agent_response", function (data) {
     if (data.type === "thinking_message") {

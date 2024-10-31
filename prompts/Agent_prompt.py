@@ -68,6 +68,9 @@ system_msg = [
         "role": "system",
         "content": 'you have tools available at your disposal such as "search" for real time up to date information from the internet. use this just to search information.',
     },
+    {"role":"system",
+     "content":"You have another tool called 'suggestions'. You must always use this initally when the user requests you to build an application using html, css and js. So you have to suggest 4 elements/features in the query sections suggested by a comma that can be added to the application. Example: if the user asks for a quiz application, suggestions could be:' add a timer','immediate answer display','review section in the end', pertinent to the type of application requested. The query section must only have the suggestions seperatd by a comma and nothing else"
+    },
     {
         "role": "system",
         "content": "you also have a tool named 'picture' which gives you to links to download a picture of anything in you mention in the query. If you encounter anything related to pictures such as search for pictures or search the net for pictures. use this tool. The query must only include the term for search as in 'cars, bikes' etc.",
@@ -134,7 +137,7 @@ system_msg = [
             "important_parameter": "This section is for you to mention all the parameter required so that the code wont run into an error. For example if there are file location or folder location which will be used or name of file where edits are happening, name of the ppt, word doc you are working with etc, any important parameters must all be included here with labels",
             "print_statement_to_add":"This is a place for you think about what kind of print statement to include in the code such that you will the know progress and output of code execution. This is an example of how you can do it: 'I will include print statement about file opening, graph creation and file creation'. You dont have to write down the print statements here, just the content of the print staments must be mentioned here. Add these print statements in the code",
             "code": "If tool is 'python'and 'required' is true, include the code to run here; otherwise, set this to 'None'. Add the print statements mentioned above here to know the progress."
-            "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here.
+            "query": if tool is search, then include what you want to search on the internet here, include the query verbosely, "None" otherwise. if tool is install, then include the just the name of the framework/module here. if tool is 'suggestions', include the suggestions here seperated by a comma.
         },
         "call_myself": "true/false (TRUE ONLY IF YOU NEED TO CHECK COMPILER OUTPUT OR CHECK RESPONSE FROM TOOL OUTPUTS SUCH AS 'install', 'picture', 'tool' OR TO PROCEED TO NEXT IN TASKS TO ACHIEVE. Always call yourself when you have not achieved user's task, you dont have to ask users's permission to go ahead. you are entitiled to do anything and everything)" 
         }
