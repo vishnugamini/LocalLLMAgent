@@ -327,7 +327,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                             exit_event.set()  
                             sug = data['suggestions']
                             print(sug[0:])
-                            add_context("user", f"Make sure to work on implementing these additonal features as well: {sug[0:]}")
+                            add_context("user", f". These are the additional features requested by user based on your suggestions.Make sure to work on implementing these additonal features as well: {sug[0:]}. Mention that so and so features will be implemented and then implement them. All of these features must be implemented when you produce code.")
                                                 
 
                 elif tool == "install" and query != "None":
