@@ -601,124 +601,117 @@ pre {
 }
 
 #think-window {
-    position: fixed;
-    top: 28%;
-    right: 10%;
-    width: 28%;
-    height: 60%;
-    padding: 20px;
-    background: rgb(43, 42, 39);
-    color: var(--text-color);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    backdrop-filter: blur(15px);
-    font-family: "Slab Serif";
-    box-sizing: border-box;
-    overflow-y: auto;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  position: fixed;
+  top: 28%;
+  right: 10%;
+  width: 28%;
+  height: 60%;
+  padding: 20px;
+  background: rgb(43, 42, 39);
+  color: var(--text-color);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(15px);
+  font-family: "Slab Serif";
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 #think-window::-webkit-scrollbar {
-    width: 20px;
+  width: 10px;
 }
 
 #think-window::-webkit-scrollbar-thumb {
-    background: var(--scrollbar-thumb);
-    border-radius: 10px;
-    border: 5px var(--chat-box-bg) solid;
+  background: var(--scrollbar-thumb);
+  border-radius: 10px;
+  transition: background 0.3s ease;
 }
 
 #think-window::-webkit-scrollbar-thumb:hover {
-    background: #8c7ae6;
-}
-
-#think-window::-webkit-scrollbar-button {
-    display: block;
-    background-color: transparent;
+  background: #98989a;
 }
 
 .think-header {
-    background: rgb(43, 42, 39);
-    border-radius: 0 0 10px 10px;
-    height: max-content;
-    margin-top: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    position: relative;
-    display: flex;
-    text-align: center;
-    margin-bottom: 10px;
+  padding: 15px 20px;
+  background: rgb(43, 42, 39);
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 10;       
 }
 
 .think-header h3 {
-  justify-content: center;
-  text-align: center;
   font-family: "Orbitron", sans-serif;
   color: #F5F4EF;
   margin-bottom: 15px;
-  font-size: 1.4rem;
-  width: 60%;
+  font-size: 1.2rem;
   letter-spacing: 1.5px;
-  position: fixed;
+  position: fixed;      
   background-color: #333;
-  padding: 5px 10px 10px 10px;
-  z-index: 1000;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 0;
-  margin-top: 0;
+  padding: 5px;
+  z-index: 1000;        
+  left: 50%;             
+  transform: translateX(-50%);  
+  top: 0;               
+  text-align: center;
 }
 
+
 .thinking-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 15%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
 }
 
 .thinking-card {
-    border-radius: 12px;
-    overflow: hidden;
-    background: #3F3E3E;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #3F3E3E;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  color: #000;
 }
 
 .thinking-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .thinking-card .card-header {
-    background-color: #1b1a16;
-    padding: 10px 15px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #fff;
+  background-color: #1b1a16;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
 }
 
 .thinking-card .card-body {
-    padding: 15px;
-    color: #fff;
-    line-height: 1.6;
-    font-size: 1.2rem;
+  padding: 15px;
+  color: #fff;
+  line-height: 1.6;
+  font-size: 1.2rem;
 }
 
 .highlight {
-    animation: pulseBorder 1s ease-in-out infinite alternate;
+  animation: pulseBorder 1s ease-in-out infinite alternate;
 }
 
+
+
 @media (max-width: 768px) {
-    #think-window {
-        bottom: 10px;
-        right: 10px;
-        width: 90%;
-        padding: 15px;
-    }
+  #think-window {
+    bottom: 10px;
+    right: 10px;
+    width: 90%;
+    padding: 15px;
+  }
 }
 
 #widget-container {
@@ -1643,3 +1636,4 @@ pre {
     color: var(--secondary-color);
     text-decoration: none;
 }
+
