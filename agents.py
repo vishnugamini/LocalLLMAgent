@@ -205,7 +205,16 @@ picture = PicSearch()
 install = InstallModule()
 original_system_message = copy.deepcopy(system_msg)
 
-
+message = [
+            {
+                "role": "system",
+                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js.Remember it should always be scripts.js and styles.css. If a html file has html, css and js, that must also be extracted for styling and functionality. dont miss the embedded css and js in the html document as it is crucial"
+            },
+            {
+                "role": "system",
+                "content": """This is how you provide your output {'file_type': 'provide the file type (html,css,js, none)', 'code': 'extracted html,css or js code only. None if no traces of html,css or js'}""",
+            },
+]
 class file_judger:
     class Format(BaseModel):
         file_type: str
@@ -215,24 +224,15 @@ class file_judger:
         self.key = os.getenv("OPENAPI_KEY")
         self.query = query
         self.client = OpenAI(api_key=self.key)
+        self.messages = copy.deepcopy(message)
 
     def initiate(self):
-        messages = [
-            {
-                "role": "system",
-                "content": "You will be given code, which you have to deem as either html, css or js or none. The code may include contents of python, but that is none of our concern. Your goal is to identify the traces either html,css or js and you have to extact the html,css or js code. The code will surely include python code as well, but you aim is to extract the html,css and js part. always ensure to change the name of js and css files cited in html file to 'scripts.js' and 'styles.css. If you encounter a case where all html,css,js are in the same code, extract all of it into html file and name it index.html. Always regardless of whether the original file contains script and styles tags, you still have to add them, pointing towards styles.css and scripts.js.Remember it should always be scripts.js and styles.css. If a html file has html, css and js, that must also be extracted for styling and functionality. dont miss the embedded css and js in the html document as it is crucial"
-            },
-            {
-                "role": "system",
-                "content": """This is how you provide your output {'file_type': 'provide the file type (html,css,js, none)', 'code': 'extracted html,css or js code only. None if no traces of html,css or js'}""",
-            },
-        ]
-        messages.append({"role": "user", "content": self.query})
+        self.messages.append({"role": "user", "content": self.query})
         completion = self.client.beta.chat.completions.parse(
-            model="gpt-4o-mini-2024-07-18", messages=messages, response_format=self.Format
+            model="gpt-4o-mini-2024-07-18", messages=self.messages, response_format=self.Format
         )
         content = completion.choices[0].message.content
-        messages.append({"role": "assistant", "content": content})
+        self.messages.append({"role": "assistant", "content": content})
         self.act(content)
 
     def act(self, content):
@@ -255,7 +255,7 @@ class file_judger:
                     file.write(code)
             elif file_type == "python":
                 exec(code)
-
+            self.messages = copy.deepcopy(message)
 
 class Code_Fixer:
     class Format(BaseModel):

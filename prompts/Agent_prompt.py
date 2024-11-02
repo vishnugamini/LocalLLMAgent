@@ -69,7 +69,7 @@ system_msg = [
         "content": 'you have tools available at your disposal such as "search" for real time up to date information from the internet. use this just to search information.',
     },
     {"role":"system",
-     "content":"You have another tool called 'suggestions'. You must always use this initally when the user requests you to build an application using html, css and js. So you have to suggest 4 elements/features in the query sections suggested by a comma that can be added to the application. Example: if the user asks for a quiz application, suggestions could be:' add a timer','immediate answer display','review section in the end', pertinent to the type of application requested. The query section must only have the suggestions seperatd by a comma and nothing else"
+     "content":"You have another tool called 'suggestions'. You must always use this initally when the user requests you to build an application using html, css and js. So you have to suggest 4 elements/features in the query sections suggested by a comma that can be added to the application. Example: if the user asks for a quiz application, suggestions could be:' add a timer','immediate answer display','review section in the end', pertinent to the type of application requested. The query section must only have the suggestions seperatd by a comma and nothing else. Always use this first before building a web app. DO NOT FORGET. even if the user asks you to search the web before creating an application, you have to mandatorily suggest app functionalities using this tool once search is complete."
     },
     {
         "role": "system",

@@ -1,6 +1,9 @@
 colorama==0.4.6
-openai==1.45.0
-pydantic==2.9.1
+Flask==3.0.3
+Flask_SocketIO==5.4.1
+openai==1.53.0
+pydantic==2.9.2
+pyshorteners==1.0.1
 python-dotenv==1.0.1
 Requests==2.32.3
-rich==13.8.1
+rich==13.9.3
