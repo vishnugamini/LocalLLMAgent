@@ -406,7 +406,7 @@ def handle_agent_logic(prompt, sid, stop_event):
                     output = search.search(query)
                     add_context(
                         "user",
-                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_the_user only if user explicitly asked or proceed to the next task) in great and decorative README FORMAT in message_to_the_user. use different colors if needed). once summarizing is done, ask the user if he wants the information to be presented in a html document in a beautiful manner. if he says yes, make sure to include a lot of css to beautify it. But if you are in the middle of another task you can skip the step of asking the user",
+                        f"OUTPUT FROM SEARCH RESULTS {output} (NOT VISIBLE TO USER, must be summarized in message_to_the_user only if user explicitly asked or proceed to the next task) in great and decorative Markdown FORMAT in message_to_the_user. use different colors if needed).If the search is to gather ideas/assests to build application, immediately suggest features using the tool suggestions tool",
                     )
 
                     socketio.emit(
