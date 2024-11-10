@@ -1,4 +1,5 @@
 let selectedMode = "agent";
+
 document.addEventListener("DOMContentLoaded", () => {
     const dropupMenu = document.getElementById("dropupMenuButton");
     const dropdownItems = document.querySelectorAll(".dropdown-item");

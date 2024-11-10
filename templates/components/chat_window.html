@@ -37,20 +37,93 @@
 </div>
 
 <div id="about-modal" class="about-modal">
-    <div class="about-modal-content">
-        <h2>about agent</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius vero ad magni. Accusamus maxime quam, itaque
-            provident assumenda est temporibus adipisci. Vitae beatae nihil voluptatibus impedit consectetur veniam
-            accusamus placeat sed velit, necessitatibus debitis dolores vero earum sequi nesciunt distinctio aliquid
-            maxime? Quaerat quibusdam saepe velit voluptate praesentium vel, dolores culpa maxime iure odio libero ipsa
-            amet voluptas dolore reiciendis doloribus esse atque qui molestiae quae obcaecati nostrum quisquam eos!
-            Facilis ducimus esse eaque suscipit voluptates! Nisi, aperiam veritatis. Sit, ullam! Quisquam, sit
-            consequuntur cumque nulla necessitatibus possimus ducimus ea labore tempore porro aliquam cupiditate at unde
-            similique velit fugit.</p>
+    <div class="about-modal-content markdown-body">
+        <h2>About Agent</h2>
+        <div id="readme-content">Loading...</div>
     </div>
 </div>
+
 
 <div id="code-sidebar">
     <h3>Code Snippets</h3>
     <div id="code-snippets-container"></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const markdownContent = `
+# \`Local LLM Agent\`
+### The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging the capabilities of LLM's ability to \`attend\` to relevant chunks of data, this tool can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
+
+## How is it different from other Agents?
+### My tool encompasses a system similar to that of a chatbot. No external coding expertise is required nor explicit creation of various agents is required. Just one single prompt will kick off the workflow, and the agent will continuously work towards fulfilling the user's request. And just like a chatbot, you can look at the work done and get it modified if you are dissatisfied.
+
+### \`The Agent can be executed in 2 ways:\`
+1. GUI (Provides intermediary outputs at every step)
+2. TERMINAL (Lightweight Alternative)
+
+## Let's look at a video of one aspect of its functionality.
+https://github.com/user-attachments/assets/65649aa9-e28a-4140-8b51-838983ec8dc5
+
+## Demonstration of Research Functionality
+https://github.com/user-attachments/assets/5084bb4b-7652-4996-b9b1-aa40a559cac6
+
+# \`Workflow Diagram\`
+![workflow](https://github.com/user-attachments/assets/71e2c360-f1be-4d50-8714-1ef79e1a3b15)
+
+# \`Current Features and Capabilities\`
+
+### 1. \`Application Development\`
+- **Develop Web Applications & Games:** The agent can design and build fully functional web applications and games, saving them directly to your system.
+
+### 2. \`Code Debugging & Self-Correction\`
+- **Automatic Code Debugging:** The agent can analyze, debug, and fix code by interacting with your local environment.
+- **Self-Correction:** The agent evaluates compiler outputs, rewrites faulty code, and re-executes it to achieve success.
+
+### 3. \`File System Interaction\`
+- **Manage Files Seamlessly:** The agent can search, update, delete, and create files/folders on your system. The agent can also open files as well.
+- **Local Environment Access:** It interacts with Python environment to run scripts.
+
+### 4. \`Version Control Integration\`
+- **GitHub Integration:** Push code changes, create repositories, or manage version control seamlessly.
+  - *Example:* Automatically push your latest project updates to GitHub.
+
+### 5. \`Data Analysis\`
+- **Analyze Data Locally:** The agent can analyze CSV or other datasets and generate charts or visualizations.
+  - *Example:* Create a line graph comparing sales data over time.
+
+### 6. \`Internet Search & Research\`
+- **Internet Search Functionality:** The agent can search the web for real-time information, news, or technical resources.
+
+### 7. \`Research & Summarization\`
+- Conduct research on any topic and summarize the findings or draft blog posts.
+
+### 8. \`Download/Generate Pictures\`
+**Search and download pictures and Generate pictures:** The agent has a picture tool using which it can download pictures and generate pictures on the fly.
+
+## Automating Menial Tasks
+The Local LLM Agent is not just for high-level tasks; it excels at automating day-to-day repetitive activities, saving you hours of manual work.
+
+SOME EXAMPLES ARE:
+- \`PPT/PDF Preparation:\` Prepare a PPT about a topic within seconds with just a simple prompt
+- \`PDF Merging:\` Combine multiple PDF files into one with a simple command.
+- \`URL Shortening:\` Shorten long URLs for sharing.
+- \`File Sorting:\` Automatically move, rename, or delete files based on predefined conditions (e.g., file type, date created).
+
+---
+
+## Comprehensive Prompts
+You can ask the Local LLM Agent to perform virtually any task by providing a comprehensive and clear prompt. Whether you need to develop an application, shorten URLs, or merge files, the agent will autonomously work through the task until it is completed successfully.
+
+## A few more examples of its work by using the comprehensive prompt approach:
+# Example Output: Tic Tac Toe with Smart AI Opponent
+With just a single prompt, the Local LLM Agent can create a fully functional Tic Tac Toe game featuring a smart AI opponent.
+
+# Example Output: Analyze stock trends and predict the price of stocks/crypto for the next day
+The Agent provides investment advice by thoroughly examining stock trends, plotting graphs, and running ML models to predict the stock price for the coming days.
+
+`
+    const htmlContent = marked.parse(markdownContent);
+    document.getElementById('readme-content').innerHTML = htmlContent;
+});
+</script>
