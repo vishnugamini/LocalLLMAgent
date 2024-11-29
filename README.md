@@ -114,7 +114,7 @@ Here, The agent is tasked to create a ppt about AI with a beautiful template.
 ### `Provides a multi-page ppt about AI with a beautiful template`
 ![Data Example](imgs/pic-12.png)
 
-### More Example
+### More Examples
 https://github.com/user-attachments/assets/65649aa9-e28a-4140-8b51-838983ec8dc5
 
 https://github.com/user-attachments/assets/5084bb4b-7652-4996-b9b1-aa40a559cac6
