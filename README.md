@@ -9,13 +9,10 @@
 2. TERMINAL (Light Weight Alternative)
 
 ## Let's look at a video of one aspect of its functionality.
-https://github.com/user-attachments/assets/65649aa9-e28a-4140-8b51-838983ec8dc5
+https://github.com/user-attachments/assets/d1af0e9f-5567-4e5a-be8c-0ebddad02326
 
 ## Demonstration of Research Functionality
-https://github.com/user-attachments/assets/5084bb4b-7652-4996-b9b1-aa40a559cac6
-
-
-
+https://github.com/user-attachments/assets/8a940923-afd9-4326-9a68-acfd5f397e27
 
 # `Workflow Diagram`
 ![workflow](https://github.com/user-attachments/assets/71e2c360-f1be-4d50-8714-1ef79e1a3b15)
@@ -116,3 +113,8 @@ Here, The agent is tasked to create a ppt about AI with a beautiful template.
 ![Data Example](imgs/pic-11.png)
 ### `Provides a multi-page ppt about AI with a beautiful template`
 ![Data Example](imgs/pic-12.png)
+
+### More Example
+https://github.com/user-attachments/assets/65649aa9-e28a-4140-8b51-838983ec8dc5
+
+https://github.com/user-attachments/assets/5084bb4b-7652-4996-b9b1-aa40a559cac6
