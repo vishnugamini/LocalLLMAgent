@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Workflow Builder</title>
+    <!-- <link rel="stylesheet" href="../static/css/styles.css"> -->
+    <link rel="stylesheet" href="../static/css/create_agent.css">
+    
+</head>
+<body>
+    <div class="main-container">
+        <h2>Workflow Builder</h2>
+        <div class="controls">
+            <select id="functionType">
+                <option value="search">Search</option>
+                <option value="code">Code</option>
+                <option value="picture">Picture</option>
+                <option value="instruction">Instruction</option>
+            </select>
+            <button id="addFunction">Add Function</button>
+            <button id="saveWorkflow">Save Workflow</button>
+        </div>
+        <div id="workflowContainer" class="workflow-container"></div>
+    </div>
+    
+    <div class="saved-workflows">
+        <h2>Saved Workflows</h2>
+        <div id="savedWorkflowsList"></div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script src="../static/js/script.js"></script>
+</body>
+</html>

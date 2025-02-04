@@ -3,6 +3,13 @@ let selectedMode = "agent";
 document.addEventListener("DOMContentLoaded", () => {
     const dropupMenu = document.getElementById("dropupMenuButton");
     const dropdownItems = document.querySelectorAll(".dropdown-item");
+    const createAgentBtn = document.getElementById("create-agent");
+    if (createAgentBtn) {
+      createAgentBtn.addEventListener("click", () => {
+        // Navigate to the /create_agent page.
+        window.location.href = '/create_agent';
+      });
+    }
     dropdownItems.forEach((item) => {
         item.addEventListener("click", (e) => {
             e.preventDefault();
@@ -177,7 +184,9 @@ promptTextarea.addEventListener("input", function () {
 });
 
 $(document).ready(function () {
-    var socket = io();
+    const socket = io();  // Creates a local variable
+    window.socket = socket; 
+
     $("#refresh-btn").click(function () {
         refresh();
     });
