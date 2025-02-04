@@ -1,0 +1,179 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+}
+
+.main-container {
+    flex: 3;
+}
+
+.saved-workflows {
+    flex: 1;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+}
+
+.workflow-container {
+    margin-top: 20px;
+    min-height: 200px;
+    border: 2px dashed #ccc;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.controls {
+    margin-bottom: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+select, button {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.function-block {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 15px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+}
+
+.function-block::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 2px;
+    height: 10px;
+    background-color: #dee2e6;
+}
+
+.function-block:first-child::before {
+    display: none;
+}
+
+.function-label {
+    font-weight: bold;
+    min-width: 100px;
+}
+
+.label-input {
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    margin-left: auto;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+.saved-workflow {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.saved-workflow-name {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 5px;
+}
+
+.saved-workflow-name:hover {
+    background-color: #e9ecef;
+}
+
+.saved-workflow .delete-workflow-btn {
+    background-color: #dc3545;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.saved-workflow .delete-workflow-btn:hover {
+    background-color: #c82333;
+}
+
+h2 {
+    margin-bottom: 15px;
+}
+/* Previous CSS remains the same until .saved-workflow */
+
+.saved-workflow {
+    background-color: #f8f9fa;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.saved-workflow-name {
+    cursor: pointer;
+    flex-grow: 1;
+    padding: 5px;
+}
+
+.saved-workflow-name:hover {
+    background-color: #e9ecef;
+}
+
+.saved-workflow .delete-workflow-btn {
+    background-color: #dc3545;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.saved-workflow .delete-workflow-btn:hover {
+    background-color: #c82333;
+}
+
+.saved-workflow .kickoff-workflow-btn {
+    background-color: #007bff;
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+.saved-workflow .kickoff-workflow-btn:hover {
+    background-color: #0056b3;
+}
+
+/* Rest of the previous CSS remains the same */
+/* hi
