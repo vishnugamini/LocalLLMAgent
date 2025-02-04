@@ -499,6 +499,7 @@ def handle_agent_logic(prompt, sid, stop_event):
         logger.info(f"Processing task for session {sid} has ended.")
 
 
+
 @socketio.on("user_prompt")
 def handle_user_prompt(data):
     prompt = data.get("prompt")
@@ -549,7 +550,17 @@ def handle_user_prompt(data):
 def serve_render_files(filename):
     return send_from_directory("render", filename)
 
-
+@socketio.on('kickoff_workflow')
+def handle_kickoff_workflow(data):
+    print(workflow)
+    workflow = data.get('workflow')
+    logger.info(f"Received workflow to kick off: {workflow}")
+    # Here you can process the workflow data as needed.
+    # For example, start executing the steps in sequence, update status, etc.
+    
+    # Optionally, emit a response back to the client:
+    emit('workflow_response', {'message': 'Workflow received and processing started'})
+    
 @socketio.on("request_file_contents")
 def handle_request_file_contents():
     sid = request.sid
@@ -584,7 +595,12 @@ def handle_end_processing():
             "content": "No active processing to terminate.",
         }
         emit("agent_response", emit_response, room=sid)
-
+        
+@app.route('/create_agent')
+def create_agent_page():
+    # Render a template called "create_agent.html". 
+    # Make sure you have this template in your templates folder.
+    return render_template("create_agent.html")
 
 @app.route("/")
 def index():
