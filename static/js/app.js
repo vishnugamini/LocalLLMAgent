@@ -1,6 +1,28 @@
 let selectedMode = "agent";
 
 document.addEventListener("DOMContentLoaded", () => {
+    const pendingQuery = localStorage.getItem("pendingQuery");
+    if (pendingQuery) {
+      // Set the chat input to the pending query
+      const promptInput = document.getElementById("prompt");
+      promptInput.value = pendingQuery;
+      
+      // Set a global flag indicating that this message was auto‑submitted
+      window.autoWorkflowMessage = true;
+      
+      // Trigger the send button automatically
+      const sendButton = document.getElementById("send-btn");
+      const endButton = document.getElementById("end-btn");
+      endButton.style.display = "none";
+      setTimeout(() => {
+        sendButton.click();
+    }, 500);
+      
+      // Remove the pending query from localStorage
+      localStorage.removeItem("pendingQuery");
+    }
+
+
     const dropupMenu = document.getElementById("dropupMenuButton");
     const dropdownItems = document.querySelectorAll(".dropdown-item");
     const createAgentBtn = document.getElementById("create-agent");
@@ -184,8 +206,12 @@ promptTextarea.addEventListener("input", function () {
 });
 
 $(document).ready(function () {
-    const socket = io();  // Creates a local variable
+    var socket = io("http://localhost:5000");  // Creates a local variable
     window.socket = socket; 
+    socket.on("connect", function () {
+        console.log("Connected to server");
+    });
+    console.log("Socket instance:", socket);
 
     $("#refresh-btn").click(function () {
         refresh();
@@ -873,26 +899,34 @@ $(document).ready(function () {
     function sendPrompt() {
         let prompt = $("#prompt").val().trim();
         if (prompt === "") {
-            return;
+          return;
         }
-
+      
+        // Create the HTML for the user message
         let html = `
-        <div class="message user-message">
+          <div class="message user-message">
             <span>${prompt}</span>
-        </div>
-    `;
+          </div>
+        `;
+        // Append the message to the chat window
         $("#chat-window").append(html);
         scrollChatToBottom();
+      
+        // Clear the chat input
         $("#prompt").val("");
-
         $("#prompt").css("height", "");
-
+      
+        // Emit the message via Socket.IO
         socket.emit("user_prompt", { prompt: prompt, mode: selectedMode });
-    }
-
-    function scrollChatToBottom() {
-        $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
-    }
+      
+        // If this was an auto-submitted workflow message, hide it
+        if (window.autoWorkflowMessage) {
+          // Hide the last user message that was just appended
+          $("#chat-window .message.user-message").last().hide();
+          // Reset the flag
+          window.autoWorkflowMessage = false;
+        }
+      }
 });
 
 const apiBtn = document.getElementById("api-btn");

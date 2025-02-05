@@ -550,16 +550,33 @@ def handle_user_prompt(data):
 def serve_render_files(filename):
     return send_from_directory("render", filename)
 
+import json
+
 @socketio.on('kickoff_workflow')
 def handle_kickoff_workflow(data):
-    print(workflow)
     workflow = data.get('workflow')
-    logger.info(f"Received workflow to kick off: {workflow}")
-    # Here you can process the workflow data as needed.
-    # For example, start executing the steps in sequence, update status, etc.
+    # logger.info(f"Received workflow to kick off: {workflow}")
     
-    # Optionally, emit a response back to the client:
-    emit('workflow_response', {'message': 'Workflow received and processing started'})
+    # Convert the workflow data into a string (or you can format it differently)
+    # query = json.dumps(workflow)
+    t = "DO NOT HALLUCINATE: here you will be given instruction. you will have to execute all of them in this order. when you recieve input in this format you dont have to ask user for preferences. for example while creating web pages, you dont have to ask user for feature etc. Do not use sub agents. if you are asked to search you search, if you are asked to execute code you use the code tool to execute code etc etc\n"
+    for x in workflow:
+        print(x)
+        for a,b in x.items():
+            if a == 'type':
+                t = t + f" USE {b} tool and do this: "
+            elif a == 'label':
+                t = t + f" {b} \n"
+
+    print(t)
+
+
+    
+    emit('workflow_response', {
+        'message': 'Workflow received and processing started',
+        'redirect': '/',
+        'query': t
+    })
     
 @socketio.on("request_file_contents")
 def handle_request_file_contents():
@@ -608,4 +625,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app, debug=True)

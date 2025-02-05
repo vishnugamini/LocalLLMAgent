@@ -1,179 +1,289 @@
+/* Modern CSS Reset and Base Styles */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    transition: all 0.3s ease;
+}
+
+:root {
+    --primary: #6366f1;
+    --primary-hover: #4f46e5;
+    --danger: #ef4444;
+    --danger-hover: #dc2626;
+    --success: #22c55e;
+    --success-hover: #16a34a;
+    --background: #0f172a;
+    --surface: #1e293b;
+    --surface-hover: #334155;
+    --text: #f8fafc;
+    --text-muted: #94a3b8;
+    --border: #334155;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    padding: 20px;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--background);
+    color: var(--text);
+    padding: 2rem;
     display: flex;
-    gap: 20px;
+    gap: 2rem;
+    min-height: 100vh;
+    line-height: 1.5;
 }
 
+/* Main Container Styles */
 .main-container {
     flex: 3;
-}
-
-.saved-workflows {
-    flex: 1;
-    border-left: 1px solid #ccc;
-    padding-left: 20px;
-}
-
-.workflow-container {
-    margin-top: 20px;
-    min-height: 200px;
-    border: 2px dashed #ccc;
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.controls {
-    margin-bottom: 20px;
     display: flex;
-    gap: 10px;
-    align-items: center;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
-select, button {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 14px;
+h2 {
+    font-size: 1.875rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+h2::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 2px;
+}
+
+/* Controls Section */
+.controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+select {
+    background-color: var(--background);
+    color: var(--text);
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.875rem;
+    min-width: 200px;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1.5rem;
+}
+
+select:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 button {
-    background-color: #4CAF50;
-    color: white;
+    padding: 0.75rem 1.5rem;
     border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 0.875rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text);
+    background: var(--primary);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 button:hover {
-    background-color: #45a049;
+    background: var(--primary-hover);
+    transform: translateY(-1px);
 }
 
-.function-block {
-    background-color: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 4px;
-    padding: 15px;
-    margin: 10px 0;
+/* Workflow Container */
+.workflow-container {
+    background: var(--surface);
+    min-height: 300px;
+    border-radius: 12px;
+    padding: 2rem;
+    border: 2px dashed var(--border);
+    transition: all 0.3s ease;
+}
+
+.workflow-container:empty {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 0.875rem;
+}
+
+.workflow-container:empty::before {
+    content: 'Drag functions here or click "Add Function"';
+}
+
+/* Function Blocks */
+.function-block {
+    background: var(--background);
+    border-radius: 10px;
+    padding: 1.25rem;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
     position: relative;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .function-block::before {
     content: '';
     position: absolute;
-    top: -10px;
+    top: -12px;
     left: 50%;
     width: 2px;
-    height: 10px;
-    background-color: #dee2e6;
-}
-
-.function-block:first-child::before {
-    display: none;
+    height: 12px;
+    background: var(--border);
 }
 
 .function-label {
-    font-weight: bold;
-    min-width: 100px;
+    font-weight: 600;
+    color: var(--primary);
+    min-width: 120px;
 }
 
 .label-input {
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    background: var(--surface);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    flex: 1;
+}
+
+.label-input:focus {
+    border-color: var(--primary);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .delete-btn {
-    background-color: #dc3545;
-    margin-left: auto;
+    background: var(--danger);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
 }
 
 .delete-btn:hover {
-    background-color: #c82333;
+    background: var(--danger-hover);
+}
+
+/* Saved Workflows Section */
+.saved-workflows {
+    flex: 1;
+    background: var(--surface);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .saved-workflow {
-    background-color: #f8f9fa;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 4px;
+    background: var(--background);
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.75rem 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 0.75rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.saved-workflow:hover {
+    transform: translateX(4px);
 }
 
 .saved-workflow-name {
+    font-weight: 500;
+    flex: 1;
     cursor: pointer;
-    flex-grow: 1;
-    padding: 5px;
-}
-
-.saved-workflow-name:hover {
-    background-color: #e9ecef;
-}
-
-.saved-workflow .delete-workflow-btn {
-    background-color: #dc3545;
-    padding: 5px 10px;
-    font-size: 12px;
-}
-
-.saved-workflow .delete-workflow-btn:hover {
-    background-color: #c82333;
-}
-
-h2 {
-    margin-bottom: 15px;
-}
-/* Previous CSS remains the same until .saved-workflow */
-
-.saved-workflow {
-    background-color: #f8f9fa;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 0.25rem 0.5rem;
     border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.saved-workflow-name {
-    cursor: pointer;
-    flex-grow: 1;
-    padding: 5px;
 }
 
 .saved-workflow-name:hover {
-    background-color: #e9ecef;
+    background: var(--surface-hover);
 }
 
-.saved-workflow .delete-workflow-btn {
-    background-color: #dc3545;
-    padding: 5px 10px;
-    font-size: 12px;
+.kickoff-workflow-btn {
+    background: var(--success);
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
 }
 
-.saved-workflow .delete-workflow-btn:hover {
-    background-color: #c82333;
+.kickoff-workflow-btn:hover {
+    background: var(--success-hover);
 }
 
-.saved-workflow .kickoff-workflow-btn {
-    background-color: #007bff;
-    padding: 5px 10px;
-    font-size: 12px;
+.delete-workflow-btn {
+    background: var(--danger);
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
 }
 
-.saved-workflow .kickoff-workflow-btn:hover {
-    background-color: #0056b3;
+.delete-workflow-btn:hover {
+    background: var(--danger-hover);
 }
 
-/* Rest of the previous CSS remains the same */
-/* hi
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding: 1rem;
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    select {
+        width: 100%;
+    }
+
+    .saved-workflows {
+        width: 100%;
+    }
+}
