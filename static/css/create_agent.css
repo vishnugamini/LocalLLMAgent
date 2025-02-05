@@ -1,4 +1,3 @@
-/* Modern CSS Reset and Base Styles */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -32,7 +31,6 @@ body {
     line-height: 1.5;
 }
 
-/* Main Container Styles */
 .main-container {
     flex: 3;
     display: flex;
@@ -60,7 +58,6 @@ h2::after {
     border-radius: 2px;
 }
 
-/* Controls Section */
 .controls {
     display: flex;
     gap: 1rem;
@@ -202,7 +199,6 @@ button:hover {
     background: var(--danger-hover);
 }
 
-/* Saved Workflows Section */
 .saved-workflows {
     flex: 1;
     background: var(--surface);
@@ -267,7 +263,6 @@ button:hover {
     background: var(--danger-hover);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     body {
         flex-direction: column;

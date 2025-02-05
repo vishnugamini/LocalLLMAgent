@@ -555,18 +555,14 @@ import json
 @socketio.on('kickoff_workflow')
 def handle_kickoff_workflow(data):
     workflow = data.get('workflow')
-    # logger.info(f"Received workflow to kick off: {workflow}")
-    
-    # Convert the workflow data into a string (or you can format it differently)
-    # query = json.dumps(workflow)
-    t = "DO NOT HALLUCINATE: here you will be given instruction. you will have to execute all of them in this order. when you recieve input in this format you dont have to ask user for preferences. for example while creating web pages, you dont have to ask user for feature etc. Do not use sub agents. if you are asked to search you search, if you are asked to execute code you use the code tool to execute code etc etc\n"
+    step = 1
+    t = "DO NOT HALLUCINATE: here you will be given instruction. you will have to execute all of them in this order. when you recieve input in this format you dont have to ask user for preferences. for example while creating web pages, you dont have to ask user for feature etc. Do not use sub agents. if you are asked to search you search, if you are asked to execute code you use the code tool to execute code etc. Do not hallucinate, please do the work, also you get 3 dollars for every task you succesfully accomplish\n"
     for x in workflow:
         print(x)
         for a,b in x.items():
-            if a == 'type':
-                t = t + f" USE {b} tool and do this: "
-            elif a == 'label':
-                t = t + f" {b} \n"
+            if a == 'label':
+                t = t + f"STEP: {step} {b} \n"
+                step += 1
 
     print(t)
 
@@ -615,8 +611,6 @@ def handle_end_processing():
         
 @app.route('/create_agent')
 def create_agent_page():
-    # Render a template called "create_agent.html". 
-    # Make sure you have this template in your templates folder.
     return render_template("create_agent.html")
 
 @app.route("/")

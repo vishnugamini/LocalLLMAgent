@@ -3,14 +3,11 @@ let selectedMode = "agent";
 document.addEventListener("DOMContentLoaded", () => {
     const pendingQuery = localStorage.getItem("pendingQuery");
     if (pendingQuery) {
-      // Set the chat input to the pending query
       const promptInput = document.getElementById("prompt");
       promptInput.value = pendingQuery;
       
-      // Set a global flag indicating that this message was auto‑submitted
       window.autoWorkflowMessage = true;
       
-      // Trigger the send button automatically
       const sendButton = document.getElementById("send-btn");
       const endButton = document.getElementById("end-btn");
       endButton.style.display = "none";
@@ -18,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
         sendButton.click();
     }, 500);
       
-      // Remove the pending query from localStorage
       localStorage.removeItem("pendingQuery");
     }
 
@@ -28,7 +24,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const createAgentBtn = document.getElementById("create-agent");
     if (createAgentBtn) {
       createAgentBtn.addEventListener("click", () => {
-        // Navigate to the /create_agent page.
         window.location.href = '/create_agent';
       });
     }
@@ -206,7 +201,7 @@ promptTextarea.addEventListener("input", function () {
 });
 
 $(document).ready(function () {
-    var socket = io("http://localhost:5000");  // Creates a local variable
+    var socket = io("http://localhost:5000"); 
     window.socket = socket; 
     socket.on("connect", function () {
         console.log("Connected to server");
@@ -902,28 +897,21 @@ $(document).ready(function () {
           return;
         }
       
-        // Create the HTML for the user message
         let html = `
           <div class="message user-message">
             <span>${prompt}</span>
           </div>
         `;
-        // Append the message to the chat window
         $("#chat-window").append(html);
         scrollChatToBottom();
       
-        // Clear the chat input
         $("#prompt").val("");
         $("#prompt").css("height", "");
       
-        // Emit the message via Socket.IO
         socket.emit("user_prompt", { prompt: prompt, mode: selectedMode });
       
-        // If this was an auto-submitted workflow message, hide it
         if (window.autoWorkflowMessage) {
-          // Hide the last user message that was just appended
           $("#chat-window .message.user-message").last().hide();
-          // Reset the flag
           window.autoWorkflowMessage = false;
         }
       }

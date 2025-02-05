@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   
     document.getElementById("saveWorkflow").addEventListener("click", () => {
-      // Prompt for workflow name
       const workflowName = prompt("Enter a name for your workflow:", `Workflow ${workflowCount + 1}`);
       if (workflowName) {
         saveWorkflow(workflowName);
@@ -71,10 +70,8 @@ document.addEventListener("DOMContentLoaded", () => {
         workflow.push({ type, label });
       }
   
-      // Save to localStorage with custom name
       const savedWorkflows = JSON.parse(localStorage.getItem("workflows") || "{}");
       
-      // Check if name already exists
       if (savedWorkflows[workflowName] && !confirm(`A workflow named "${workflowName}" already exists. Do you want to overwrite it?`)) {
         return;
       }
@@ -87,10 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
       localStorage.setItem("workflows", JSON.stringify(savedWorkflows));
       workflowCount++;
   
-      // Add to sidebar
       addWorkflowToSidebar(workflowName, workflow);
   
-      // Clear the container
       container.innerHTML = "";
     }
   
@@ -180,12 +175,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
   
-    // Load saved workflows from localStorage when the window loads
     window.onload = function () {
       const savedWorkflows = JSON.parse(localStorage.getItem("workflows") || "{}");
       for (let name in savedWorkflows) {
         const workflow = savedWorkflows[name];
-        addWorkflowToSidebar(name, workflow.steps || workflow); // Handle both new and old format
+        addWorkflowToSidebar(name, workflow.steps || workflow); 
         workflowCount = Object.keys(savedWorkflows).length;
       }
     };
