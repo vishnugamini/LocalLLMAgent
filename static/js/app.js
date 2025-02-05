@@ -1,12 +1,29 @@
 let selectedMode = "agent";
 
 document.addEventListener("DOMContentLoaded", () => {
+    const pendingQuery = localStorage.getItem("pendingQuery");
+    if (pendingQuery) {
+      const promptInput = document.getElementById("prompt");
+      promptInput.value = pendingQuery;
+      
+      window.autoWorkflowMessage = true;
+      
+      const sendButton = document.getElementById("send-btn");
+      const endButton = document.getElementById("end-btn");
+      endButton.style.display = "none";
+      setTimeout(() => {
+        sendButton.click();
+    }, 500);
+      
+      localStorage.removeItem("pendingQuery");
+    }
+
+
     const dropupMenu = document.getElementById("dropupMenuButton");
     const dropdownItems = document.querySelectorAll(".dropdown-item");
     const createAgentBtn = document.getElementById("create-agent");
     if (createAgentBtn) {
       createAgentBtn.addEventListener("click", () => {
-        // Navigate to the /create_agent page.
         window.location.href = '/create_agent';
       });
     }
@@ -184,8 +201,12 @@ promptTextarea.addEventListener("input", function () {
 });
 
 $(document).ready(function () {
-    const socket = io();  // Creates a local variable
+    var socket = io("http://localhost:5000"); 
     window.socket = socket; 
+    socket.on("connect", function () {
+        console.log("Connected to server");
+    });
+    console.log("Socket instance:", socket);
 
     $("#refresh-btn").click(function () {
         refresh();
@@ -873,26 +894,27 @@ $(document).ready(function () {
     function sendPrompt() {
         let prompt = $("#prompt").val().trim();
         if (prompt === "") {
-            return;
+          return;
         }
-
+      
         let html = `
-        <div class="message user-message">
+          <div class="message user-message">
             <span>${prompt}</span>
-        </div>
-    `;
+          </div>
+        `;
         $("#chat-window").append(html);
         scrollChatToBottom();
+      
         $("#prompt").val("");
-
         $("#prompt").css("height", "");
-
+      
         socket.emit("user_prompt", { prompt: prompt, mode: selectedMode });
-    }
-
-    function scrollChatToBottom() {
-        $("#chat-window").scrollTop($("#chat-window")[0].scrollHeight);
-    }
+      
+        if (window.autoWorkflowMessage) {
+          $("#chat-window .message.user-message").last().hide();
+          window.autoWorkflowMessage = false;
+        }
+      }
 });
 
 const apiBtn = document.getElementById("api-btn");
