@@ -162,6 +162,22 @@ body {
     font-size: 1.1rem;
     font-family: cursive;
 }
+#create-agent{
+    background: var(--button-bg);
+    border: none;
+    color: #ffffff;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.1rem;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    /* font-family: cursive; */
+}
+#crete-agent button:hover {
+    background: var(--button-hover);
+    transform: translateY(-1px);
+}
 
 .futuristic-input-group button:hover {
     background: var(--button-hover);
@@ -533,11 +549,11 @@ pre {
 #agent-status {
     font-size: 1.2rem;
     position: sticky;
-    top: 10px;
+    top: 120px;
     left: 55%;
     transform: translateX(-50%);
     padding: 6px 8px;
-    border-radius: 20px 20px 0 0;
+    border-radius: 20px 20px 20px 20px;
     color: white;
     display: flex;
     align-items: center;

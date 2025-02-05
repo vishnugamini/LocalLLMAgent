@@ -499,6 +499,7 @@ def handle_agent_logic(prompt, sid, stop_event):
         logger.info(f"Processing task for session {sid} has ended.")
 
 
+
 @socketio.on("user_prompt")
 def handle_user_prompt(data):
     prompt = data.get("prompt")
@@ -549,7 +550,30 @@ def handle_user_prompt(data):
 def serve_render_files(filename):
     return send_from_directory("render", filename)
 
+import json
 
+@socketio.on('kickoff_workflow')
+def handle_kickoff_workflow(data):
+    workflow = data.get('workflow')
+    step = 1
+    t = "DO NOT HALLUCINATE: here you will be given instruction. you will have to execute all of them in this order. when you recieve input in this format you dont have to ask user for preferences. for example while creating web pages, you dont have to ask user for feature etc. Do not use sub agents. if you are asked to search you search, if you are asked to execute code you use the code tool to execute code etc. Do not hallucinate, please do the work, also you get 3 dollars for every task you succesfully accomplish\n"
+    for x in workflow:
+        print(x)
+        for a,b in x.items():
+            if a == 'label':
+                t = t + f"STEP: {step} {b} \n"
+                step += 1
+
+    print(t)
+
+
+    
+    emit('workflow_response', {
+        'message': 'Workflow received and processing started',
+        'redirect': '/',
+        'query': t
+    })
+    
 @socketio.on("request_file_contents")
 def handle_request_file_contents():
     sid = request.sid
@@ -584,7 +608,10 @@ def handle_end_processing():
             "content": "No active processing to terminate.",
         }
         emit("agent_response", emit_response, room=sid)
-
+        
+@app.route('/create_agent')
+def create_agent_page():
+    return render_template("create_agent.html")
 
 @app.route("/")
 def index():
@@ -592,4 +619,4 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run()
+    socketio.run(app, debug=True)

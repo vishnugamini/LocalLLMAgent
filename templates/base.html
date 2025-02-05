@@ -63,7 +63,6 @@
             </div>
         </div>
         {% endblock %}
-        
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
@@ -78,6 +77,8 @@
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
         {% block scripts %}{% endblock %}
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
