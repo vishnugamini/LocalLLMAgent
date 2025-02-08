@@ -497,6 +497,10 @@ def handle_agent_logic(prompt, sid, stop_event):
         if sid in processing_tasks:
             del processing_tasks[sid]
         logger.info(f"Processing task for session {sid} has ended.")
+        socketio.emit("agent_response", {
+            "type": "info",
+            "content": "Workflow completed."
+        }, room=sid)
 
 
 
@@ -556,24 +560,39 @@ import json
 def handle_kickoff_workflow(data):
     workflow = data.get('workflow')
     step = 1
-    t = "DO NOT HALLUCINATE: here you will be given instruction. you will have to execute all of them in this order. when you recieve input in this format you dont have to ask user for preferences. for example while creating web pages, you dont have to ask user for feature etc. Do not use sub agents. if you are asked to search you search, if you are asked to execute code you use the code tool to execute code etc. Do not hallucinate, please do the work, also you get 3 dollars for every task you succesfully accomplish\n"
+    t = (
+        "DO NOT HALLUCINATE: here you will be given instruction. "
+        "You will have to execute all of them in this order. "
+        "When you receive input in this format, you don't have to ask the user for preferences. "
+        "For example, while creating web pages, you don't have to ask the user for features etc. "
+        "Do not use sub agents. If you are asked to search, you search; if you are asked to execute code, you use the code tool to execute code etc. "
+        "Do not hallucinate—please do the work. Also, you get 3 dollars for every task you successfully accomplish.\n"
+    )
     for x in workflow:
-        print(x)
-        for a,b in x.items():
+        for a, b in x.items():
             if a == 'label':
-                t = t + f"STEP: {step} {b} \n"
+                t += f"STEP: {step} {b}\n"
                 step += 1
 
-    print(t)
-
-
+    logger.info(f"Workflow instructions: {t}")
     
-    emit('workflow_response', {
-        'message': 'Workflow received and processing started',
-        'redirect': '/',
-        'query': t
-    })
-    
+    sid = request.sid
+
+    if sid in processing_tasks:
+        emit("agent_response", {
+            "type": "error",
+            "content": "A task is already in progress. Please wait or end the current task."
+        }, room=sid)
+        return
+
+    stop_event = threading.Event()
+    thread = socketio.start_background_task(handle_agent_logic, prompt=t, sid=sid, stop_event=stop_event)
+    processing_tasks[sid] = {"thread": thread, "stop_event": stop_event}
+
+    emit("agent_response", {
+        "type": "info",
+        "content": "Workflow received and processing started."
+    }, room=sid)
 @socketio.on("request_file_contents")
 def handle_request_file_contents():
     sid = request.sid

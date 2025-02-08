@@ -309,6 +309,12 @@ $(document).ready(function () {
 
 
     socket.on("agent_response", function (data) {
+        if (data.type === "info" &&
+            data.content === "Workflow completed." &&
+            !window.location.pathname.includes("create_agent")) {
+            console.log("Skipping 'Workflow completed.' message because we're not on create_agent");
+            return;
+        }
         if (data.type === "thinking_message") {
             displayThinkingMessage(data.content, data.msg_id);
         }
