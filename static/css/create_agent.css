@@ -133,7 +133,7 @@ font-size: 0.875rem;
 }
 
 .workflow-container:empty::before {
-content: 'Drag functions here or click "Add Function"';
+content: 'click "Add Function';
 }
 
 .function-block {
@@ -476,3 +476,72 @@ select {
     width: 100%;
 }
 }
+.workflow-message {
+    border: 2px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .green-pulse {
+    border-color: #28a745 !important;
+    animation: pulseGreen 1.5s ease-out forwards;
+  }
+  
+  @keyframes pulseGreen {
+    0% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(40, 167, 69, 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+  }
+.workflow-card {
+    border: 3px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    position: relative;
+    animation: pulseBorder 2s infinite;
+    transition: border-color 0.3s ease;
+  }
+  
+  @keyframes pulseBorder {
+    0% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(40, 167, 69, 0.2);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    }
+  }
+  
+  .workflow-card.completed {
+    animation: finalPulse 1s ease-out;
+  }
+  
+  @keyframes finalPulse {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 1);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 0 0 15px rgba(40, 167, 69, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(40, 167, 69, 0);
+    }
+  }
+  
+  .workflow-card.active {
+    border-color: #28a745;
+  }

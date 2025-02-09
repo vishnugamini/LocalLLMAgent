@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (data.type === "workflow_received") {
-      displayWorkflowReceived(data.workflowText || "Workflow details here.");
+      displayWorkflowReceived(data.workflowText || "");
     } else if (data.type === "workflow_completed") {
       displayWorkflowCompleted();
     } else if (data.type === "thinking_message") {
@@ -198,6 +198,27 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     $("#chat-window").append(html);
     scrollChatToBottom();
+  
+    // Wait a moment to ensure the element is rendered
+    setTimeout(() => {
+      // Select all workflow messages in the chat window
+      const $workflowMessages = $("#chat-window .workflow-message");
+      if ($workflowMessages.length > 0) {
+        // Get the first (start) and last (end) workflow messages
+        const $startMessage = $workflowMessages.first();
+        const $endMessage = $workflowMessages.last();
+  
+        // Add the animation class
+        $startMessage.addClass("green-pulse");
+        $endMessage.addClass("green-pulse");
+  
+        // Optionally remove the class after the animation completes
+        setTimeout(() => {
+          $startMessage.removeClass("green-pulse");
+          $endMessage.removeClass("green-pulse");
+        }, 1500); // Match the duration of the animation
+      }
+    }, 100);
   }
 
   let workflowCount = 0;
@@ -362,3 +383,145 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 });
+
+$(document).ready(function () {
+  $("#preview-btn").click(function () {
+      showPreviewModal();
+  });
+});
+
+function showPreviewModal() {
+  let modalHtml = `
+  <div class="modal" id="preview-modal">
+    <div class="modal-contents">
+      <span class="close-preview-modal">&times;</span>
+      <div class="modal-body">
+        <div class="web-app-preview">
+          <iframe id="preview-iframe" src="about:blank" frameborder="0" scrolling="yes"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+`;
+  $("body").append(modalHtml);
+
+  $("#preview-modal").css({
+      position: "fixed",
+      top: "0",
+      left: "0",
+      right: "0",
+      bottom: "0",
+      width: "100vw",
+      height: "100vh",
+      "background-color": "rgba(0, 0, 0, 0.9)",
+      "z-index": "9999",
+      display: "flex",
+      "align-items": "center",
+      "justify-content": "center",
+  });
+
+  $("#preview-modal .modal-contents").css({
+      position: "relative",
+      width: "100vw",
+      height: "100vh",
+      "background-color": "#fff",
+      display: "flex",
+      "flex-direction": "column",
+      overflow: "hidden",
+      margin: "0",
+      padding: "0",
+  });
+
+  $("#preview-modal .modal-body").css({
+      flex: "1",
+      overflow: "hidden",
+      padding: "0",
+      margin: "0",
+      width: "100%",
+      height: "100%",
+  });
+
+  $("#preview-modal .web-app-preview").css({
+      width: "100%",
+      height: "100%",
+      "background-color": "#fff",
+      overflow: "hidden",
+      display: "flex",
+  });
+
+  $("#preview-modal .web-app-preview iframe").css({
+      border: "solid 12px",
+      width: "100%",
+      height: "100%",
+      border: "none",
+      margin: "0",
+      padding: "0",
+      overflow: "auto",
+      flex: "1",
+  });
+
+  $("#preview-modal .close-preview-modal").css({
+      position: "fixed",
+      top: "-5px",
+      right: "20px",
+      "font-size": "40px",
+      cursor: "pointer",
+      color: "#050505",
+      "z-index": "10000",
+      "text-shadow": "0 0 10px white",
+  });
+
+  $("#preview-modal .close-preview-modal").click(function () {
+      $("#preview-modal").remove();
+  });
+
+  $(document).on("keydown", function (e) {
+      if (e.key === "Escape") {
+          $("#preview-modal").remove();
+      }
+  });
+
+  $("#preview-modal").on("click", function (e) {
+      if ($(e.target).is("#preview-modal")) {
+          $("#preview-modal").remove();
+      }
+  });
+
+  renderWebApp();
+}
+
+function renderWebApp() {
+  const iframe = document.getElementById("preview-iframe");
+  iframe.onload = function () {
+      try {
+          const iframeDoc =
+              iframe.contentDocument || iframe.contentWindow.document;
+          const style = document.createElement("style");
+          style.textContent = `
+      ::-webkit-scrollbar {
+          width: 15px;
+      }
+      ::-webkit-scrollbar-thumb {
+          background: #ada7a7b6;
+          border-radius: 10px;
+          border: 5px white solid;
+      }
+      `;
+          iframeDoc.head.appendChild(style);
+
+          if (!iframeDoc.querySelector('meta[name="viewport"]')) {
+              const meta = iframeDoc.createElement("meta");
+              meta.name = "viewport";
+              meta.content =
+                  "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no";
+              iframeDoc.head.appendChild(meta);
+          }
+      } catch (e) {
+          console.log(
+              "Cannot access iframe content - likely due to same-origin policy"
+          );
+      }
+  };
+
+  iframe.src = "render/index.html";
+}

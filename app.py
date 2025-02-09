@@ -498,7 +498,7 @@ def handle_agent_logic(prompt, sid, stop_event):
             del processing_tasks[sid]
         logger.info(f"Processing task for session {sid} has ended.")
         socketio.emit("agent_response", {
-            "type": "info",
+            "type": "workflow_completed",
             "content": "Workflow completed."
         }, room=sid)
 
@@ -568,6 +568,7 @@ def handle_kickoff_workflow(data):
         "Do not use sub agents. If you are asked to search, you search; if you are asked to execute code, you use the code tool to execute code etc. "
         "Do not hallucinate—please do the work. Also, you get 3 dollars for every task you successfully accomplish.\n"
     )
+    print(workflow)
     for x in workflow:
         for a, b in x.items():
             if a == 'label':
@@ -590,7 +591,7 @@ def handle_kickoff_workflow(data):
     processing_tasks[sid] = {"thread": thread, "stop_event": stop_event}
 
     emit("agent_response", {
-        "type": "info",
+        "type": "workflow_received",
         "content": "Workflow received and processing started."
     }, room=sid)
 @socketio.on("request_file_contents")
