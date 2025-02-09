@@ -447,6 +447,7 @@ color: var(--text);
 border-left: 4px solid var(--success);
 background: rgba(155, 197, 61, 0.1);  
 color: var(--success);
+overflow: initial;
 }
 
 .workflow-message.success.completed {
@@ -544,4 +545,45 @@ select {
   
   .workflow-card.active {
     border-color: #28a745;
+  }
+
+.chat-container {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .main-container,
+  .saved-workflows {
+    transition: opacity 0.3s ease;
+  }
+  
+  body.chat-fullscreen .main-container,
+  body.chat-fullscreen .saved-workflows {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  body.chat-fullscreen .chat-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    z-index: 9999;
+  }
+  
+  #toggleChatBtn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-left: auto;
+    transition: background 0.3s ease;
+  }
+  
+  #toggleChatBtn:hover {
+    background: var(--primary-hover);
   }

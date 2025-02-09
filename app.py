@@ -558,6 +558,7 @@ import json
 
 @socketio.on('kickoff_workflow')
 def handle_kickoff_workflow(data):
+
     workflow = data.get('workflow')
     step = 1
     t = (
@@ -571,13 +572,25 @@ def handle_kickoff_workflow(data):
     print(workflow)
     for x in workflow:
         for a, b in x.items():
-            if a == 'label':
-                t += f"STEP: {step} {b}\n"
+            if a == 'type':
+                t = t + f"STEP{step}: ({b}) "
                 step += 1
+
+            elif a == 'label':
+                t += f"{b}\n"
+    print(t)
 
     logger.info(f"Workflow instructions: {t}")
     
     sid = request.sid
+    def refresh_memory():
+        response = refresh()
+        summary.refresh()
+        research.refresh()
+        search.refresh()
+        emit_response = {"type": "refresh", "content": response}
+        socketio.emit("agent_response", emit_response, room=sid)
+    refresh_memory()
 
     if sid in processing_tasks:
         emit("agent_response", {

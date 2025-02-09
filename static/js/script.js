@@ -5,6 +5,66 @@ document.addEventListener("DOMContentLoaded", () => {
   socket.on("connect", () => {
     console.log("Socket connected (from script.js)");
   });
+  const toggleChatBtn = document.getElementById("toggleChatBtn");
+  let isFullscreen = false;
+  let originalRect = null; 
+
+  toggleChatBtn.addEventListener("click", () => {
+    const chatContainer = document.querySelector(".chat-container");
+    const mainContainer = document.querySelector(".main-container");
+    const savedWorkflows = document.querySelector(".saved-workflows");
+
+    if (!isFullscreen) {
+      originalRect = chatContainer.getBoundingClientRect();
+
+      chatContainer.style.position = "fixed";
+      chatContainer.style.top = originalRect.top + "px";
+      chatContainer.style.left = originalRect.left + "px";
+      chatContainer.style.width = originalRect.width + "px";
+      chatContainer.style.height = originalRect.height + "px";
+      chatContainer.style.zIndex = "9999";
+
+      chatContainer.style.transition = "top 0.3s ease, left 0.3s ease, width 0.3s ease, height 0.3s ease";
+      mainContainer.style.transition = "opacity 0.3s ease";
+      savedWorkflows.style.transition = "opacity 0.3s ease";
+
+      chatContainer.getBoundingClientRect();
+
+      chatContainer.style.top = "0";
+      chatContainer.style.left = "0";
+      chatContainer.style.width = "100vw";
+      chatContainer.style.height = "100vh";
+
+      mainContainer.style.opacity = "0";
+      savedWorkflows.style.opacity = "0";
+
+      isFullscreen = true;
+    } else {
+      chatContainer.style.top = originalRect.top + "px";
+      chatContainer.style.left = originalRect.left + "px";
+      chatContainer.style.width = originalRect.width + "px";
+      chatContainer.style.height = originalRect.height + "px";
+
+      mainContainer.style.opacity = "1";
+      savedWorkflows.style.opacity = "1";
+
+      chatContainer.addEventListener("transitionend", function handler(e) {
+        if (e.propertyName === "height") {
+          chatContainer.style.position = "";
+          chatContainer.style.top = "";
+          chatContainer.style.left = "";
+          chatContainer.style.width = "";
+          chatContainer.style.height = "";
+          chatContainer.style.zIndex = "";
+          chatContainer.style.transition = "";
+          chatContainer.removeEventListener("transitionend", handler);
+        }
+      });
+
+      isFullscreen = false;
+    }
+  });
+
 
   socket.on("workflow_response", function (data) {
     console.log("Received workflow_response:", data);
@@ -105,13 +165,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // --- Utility: Scroll Chat to Bottom ---
   function scrollChatToBottom() {
     const chatWindow = document.getElementById("chat-window");
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
-  // --- Helper Functions for Displaying Messages ---
   function displayAgentMessage(message) {
     const msg_id = Date.now();
     const html = `
@@ -199,24 +257,19 @@ document.addEventListener("DOMContentLoaded", () => {
     $("#chat-window").append(html);
     scrollChatToBottom();
   
-    // Wait a moment to ensure the element is rendered
     setTimeout(() => {
-      // Select all workflow messages in the chat window
       const $workflowMessages = $("#chat-window .workflow-message");
       if ($workflowMessages.length > 0) {
-        // Get the first (start) and last (end) workflow messages
         const $startMessage = $workflowMessages.first();
         const $endMessage = $workflowMessages.last();
   
-        // Add the animation class
         $startMessage.addClass("green-pulse");
         $endMessage.addClass("green-pulse");
   
-        // Optionally remove the class after the animation completes
         setTimeout(() => {
           $startMessage.removeClass("green-pulse");
           $endMessage.removeClass("green-pulse");
-        }, 1500); // Match the duration of the animation
+        }, 1500); 
       }
     }, 100);
   }
