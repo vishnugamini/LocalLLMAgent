@@ -79,12 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     if (window.location.pathname.includes("create_agent")) {
       if (data.query) {
-        const messageHtml = `
-          <div class="message agent-message">
-            <span>${data.query}</span>
-          </div>`;
-        document.getElementById("chat-window").insertAdjacentHTML("beforeend", messageHtml);
-        scrollChatToBottom();
+        displayAgentMessage(data.query);
       }
     } else {
       if (data.redirect && data.query) {
@@ -93,23 +88,17 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+  
   socket.on("agent_response", function (data) {
     console.log("agent_response received:", data);
 
-    if (
-      data.type === "info" &&
-      data.content === "Workflow completed." &&
-      !window.location.pathname.includes("create_agent")
-    ) {
-      console.log("Skipping 'Workflow completed.' message because we're not on create_agent");
-      return;
-    }
-
     if (data.type === "workflow_received") {
       displayWorkflowReceived(data.workflowText || "");
-    } else if (data.type === "workflow_completed") {
+    } 
+    else if (data.type === "thinking_message") {
+    }
+    else if (data.type === "workflow_completed") {
       displayWorkflowCompleted();
-    } else if (data.type === "thinking_message") {
     } else if (data.type === "loading_message") {
       displayLoadingMessage(data.content, data.msg_id);
     } else if (data.type === "search_results") {
@@ -123,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else if (data.type === "error") {
       displayErrorMessage(data.content);
     } else if (data.type === "search_agent_message") {
-      SearchAgentMessage(data.content);
+      displaySearchAgentMessage(data.content);
     } else if (data.type === "info") {
       displayAgentMessage(data.content);
     } else {
@@ -135,26 +124,18 @@ document.addEventListener("DOMContentLoaded", () => {
   function sendPrompt() {
     const promptEl = document.getElementById("prompt");
     let promptText = promptEl.value.trim();
-
     if (!promptText) return;
 
-    console.log("Sending prompt:", promptText);
-
     const chatWindow = document.getElementById("chat-window");
-    const userMessage = document.createElement("div");
-    userMessage.className = "message user-message";
-    userMessage.innerHTML = `<span>${promptText}</span>`;
-    chatWindow.appendChild(userMessage);
+    const userMsgHTML = `<div class="message user-message">
+                            <span>${marked.parse(promptText)}</span>
+                          </div>`;
+    chatWindow.insertAdjacentHTML("beforeend", userMsgHTML);
     scrollChatToBottom();
 
     promptEl.value = "";
     promptEl.style.height = "";
-
     socket.emit("user_prompt", { prompt: promptText, mode: "agent" });
-
-    if (window.autoWorkflowMessage) {
-      window.autoWorkflowMessage = false;
-    }
   }
 
   document.getElementById("send-btn").addEventListener("click", sendPrompt);
@@ -170,11 +151,13 @@ document.addEventListener("DOMContentLoaded", () => {
     chatWindow.scrollTop = chatWindow.scrollHeight;
   }
 
+  // --- Updated Display Functions Using Markdown ---
+
   function displayAgentMessage(message) {
     const msg_id = Date.now();
     const html = `
       <div class="message agent-message" id="msg-${msg_id}">
-        <span>${message}</span>
+        <span>${marked.parse(message)}</span>
       </div>`;
     document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
   }
@@ -182,35 +165,21 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayLoadingMessage(message, msg_id) {
     const html = `
       <div class="message loading-message" id="msg-${msg_id}">
-        <span>${message}</span>
+        <span>${marked.parse(message)}</span>
         <span class="spinner" style="margin-left: 10px;">⏳</span>
       </div>`;
     document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
   }
 
-  function updateSearchResults(message, results, msg_id) {
-    const resultHtml = `<pre>${results}</pre>`;
-    document.getElementById(`msg-${msg_id}`).insertAdjacentHTML("beforeend", resultHtml);
-  }
-
   function updateLoadingMessage(msg_id, message) {
-    document.getElementById(`msg-${msg_id}`).innerHTML = `<span>${message}</span>`;
-  }
-
-  function displayCodeExecutionMessage(content, code, msg_id) {
-    const html = `
-      <div class="message code-execution-message" id="msg-${msg_id}">
-        <pre>${code}</pre>
-        <span>${content}</span>
-      </div>`;
-    document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
+    document.getElementById(`msg-${msg_id}`).innerHTML = `<span>${marked.parse(message)}</span>`;
   }
 
   function updateLoadingMessageWithError(msg_id, message, code) {
     const html = `
       <div class="message error-message" id="msg-${msg_id}">
-        <span>${message}</span>
-        <pre>${code}</pre>
+        <span>${marked.parse(message)}</span>
+        ${marked.parse("```python\n" + code + "\n```")}
       </div>`;
     document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
   }
@@ -219,18 +188,48 @@ document.addEventListener("DOMContentLoaded", () => {
     const msg_id = Date.now();
     const html = `
       <div class="message error-message" id="msg-${msg_id}">
-        <span>${message}</span>
+        <span>${marked.parse(message)}</span>
       </div>`;
     document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
   }
 
-  function SearchAgentMessage(content) {
+  function displaySearchAgentMessage(message) {
     const msg_id = Date.now();
     const html = `
       <div class="message search-message" id="msg-${msg_id}">
-        <span>${content}</span>
+        <span>${marked.parse(message)}</span>
       </div>`;
     document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
+  }
+
+  function displayCodeExecutionMessage(content, code, msg_id) {
+    const mdContent = marked.parse(content);
+    const mdCode = marked.parse("```python\n" + code + "\n```");
+    const html = `
+      <div class="message code-execution-message" id="msg-${msg_id}">
+        <details class="collapsible-box">
+          <summary>Show Code Execution Details</summary>
+          <div class="collapsible-content">
+            ${mdCode}
+            <div class="execution-content">${mdContent}</div>
+          </div>
+        </details>
+      </div>`;
+    document.getElementById("chat-window").insertAdjacentHTML("beforeend", html);
+  }
+
+  function updateSearchResults(message, results, msg_id) {
+    const mdMessage = marked.parse(message);
+    const mdResults = marked.parse("```json\n" + results + "\n```");
+    const collapsible = `
+      <details class="search-message-collapsible">
+        <summary>Show Search Results</summary>
+        <div class="collapsible-content">
+          ${mdMessage}
+          ${mdResults}
+        </div>
+      </details>`;
+    document.getElementById(`msg-${msg_id}`).insertAdjacentHTML("beforeend", collapsible);
   }
 
   function displayWorkflowReceived(workflowText) {
@@ -239,7 +238,6 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="workflow-message success" id="workflow-msg-${msg_id}">
         <div class="workflow-header">Workflow Received</div>
         <div class="workflow-content">
-          <pre>${workflowText}</pre>
         </div>
       </div>
     `;
@@ -274,6 +272,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
+  // --- Workflow Builder functions (unchanged) ---
   let workflowCount = 0;
   document.getElementById("addFunction").addEventListener("click", () => {
     const functionType = document.getElementById("functionType").value;
@@ -340,7 +339,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     localStorage.setItem("workflows", JSON.stringify(savedWorkflows));
     workflowCount++;
-
     addWorkflowToSidebar(workflowName, workflow);
     container.innerHTML = "";
   }
@@ -437,9 +435,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 });
 
+// Preview modal code remains unchanged…
 $(document).ready(function () {
   $("#preview-btn").click(function () {
-      showPreviewModal();
+    showPreviewModal();
   });
 });
 
@@ -570,9 +569,7 @@ function renderWebApp() {
               iframeDoc.head.appendChild(meta);
           }
       } catch (e) {
-          console.log(
-              "Cannot access iframe content - likely due to same-origin policy"
-          );
+          console.log("Cannot access iframe content - likely due to same-origin policy");
       }
   };
 

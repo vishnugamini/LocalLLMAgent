@@ -83,7 +83,6 @@ font-size: 0.875rem;
 min-width: 200px;
 cursor: pointer;
 appearance: none;
-background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23AAAAAA'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
 background-repeat: no-repeat;
 background-position: right 1rem center;
 background-size: 1.5rem;
@@ -587,3 +586,56 @@ select {
   #toggleChatBtn:hover {
     background: var(--primary-hover);
   }
+
+ 
+
+
+details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+  }
+  
+  details summary {
+    cursor: pointer;
+    font-weight: bold;
+    color: var(--primary);
+    list-style: none;
+    outline: none;
+  }
+  
+  details[open] summary {
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+  }
+  
+  .collapsible-content {
+    margin-top: 0.5rem;
+  }
+  
+ 
+  pre {
+    background: var(--surface);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-family: "Fira Code", monospace;
+    word-wrap: break-word;
+    overflow-x: auto;
+  }
+  code {
+    font-family: 'Source Code Pro', monospace;
+    color: var(--text);
+  }
+  
+ 
+  blockquote {
+    border-left: 4px solid var(--primary);
+    padding-left: 1rem;
+    color: var(--text-muted);
+    margin: 0.5rem 0;
+  }
+
+  

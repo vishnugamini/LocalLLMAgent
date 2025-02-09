@@ -320,7 +320,8 @@ $(document).ready(function () {
         }
         if (data.type === "loading_message") {
             displayLoadingMessage(data.content, data.msg_id);
-        } else if (data.type === "search_results") {
+        }else if (data.type === "workflow_completed") {} 
+        else if (data.type === "search_results") {
             updateSearchResults(data.content, data.results, data.msg_id);
         } else if (data.type === "compiler_message") {
             displayCodeExecutionMessage(data.content, data.code, data.msg_id);

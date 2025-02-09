@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <title>Create Agent & Workflow Builder</title>
   <link rel="stylesheet" href="../static/css/create_agent.css">
-    <script>
-        window.isCreateAgent = true;
-    </script>
+  <script>
+      window.isCreateAgent = true;
+  </script>
 </head>
 <body>
   <div class="main-container">
@@ -29,23 +29,24 @@
     <h2>Saved Workflows</h2>
     <div id="savedWorkflowsList"></div>
   </div>
-<div class="chat-container">
-    <div class="chat-header">
-        <h2>Workflow Monitor</h2>
-        <button id="toggleChatBtn" title="Toggle Fullscreen Chat">Toggle Chat</button>
-    </div>
-    <div id="chat-window"></div>
-    <div class="chat-input-container">
-        <textarea id="prompt" placeholder="Type your message..."></textarea>
-        <button id="send-btn">Send</button>
-        <button id="preview-btn">preview</button>
 
+  <div class="chat-container">
+    <div class="chat-header">
+      <h2>Workflow Monitor</h2>
+      <button id="toggleChatBtn" title="Toggle Fullscreen Chat">Toggle Chat</button>
     </div>
-</div>
+    <div id="chat-window" class="chat-window"></div>
+    <div class="chat-input-container">
+      <textarea id="prompt" placeholder="Type your message..."></textarea>
+      <button id="send-btn">Send</button>
+      <button id="preview-btn">Preview</button>
+    </div>
+  </div>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
-  <script src="../static/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../static/js/app.js"></script>
   <script src="../static/js/script.js"></script>
 </body>
 </html>
