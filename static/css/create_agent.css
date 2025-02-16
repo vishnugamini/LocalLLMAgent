@@ -246,7 +246,7 @@ button:hover {
 }
 
 .saved-workflows::-webkit-scrollbar-thumb {
-    background: transparent;
+    background: var(--background);
     border-radius: 10px;
     border: 5px var(--surface) solid;
 }
