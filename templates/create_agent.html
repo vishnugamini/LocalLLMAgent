@@ -1,41 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Workflow Builder</title>
-    <!-- <link rel="stylesheet" href="../static/css/styles.css"> -->
-    <link rel="stylesheet" href="../static/css/create_agent.css">
 
+    <head>
+        <meta charset="UTF-8">
+        <title>Create Agent & Workflow Builder</title>
+        <link rel="stylesheet" href="../static/css/create_agent.css">
+        <script>
+            window.isCreateAgent = true;
+        </script>
+    </head>
 
-    
-</head>
-<body>
-    <div class="main-container">
-        <h2>Workflow Builder</h2>
-        <div class="controls">
-            <select id="functionType">
-                <option value="search">Search</option>
-                <option value="website">creation of website using html,css and js</option>
-                <option value="code">Execute Python code</option>
-                <option value="generate picture">Generate Picture</option>
-                <option value="instruction"> Custom Instruction</option>
-            </select>
-            <button id="addFunction">Add Function</button>
-            <button id="saveWorkflow">Save Workflow</button>
+    <body>
+        <div class="back-button-container">
+            <a href="/" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Back to Chat
+            </a>
         </div>
-        <div id="workflowContainer" class="workflow-container"></div>
-    </div>
-    
-    <div class="saved-workflows">
-        <h2>Saved Workflows</h2>
-        <div id="savedWorkflowsList"></div>
-    </div>
-    <!-- Load jQuery if needed -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Load Socket.IO client from CDN (or your server) -->
-    <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
-    <!-- Then load your custom scripts -->
-    <script src="../static/js/app.js"></script>
-    <script src="../static/js/script.js"></script>
-</body>
+        <div class="saved-workflows">
+            <h2>Saved Workflows</h2>
+            <div id="savedWorkflowsList"></div>
+        </div>
+        <div class="main-container">
+            <h2>Workflow Builder</h2>
+            <div class="controls">
+                <select id="functionType">
+                    <option value="search">Search</option>
+                    <option value="website">Website Creation</option>
+                    <option value="code">Execute Python code</option>
+                    <option value="generate picture">Generate Picture</option>
+                    <option value="instruction">Custom Instruction</option>
+                </select>
+                <button id="addFunction">Add Function</button>
+                <button id="saveWorkflow">Save Workflow</button>
+            </div>
+            <div id="workflowContainer" class="workflow-container"></div>
+        </div>
+
+
+        <div class="chat-container">
+            <div class="chat-header">
+                <h2>Workflow Monitor</h2>
+                <button id="toggleChatBtn" title="Toggle Fullscreen Chat">Toggle Chat</button>
+            </div>
+            <div id="chat-window" class="chat-window"></div>
+            <div class="chat-input-container">
+                <textarea id="prompt" placeholder="Type your message..."></textarea>
+                <button id="send-btn">Send</button>
+                <button id="preview-btn">Preview</button>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.socket.io/4.5.1/socket.io.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+        <script src="../static/js/app.js"></script>
+        <script src="../static/js/script.js"></script>
+    </body>
+
 </html>

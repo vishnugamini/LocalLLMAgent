@@ -309,12 +309,19 @@ $(document).ready(function () {
 
 
     socket.on("agent_response", function (data) {
+        if (data.type === "info" &&
+            data.content === "Workflow completed." &&
+            !window.location.pathname.includes("create_agent")) {
+            console.log("Skipping 'Workflow completed.' message because we're not on create_agent");
+            return;
+        }
         if (data.type === "thinking_message") {
             displayThinkingMessage(data.content, data.msg_id);
         }
         if (data.type === "loading_message") {
             displayLoadingMessage(data.content, data.msg_id);
-        } else if (data.type === "search_results") {
+        }else if (data.type === "workflow_completed") {} 
+        else if (data.type === "search_results") {
             updateSearchResults(data.content, data.results, data.msg_id);
         } else if (data.type === "compiler_message") {
             displayCodeExecutionMessage(data.content, data.code, data.msg_id);
