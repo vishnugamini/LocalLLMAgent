@@ -11,6 +11,9 @@
 ## Let's look at a video of one aspect of its functionality.
 https://github.com/user-attachments/assets/d1af0e9f-5567-4e5a-be8c-0ebddad02326
 
+## Custom Agents
+https://github.com/user-attachments/assets/26988225-825e-4722-a42e-efe070dc9769
+
 ## Demonstration of Research Functionality
 https://github.com/user-attachments/assets/8a940923-afd9-4326-9a68-acfd5f397e27
 
