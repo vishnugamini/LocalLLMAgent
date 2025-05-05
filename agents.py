@@ -27,6 +27,7 @@ from terminal_ui.terminal_animation2 import (
 
 load_dotenv()
 
+
 Perp_msg = [
             {
                 "role": "system",
@@ -44,14 +45,10 @@ class PerpSearch:
         self.url = "https://api.perplexity.ai/chat/completions"
         self.msg = copy.deepcopy(Perp_msg)
         self.payload = {
-            "model": "llama-3.1-sonar-small-128k-online",
+            "model": "sonar",
             "messages": self.msg,
             "temperature": 0.2,
             "top_p": 0.9,
-            "return_citations": True,
-            "search_domain_filter": ["perplexity.ai"],
-            "return_images": True,
-            "return_related_questions": True,
             "search_recency_filter": "month",
             "top_k": 0,
             "stream": False,
@@ -70,6 +67,7 @@ class PerpSearch:
             "POST", self.url, json=self.payload, headers=self.headers
         )
         response = json.loads(response.text)
+        print(response)
         response = response["choices"][0]["message"]["content"]
         self.msg.append({"role": "assistant", "content": response})
         return response

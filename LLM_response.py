@@ -50,9 +50,10 @@ def llm():
     global msg
     try:
         completion = client.beta.chat.completions.parse(
-            model="gpt-4o-mini-2024-07-18",  # or "gpt-4o-mini-2024-07-18" (expensive but better output in some instances)
+            model="gpt-4.1-2025-04-14",  # or "gpt-4o-2024-08-06" (expensive but better output in some instances)
             messages=msg,
             response_format=Message,
+            # reasoning_effort="medium"
         )
         content = completion.choices[0].message.content
         add_context("assistant", content)

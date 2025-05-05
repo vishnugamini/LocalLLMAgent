@@ -924,17 +924,17 @@ $(document).ready(function () {
       }
 });
 
-const apiBtn = document.getElementById("api-btn");
-const apiModal = document.getElementById("api-modal");
+// const apiBtn = document.getElementById("api-btn");
+// const apiModal = document.getElementById("api-modal");
 const closeBtn = document.querySelector(".close-btn");
 
-apiBtn.addEventListener("click", () => {
-    apiModal.style.display = "block";
-});
+// apiBtn.addEventListener("click", () => {
+//     apiModal.style.display = "block";
+// });
 
-closeBtn.addEventListener("click", () => {
-    apiModal.style.display = "none";
-});
+// closeBtn.addEventListener("click", () => {
+//     apiModal.style.display = "none";
+// });
 
 window.addEventListener("click", (event) => {
     if (event.target === apiModal) {
