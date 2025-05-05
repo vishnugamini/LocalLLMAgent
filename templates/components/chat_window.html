@@ -6,7 +6,7 @@
     </button>
     <!-- <button id="create-agent" data-tooltip="Create your own agents">CREATE AGENTS</button> -->
     <button id="create-agent" data-tooltip="Create your own agents">
-        <i></i> CREATE AGENT
+        <i class="bi bi-robot"></i> AGENTS
     </button>
     <button id="clear-btn" data-tooltip="Clears the chat window">
         <i class="bi bi-trash"></i>
@@ -54,8 +54,8 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-    const markdownContent = `
+    document.addEventListener('DOMContentLoaded', () => {
+        const markdownContent = `
 # \`Local LLM Agent\`
 ### The Local LLM Agent is an AI-powered tool designed to automate complex and time-consuming tasks directly on your device. By leveraging the capabilities of LLM's ability to \`attend\` to relevant chunks of data, this tool can autonomously complete entire workflows, saving you hours of manual effort. The agent is capable of recursive self-calling, allowing it to self-correct and achieve the tasks presented in the query.
 
@@ -127,7 +127,7 @@ With just a single prompt, the Local LLM Agent can create a fully functional Tic
 The Agent provides investment advice by thoroughly examining stock trends, plotting graphs, and running ML models to predict the stock price for the coming days.
 
 `
-    const htmlContent = marked.parse(markdownContent);
-    document.getElementById('readme-content').innerHTML = htmlContent;
-});
+        const htmlContent = marked.parse(markdownContent);
+        document.getElementById('readme-content').innerHTML = htmlContent;
+    });
 </script>
